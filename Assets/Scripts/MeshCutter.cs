@@ -25,6 +25,8 @@ namespace MeshCut
             CutGeneratedMesh leftMesh = new CutGeneratedMesh();     // mesh on the positive side of the plane
             CutGeneratedMesh rightMesh = new CutGeneratedMesh();    // mesh on the negative side of the plane
 
+            bool split = false;
+
             // loop for each submesh in the target's mesh
             for (int i = 0; i < target.mesh.subMeshCount; i++)
             {
@@ -50,16 +52,24 @@ namespace MeshCut
                         else
                             rightMesh.AddTriangle(currentTriangle);
                     }
-                    else // split the current triangle
+                    else
+                    {
+                        // split the current triangle
                         SplitTriangle(currentTriangle, side, plane, leftMesh, rightMesh);
+                        split = true;
+                    }
                 }
             }
 
-            FillMeshHoles(leftMesh, rightMesh, plane);
+            // don't continue if no triangle has been cut
+            if (!split)
+                return;
+
+            MeshRenderer targetRenderer = target.GetComponent<MeshRenderer>();
+            FillMeshHoles(leftMesh, rightMesh, plane, targetRenderer.materials.Length);
 
             leftMesh.InitMesh();
             rightMesh.InitMesh();
-
 
             // right mesh will take the place of the current mesh  of the target
             // remove all original colliders
@@ -69,22 +79,28 @@ namespace MeshCut
 
             target.GetComponent<MeshFilter>().mesh = rightMesh.mesh;
             target.gameObject.AddComponent<MeshCollider>().sharedMesh = rightMesh.mesh;
+            Material[] newMaterials = new Material[targetRenderer.materials.Length + 1];
+            targetRenderer.materials.CopyTo(newMaterials, 0);
+            newMaterials[^1] = target.fillMaterial;     // ^1 access the last element of the array, it's the same as newMaterials[newMaterials.Length-1]
+            targetRenderer.materials = newMaterials;
 
             // left mesh will be the new generated object
-            GameObject leftSideGO = new GameObject();
+            GameObject leftSideGO = new GameObject(target.name+" [Left Cut]");
             leftSideGO.transform.position = target.transform.position;
             leftSideGO.transform.rotation = target.transform.rotation;
             leftSideGO.transform.localScale = target.transform.localScale;
             leftSideGO.AddComponent<MeshFilter>().mesh = leftMesh.mesh;
-            leftSideGO.AddComponent<MeshRenderer>().materials = target.GetComponent<MeshRenderer>().materials;
+            leftSideGO.AddComponent<MeshRenderer>().materials = targetRenderer.materials;
             MeshCollider leftMeshCollider = leftSideGO.AddComponent<MeshCollider>();
             leftMeshCollider.sharedMesh = leftMesh.mesh;
             leftMeshCollider.convex = true;
             leftSideGO.AddComponent<Rigidbody>().AddForce(plane.normal * 50.0f);
         }
 
-        private void FillMeshHoles(CutGeneratedMesh leftMesh, CutGeneratedMesh rightMesh, Plane plane)
+        private void FillMeshHoles(CutGeneratedMesh leftMesh, CutGeneratedMesh rightMesh, Plane plane, int subMeshIndex)
         {
+            Debug.Log(leftMesh.intersectionPoints.Count);
+
             if (leftMesh.intersectionPoints.Count == 0) // if there are no intersection points return
                 return;
 
@@ -97,12 +113,12 @@ namespace MeshCut
             {
                 Vector3[] leftVertices = new Vector3[] { leftMesh.intersectionPoints[i].vertex, leftMesh.intersectionPoints[i + 1].vertex, holeCenter };
                 Vector3[] normals = new Vector3[] { -plane.normal, -plane.normal, -plane.normal };
-                Vector2[] leftUvs = new Vector2[] { leftMesh.intersectionPoints[i].uv, leftMesh.intersectionPoints[i + 1].uv, new Vector2(0.5f, 0.5f) };
+                Vector2[] leftUvs = new Vector2[] { leftMesh.intersectionPoints[i].uv, leftMesh.intersectionPoints[i + 1].uv, new Vector2(0.5f, 0.5f) };            // TODO: calcolare correttamente le uv altrimenti la texture nella parte tagliata si vede male !!!!!!!!!!
 
-                MeshTriangle leftSideTriangle = new MeshTriangle(leftVertices, normals, leftUvs, leftMesh.subMeshTriangles.Count);
+                MeshTriangle leftSideTriangle = new MeshTriangle(leftVertices, normals, leftUvs, subMeshIndex);
 
                 if (IsFacingWrongSide(leftVertices, normals[0]))
-                    FlipTriangleVertices(leftSideTriangle);
+                    FlipTriangle(leftSideTriangle);
 
                 leftMesh.AddTriangle(leftSideTriangle);
 
@@ -113,10 +129,11 @@ namespace MeshCut
 
                 Vector3[] rightVertices = new Vector3[] { rightMesh.intersectionPoints[i].vertex, rightMesh.intersectionPoints[i + 1].vertex, holeCenter };
                 Vector2[] rightUvs = new Vector2[] { rightMesh.intersectionPoints[i].uv, rightMesh.intersectionPoints[i + 1].uv, new Vector2(0.5f, 0.5f) };
-                MeshTriangle rightSideTriangle = new MeshTriangle(rightVertices, normals, rightUvs, rightMesh.subMeshTriangles.Count);
+                MeshTriangle rightSideTriangle = new MeshTriangle(rightVertices, normals, rightUvs, subMeshIndex);
+
 
                 if (IsFacingWrongSide(rightVertices, normals[0]))
-                    FlipTriangleVertices(rightSideTriangle);
+                    FlipTriangle(rightSideTriangle);
 
                 rightMesh.AddTriangle(rightSideTriangle);
             }
@@ -147,7 +164,7 @@ namespace MeshCut
                 Ray ray = new Ray(targetTriangle.vertices[i], direction);
                 plane.Raycast(ray, out distanceFromPlane);
 
-                /*
+                /*          RICONTROLLARE QUESTO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 Debug.Log(distanceFromPlane);
                 if (distanceFromPlane < 0)
                 {
@@ -168,6 +185,7 @@ namespace MeshCut
                 intersectionIndex++;
             }
 
+            // TODO: capire come evitare di aggiungere gli stessi punti di intersezione più volte (modificare funzione AddIntersectionsToMesh)  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             leftMesh.intersectionPoints.AddRange(intersectionPoints);
             rightMesh.intersectionPoints.AddRange(intersectionPoints);
 
@@ -208,7 +226,7 @@ namespace MeshCut
             MeshTriangle firstTriangle = new MeshTriangle(firstTriangleVertices, firstTriangleNormals, firstTriangleUvs, targetTriangle.subMeshIndex);
 
             if (IsFacingWrongSide(firstTriangleVertices, firstTriangleNormals[0]))
-                FlipTriangleVertices(firstTriangle);
+                FlipTriangle(firstTriangle);
 
             targetMesh.AddTriangle(firstTriangle);
 
@@ -224,7 +242,7 @@ namespace MeshCut
             MeshTriangle secondTriangle = new MeshTriangle(secondTriangleVertices, secondTriangleNormals, secondTriangleUvs, targetTriangle.subMeshIndex);
 
             if (IsFacingWrongSide(secondTriangleVertices, secondTriangleNormals[0]))
-                FlipTriangleVertices(secondTriangle);
+                FlipTriangle(secondTriangle);
 
             targetMesh.AddTriangle(secondTriangle);
         }
@@ -238,7 +256,7 @@ namespace MeshCut
             MeshTriangle output = new MeshTriangle(newTriangleVertices, newTriangleNormals, newTriangleUvs, targetTriangle.subMeshIndex);
 
             if (IsFacingWrongSide(newTriangleVertices, newTriangleNormals[0]))
-                FlipTriangleVertices(output);
+                FlipTriangle(output);
 
             return output;
         }
@@ -248,12 +266,22 @@ namespace MeshCut
             return Vector3.Dot(Vector3.Cross(triangleVertices[0] - triangleVertices[1], triangleVertices[0] - triangleVertices[2]), triangleNormal) < 0;
         }
 
-        private void FlipTriangleVertices(MeshTriangle triangle)
+        private void FlipTriangle(MeshTriangle triangle)
         {
             Vector3 temp = triangle.vertices[0];
 
             triangle.vertices[0] = triangle.vertices[1];
             triangle.vertices[1] = temp;
+
+            temp = triangle.normals[0];
+            triangle.normals[0] = triangle.normals[1];
+            triangle.normals[1] = temp;
+
+            Vector2 temp2 = triangle.uvs[0];
+
+            triangle.uvs[0] = triangle.uvs[1];
+            triangle.uvs[1] = temp2;
+
         }
 
         private MeshTriangle GetTriangle(Mesh targetMesh, int submeshIndex, int[] submeshTriangles ,int triangleIndexOffset)
