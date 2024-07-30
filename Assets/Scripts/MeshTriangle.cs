@@ -12,7 +12,7 @@ namespace MeshCut
         public List<Vector2> uvs = new List<Vector2>();
         public int subMeshIndex;
 
-        public MeshTriangle(List<Vector3> vertices, List<Vector3> normals, List<Vector2> uvs, int subMeshIndex)
+        public MeshTriangle(Vector3[] vertices, Vector3[] normals, Vector2[] uvs, int subMeshIndex)
         {
             this.vertices.AddRange(vertices);
             this.normals.AddRange(normals);

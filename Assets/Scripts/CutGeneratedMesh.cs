@@ -15,7 +15,10 @@ namespace MeshCut
         public List<Vector3> normals = new List<Vector3>();
         public List<Vector2> uvs = new List<Vector2>();
         public List<List<int>> subMeshTriangles = new List<List<int>>();
-        
+        public List<IntersectionPoint> intersectionPoints = new List<IntersectionPoint>();
+
+        public Mesh mesh { get; private set; } = null;
+
         /// <summary>
         /// Add a triangle to this mesh.
         /// </summary>
@@ -33,6 +36,20 @@ namespace MeshCut
             vertices.AddRange(triangle.vertices);
             normals.AddRange(triangle.normals);
             uvs.AddRange(triangle.uvs);
+        }
+
+        public void InitMesh()
+        {
+            Mesh mesh = new Mesh();
+
+            mesh.SetVertices(vertices);
+            mesh.SetNormals(normals);
+            mesh.SetUVs(0, uvs);
+            mesh.subMeshCount = subMeshTriangles.Count;
+            for (int i = 0;i < subMeshTriangles.Count; i++)
+                mesh.SetTriangles(subMeshTriangles[i], i);
+
+            this.mesh = mesh;
         }
     }
 }
