@@ -78,7 +78,8 @@ namespace MeshCut
                 Destroy(collider);
 
             target.GetComponent<MeshFilter>().mesh = rightMesh.mesh;
-            target.gameObject.AddComponent<MeshCollider>().sharedMesh = rightMesh.mesh;
+            MeshCollider targetCollider = target.gameObject.AddComponent<MeshCollider>();
+            targetCollider.sharedMesh = rightMesh.mesh;
             Material[] newMaterials = new Material[targetRenderer.materials.Length + 1];
             targetRenderer.materials.CopyTo(newMaterials, 0);
             newMaterials[^1] = target.fillMaterial;     // ^1 access the last element of the array, it's the same as newMaterials[newMaterials.Length-1]
@@ -94,13 +95,11 @@ namespace MeshCut
             MeshCollider leftMeshCollider = leftSideGO.AddComponent<MeshCollider>();
             leftMeshCollider.sharedMesh = leftMesh.mesh;
             leftMeshCollider.convex = true;
-            leftSideGO.AddComponent<Rigidbody>().AddForce(plane.normal * 50.0f);
+            leftSideGO.AddComponent<Rigidbody>().AddForce(plane.normal * 25.0f);
         }
 
         private void FillMeshHoles(CutGeneratedMesh leftMesh, CutGeneratedMesh rightMesh, Plane plane, int subMeshIndex)
         {
-            Debug.Log(leftMesh.intersectionPoints.Count);
-
             if (leftMesh.intersectionPoints.Count == 0) // if there are no intersection points return
                 return;
 
@@ -109,11 +108,25 @@ namespace MeshCut
                 holeCenter += leftMesh.intersectionPoints[i].vertex;
             holeCenter /= leftMesh.intersectionPoints.Count;
 
+            Vector3 firstRefVector = Vector3.Cross(leftMesh.intersectionPoints[0].vertex - holeCenter, plane.normal);
+            Vector3 secondRefVector = Vector3.Cross(plane.normal, firstRefVector);
+            Vector2 uvCenter = new Vector2(0.5f, 0.5f);
+
+            for (int i = 0; i < leftMesh.intersectionPoints.Count; i++)
+            {
+                Vector3 fromCenterToVertex = leftMesh.intersectionPoints[i].vertex - holeCenter;
+                float xValue = (Vector3.Dot(firstRefVector, fromCenterToVertex) + 1) * 0.5f;
+                float yValue = (Vector3.Dot(secondRefVector, fromCenterToVertex) + 1) * 0.5f;
+
+                leftMesh.intersectionPoints[i].uv = new Vector2(xValue, yValue);
+                rightMesh.intersectionPoints[i].uv = new Vector2(xValue, yValue);
+            }
+
             for (int i = 0; i < leftMesh.intersectionPoints.Count; i += 2)
             {
                 Vector3[] leftVertices = new Vector3[] { leftMesh.intersectionPoints[i].vertex, leftMesh.intersectionPoints[i + 1].vertex, holeCenter };
                 Vector3[] normals = new Vector3[] { -plane.normal, -plane.normal, -plane.normal };
-                Vector2[] leftUvs = new Vector2[] { leftMesh.intersectionPoints[i].uv, leftMesh.intersectionPoints[i + 1].uv, new Vector2(0.5f, 0.5f) };            // TODO: calcolare correttamente le uv altrimenti la texture nella parte tagliata si vede male !!!!!!!!!!
+                Vector2[] leftUvs = new Vector2[] { leftMesh.intersectionPoints[i].uv, leftMesh.intersectionPoints[i + 1].uv, uvCenter };
 
                 MeshTriangle leftSideTriangle = new MeshTriangle(leftVertices, normals, leftUvs, subMeshIndex);
 
@@ -128,7 +141,7 @@ namespace MeshCut
 
 
                 Vector3[] rightVertices = new Vector3[] { rightMesh.intersectionPoints[i].vertex, rightMesh.intersectionPoints[i + 1].vertex, holeCenter };
-                Vector2[] rightUvs = new Vector2[] { rightMesh.intersectionPoints[i].uv, rightMesh.intersectionPoints[i + 1].uv, new Vector2(0.5f, 0.5f) };
+                Vector2[] rightUvs = new Vector2[] { rightMesh.intersectionPoints[i].uv, rightMesh.intersectionPoints[i + 1].uv, uvCenter };
                 MeshTriangle rightSideTriangle = new MeshTriangle(rightVertices, normals, rightUvs, subMeshIndex);
 
 
@@ -164,16 +177,6 @@ namespace MeshCut
                 Ray ray = new Ray(targetTriangle.vertices[i], direction);
                 plane.Raycast(ray, out distanceFromPlane);
 
-                /*          RICONTROLLARE QUESTO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                Debug.Log(distanceFromPlane);
-                if (distanceFromPlane < 0)
-                {
-                    // CHECK IF THIS MUST BE DONE
-                    Debug.Break();
-                    distanceFromPlane = -distanceFromPlane;
-                }
-                 */
-
                 distanceFromPlane = distanceFromPlane / direction.magnitude;    // normalize
 
                 intersectionPoints[intersectionIndex] = new IntersectionPoint();
@@ -185,12 +188,8 @@ namespace MeshCut
                 intersectionIndex++;
             }
 
-            // TODO: capire come evitare di aggiungere gli stessi punti di intersezione più volte (modificare funzione AddIntersectionsToMesh)  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             leftMesh.intersectionPoints.AddRange(intersectionPoints);
             rightMesh.intersectionPoints.AddRange(intersectionPoints);
-
-            //AddIntersectionsToMesh(leftMesh, intersectionPoints);
-            //AddIntersectionsToMesh(rightMesh, intersectionPoints);
 
             if (positiveSideVertexIndex.Count == 1)
             {
@@ -208,13 +207,6 @@ namespace MeshCut
                 // handle double vertices on positive side
                 AddDoubleSideTriangles(targetTriangle, leftMesh, intersectionPoints, positiveSideVertexIndex);
             }
-        }
-
-        private void AddIntersectionsToMesh(CutGeneratedMesh mesh, IntersectionPoint[] intersectionPoints)
-        {
-            for (int i = 0; i < intersectionPoints.Length; i++)
-                if (!mesh.intersectionPoints.Contains(intersectionPoints[i]))
-                    mesh.intersectionPoints.Add(intersectionPoints[i]);
         }
 
         private void AddDoubleSideTriangles(MeshTriangle targetTriangle, CutGeneratedMesh targetMesh, IntersectionPoint[] intersectionPoints, List<int> sideVertexIndex)
