@@ -38,6 +38,9 @@ namespace MeshCut
             uvs.AddRange(triangle.uvs);
         }
 
+        /// <summary>
+        /// Initialize the mesh with the current vertices, normals, uvs and submeshes
+        /// </summary>
         public void InitMesh()
         {
             Mesh mesh = new Mesh();

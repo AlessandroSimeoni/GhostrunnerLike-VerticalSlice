@@ -5,7 +5,7 @@ namespace MeshCut
 {
     public class MeshTriangle
     {
-        // each triangle has vertices, normals, uvs and it's associated to a subMesh
+        // each mesh triangle has vertices, normals, uvs and it's associated to a subMesh
 
         public List<Vector3> vertices = new List<Vector3>();
         public List<Vector3> normals = new List<Vector3>();
