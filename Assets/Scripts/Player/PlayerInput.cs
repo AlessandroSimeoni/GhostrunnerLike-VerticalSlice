@@ -49,13 +49,11 @@ namespace Player
             Vector3 forwardDirection = new Vector3(fpCamera.transform.forward.x, 0.0f, fpCamera.transform.forward.z).normalized;
 
             playerStateController.AddMovementDirection(rightDirection*inputValue.x + forwardDirection*inputValue.y);
+
+            if (controls.Player.Jump.ReadValue<float>() > 0.0f)
+                playerStateController.RequestJump();
         }
 
-        private void RotateCamera()
-        {
-            
-
-
-        }
+        private void RotateCamera() => fpCamera.ProcessMovement(controls.Camera.Rotation.ReadValue<Vector2>());
     }
 }

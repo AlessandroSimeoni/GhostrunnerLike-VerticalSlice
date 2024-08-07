@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: PlayerModel
   m_EditorClassIdentifier: 
   hp: 1
-  movementSpeed: 5
-  jumpHeight: 1.5
+  movementSpeed: 15
+  jumpHeight: 3
+  gravityMultiplier: 7
+  midAirSpeed: 10

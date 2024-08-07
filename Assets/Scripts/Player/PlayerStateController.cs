@@ -21,7 +21,7 @@ namespace Player
         public GroundCheck groundCheck { get; private set; } = null;
         public CharacterController characterController { get; private set; } = null;
         public Vector3 movementDirectionBuffer {  get; set; } = Vector3.zero;
-        public bool jumpRequest { get; private set; } = false;
+        public bool jumpRequest { get; set; } = false;
 
         private void Awake()
         {
@@ -31,6 +31,7 @@ namespace Player
 
         private void Start()
         {
+            transform.position += Vector3.up * characterController.skinWidth;
             Init();
         }
 
@@ -83,7 +84,7 @@ namespace Player
 
         public void RequestJump()
         {
-            if (!groundCheck.isGrounded)
+            if (!groundCheck.isGrounded || currentState.GetType() == typeof(PlayerJumpState))
                 return;
 
             jumpRequest = true;

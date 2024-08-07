@@ -8,6 +8,6 @@ namespace GameCamera
 
         protected virtual void Start() => Cursor.lockState = CursorLockMode.Locked;
 
-        protected abstract void ProcessMovement();
+        public abstract void ProcessMovement(Vector3 input);
     }
 }
