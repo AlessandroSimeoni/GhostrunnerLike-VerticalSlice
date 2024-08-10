@@ -16,4 +16,4 @@ MonoBehaviour:
   movementSpeed: 15
   jumpHeight: 3
   gravityMultiplier: 7
-  midAirSpeed: 10
+  midAirSpeed: 9
