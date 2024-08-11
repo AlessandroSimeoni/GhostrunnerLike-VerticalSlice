@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace MeshCut
 {
     [RequireComponent(typeof(MeshFilter))]
+    [RequireComponent(typeof(Rigidbody))]
     public class Sliceable : MonoBehaviour
     {
         /*
@@ -11,6 +13,18 @@ namespace MeshCut
 
         [Tooltip("The material for the part where the mesh will be cut")] 
         public Material fillMaterial = null;
+        [SerializeField] private float cutReadyCooldown = 0.1f;
+
+        private bool _cutReady = false;
+
+        public bool cutReady {
+            get { return _cutReady; } 
+            set {
+                _cutReady = value;
+                if (!_cutReady)
+                    PrepareForCut().Forget();
+            }
+        }
 
         private MeshFilter meshFilter = null;
         public Mesh mesh { get { return meshFilter.mesh; } }
@@ -18,6 +32,17 @@ namespace MeshCut
         private void Awake()
         {
             meshFilter = GetComponent<MeshFilter>();
+        }
+
+        private void Start()
+        {
+            PrepareForCut().Forget();
+        }
+
+        private async UniTask PrepareForCut()
+        {
+            await UniTask.WaitForSeconds(cutReadyCooldown);
+            cutReady = true;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Player
             currentState.Tick();
         }
 
-        public void Init(PlayerCharacter playerCharacter)
+        public virtual void Init(PlayerCharacter playerCharacter)
         {
             foreach (PlayerState state in state)
                 state.Init(playerCharacter, this);

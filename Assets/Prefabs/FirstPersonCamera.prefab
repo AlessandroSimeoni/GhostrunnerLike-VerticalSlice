@@ -214,9 +214,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1265718711005904169, guid: 27e7db2db577cff4ba00f2ddfaac420e, type: 3}
+    - {fileID: 1287053721332061076, guid: 27e7db2db577cff4ba00f2ddfaac420e, type: 3}
+    - {fileID: 68800615988661983, guid: 27e7db2db577cff4ba00f2ddfaac420e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3135245313229092794, guid: 27e7db2db577cff4ba00f2ddfaac420e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9082785701018493455}
     - targetCorrespondingSourceObject: {fileID: 3135245313229092794, guid: 27e7db2db577cff4ba00f2ddfaac420e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4187302262577801198}
@@ -229,6 +234,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3135245313229092794, guid: 27e7db2db577cff4ba00f2ddfaac420e, type: 3}
   m_PrefabInstance: {fileID: 3519964806603024908}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &9082785701018493455
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971393939257253302}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.145805, y: 1.4210904, z: 0.044963516}
+  m_Center: {x: 0, y: 1.0414995, z: 0}
 --- !u!95 &4187302262577801198
 Animator:
   serializedVersion: 5
@@ -262,6 +288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69607ea1ce43240479cb2ae128a232dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordCollider: {fileID: 9082785701018493455}
+  cutForce: 25
 --- !u!4 &8167024420573511008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4723840770468632428, guid: 27e7db2db577cff4ba00f2ddfaac420e, type: 3}

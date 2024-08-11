@@ -14,6 +14,7 @@ namespace Player
         [SerializeField] private PlayerAttackStateController attackStateController = null;
         public PlayerModel playerModel = null;
         public Animator playerAnimator = null;
+        [Min(0.0f)] public float rigidbodyInteractionForce = 10.0f;
 
 
         public Controls controls;

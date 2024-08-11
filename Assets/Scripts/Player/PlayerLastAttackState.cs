@@ -14,7 +14,6 @@ namespace Player
 
         public override async UniTask Enter()
         {
-            Debug.Log("SecondAttack!");
             ((PlayerAttackStateController)controller).sword.OnAttackEnded += EndAttack;
             player.playerAnimator.SetBool(ATTACK_ANIMATION, true);
             await UniTask.NextFrame();

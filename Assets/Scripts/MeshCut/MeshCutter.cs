@@ -6,25 +6,17 @@ namespace MeshCut
 {
 	public class MeshCutter : MonoBehaviour
 	{
-#if UNITY_EDITOR
+		//############################################################
+		//## DOES NOT WORK WELL WITH NON-UNIFORM SCALED GAMEOBJECTS ##
+		//############################################################
 
-		[SerializeField] private Sliceable theTarget;
-		[SerializeField] private Transform planeTransform;
-
-		[ContextMenu("TestCut")]
-		private void TestCut()
-		{
-			Cut(theTarget, planeTransform.up, Vector3.zero);
-		}
-#endif
-
-		/// <summary>
-		/// Cut the target mesh in half using a plane with planeNormal normal passing for the planePosition position
-		/// </summary>
-		/// <param name="target">The target to cut</param>
-		/// <param name="planeNormal">The normal of the cut plane</param>
-		/// <param name="planePosition">The position of the cut plane</param>
-		public void Cut(Sliceable target, Vector3 planeNormal, Vector3 planePosition)
+        /// <summary>
+        /// Cut the target mesh in half using a plane with planeNormal normal passing for the planePosition position
+        /// </summary>
+        /// <param name="target">The target to cut</param>
+        /// <param name="planeNormal">The normal of the cut plane</param>
+        /// <param name="planePosition">The position of the cut plane</param>
+        protected void Cut(Sliceable target, Vector3 planeNormal, Vector3 planePosition, float cutForce)
         {
             Plane plane = new Plane(
                 target.transform.InverseTransformDirection(planeNormal),
@@ -86,8 +78,8 @@ namespace MeshCut
             leftMesh.InitMesh();
             rightMesh.InitMesh();
             
-            PrepareRightGameObject(target, rightMesh, targetRenderer, plane, 25.0f);	// right mesh will take the place of the current mesh of the target
-            PrepareLeftGameObject(target, leftMesh, targetRenderer, plane, 25.0f);		// left mesh will be the new generated object
+            PrepareRightGameObject(target, rightMesh, targetRenderer, plane, cutForce);	// right mesh will take the place of the current mesh of the target
+            PrepareLeftGameObject(target, leftMesh, targetRenderer, plane, cutForce);		// left mesh will be the new generated object
         }
 
         /// <summary>
@@ -121,6 +113,7 @@ namespace MeshCut
             leftMeshCollider.convex = true;
 
             leftSideGO.AddComponent<Rigidbody>().AddForce(plane.normal * cutForce);
+			leftSideGO.AddComponent<Sliceable>().fillMaterial = target.fillMaterial;
         }
 
         /// <summary>
@@ -157,7 +150,9 @@ namespace MeshCut
             targetCollider.sharedMesh = rightMesh.mesh;
             targetCollider.convex = true;
 
-            target.gameObject.AddComponent<Rigidbody>().AddForce(-plane.normal * cutForce);
+			Rigidbody targetRigidbody = target.gameObject.GetComponent<Rigidbody>();
+			//targetRigidbody.isKinematic = false;
+            targetRigidbody.AddForce(-plane.normal * cutForce);
         }
 
 		/// <summary>
