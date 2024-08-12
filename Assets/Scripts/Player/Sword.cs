@@ -24,12 +24,12 @@ namespace Player
             }
         }
 
-        private void EndAttack()
+        public void EndAttack()
         {
             invertCutNormal = false;
             OnAttackEnded?.Invoke();
         }
-        private void OpenComboWindow() => OnComboWindow?.Invoke();
-        private void InvertCutNormal() => invertCutNormal = true;
+        public void OpenComboWindow() => OnComboWindow?.Invoke();
+        public void InvertCutNormal() => invertCutNormal = true;
     }
 }

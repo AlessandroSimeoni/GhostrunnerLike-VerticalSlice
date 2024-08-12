@@ -410,7 +410,7 @@ namespace MeshCut
 				int index = submeshTriangles[triangleIndexOffset + i];
 				vertices[i] = targetMesh.vertices[index];
 				normals[i] = targetMesh.normals[index];
-				uvs[i] = targetMesh.uv[index];
+                uvs[i] = targetMesh.uv[index];
 			}
 
 			return new MeshTriangle(vertices, normals, uvs, submeshIndex);
