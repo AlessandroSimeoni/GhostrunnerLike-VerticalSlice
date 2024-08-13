@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingState: {fileID: 6905955132634936331}
   jumpState: {fileID: 1279889641217208062}
+  crouchedState: {fileID: 1404063540192064796}
 --- !u!1 &1858169510365345619
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,13 +242,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 1.25
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.625, z: 0}
 --- !u!114 &1758896067050372977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,7 +266,7 @@ MonoBehaviour:
   attackStateController: {fileID: 502789715336523778}
   playerModel: {fileID: 11400000, guid: 7547e68d538dbf3468c923f8c564b2ba, type: 2}
   playerAnimator: {fileID: 0}
-  rigidbodyInteractionForce: 10
+  rigidbodyInteractionForce: 5
 --- !u!114 &847907998886575097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +310,7 @@ MonoBehaviour:
   - {fileID: 7052092395668710853}
   - {fileID: 6905955132634936331}
   - {fileID: 1279889641217208062}
+  - {fileID: 1404063540192064796}
   initialState: {fileID: 7052092395668710853}
 --- !u!114 &502789715336523778
 MonoBehaviour:
@@ -363,6 +365,7 @@ Transform:
   - {fileID: 306918522387813681}
   - {fileID: 2115163895706958738}
   - {fileID: 7396890784808930606}
+  - {fileID: 4681284240045741420}
   m_Father: {fileID: 1658106588011379665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6928567365404764424
@@ -421,7 +424,7 @@ GameObject:
   - component: {fileID: 306918522387813681}
   - component: {fileID: 1239408678167471794}
   m_Layer: 6
-  m_Name: AttackState
+  m_Name: BaseAttackState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -486,3 +489,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1658106588011379665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9028119413897356972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4681284240045741420}
+  - component: {fileID: 1404063540192064796}
+  m_Layer: 6
+  m_Name: CrouchedState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4681284240045741420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9028119413897356972}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5566620087732254069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1404063540192064796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9028119413897356972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7866d463ded0adf4d827969f9e721707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleState: {fileID: 7052092395668710853}
+  movingState: {fileID: 6905955132634936331}
+  jumpState: {fileID: 1279889641217208062}

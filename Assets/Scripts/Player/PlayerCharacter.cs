@@ -9,7 +9,7 @@ namespace Player
     [RequireComponent(typeof(GroundCheck))]
     public class PlayerCharacter : MonoBehaviour
     {
-        [SerializeField] private FirstPersonCamera fpCamera = null;
+        public FirstPersonCamera fpCamera = null;
         [SerializeField] private PlayerMovementStateController movementStateController = null;
         [SerializeField] private PlayerAttackStateController attackStateController = null;
         public PlayerModel playerModel = null;

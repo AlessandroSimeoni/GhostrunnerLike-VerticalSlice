@@ -34,8 +34,6 @@ namespace Player
 
         public override void Tick()
         {
-            base.Tick();
-
             if (player.movementDirection == Vector3.zero)
             {
                 controller.ChangeState(idleState).Forget();

@@ -5,7 +5,7 @@ namespace GameCamera
     public class FirstPersonCamera : ACamera
     {
         [Header("Position")]
-        [SerializeField] private float heightOffset = 1.75f;
+        public float heightOffset = 1.75f;
         [SerializeField] private float depthOffset = 0.0f;
         [Header("Axis")]
         [SerializeField] private bool invertedVerticalAxis = false;

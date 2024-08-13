@@ -8,15 +8,18 @@ namespace Player
     {
         [SerializeField] private PlayerState movingState = null;
         [SerializeField] private PlayerState jumpState = null;
+        [SerializeField] private PlayerState crouchedState = null;
 
         private const string IDLE_ANIMATION = "Idle";
 
         private InputAction jumpAction = null;
+        private InputAction crouchAction = null;
 
         public override void Init(PlayerCharacter player, PlayerStateController controller)
         {
             base.Init(player, controller);
             jumpAction = player.controls.Player.Jump;
+            crouchAction = player.controls.Player.Crouch;
         }
 
         public override async UniTask Enter()
@@ -34,8 +37,6 @@ namespace Player
 
         public override void Tick()
         {
-            base.Tick();
-
             if (player.movementDirection != Vector3.zero)
             {
                 controller.ChangeState(movingState).Forget();
@@ -45,6 +46,12 @@ namespace Player
             if (jumpAction.triggered && player.groundCheck.isGrounded)
             {
                 controller.ChangeState(jumpState).Forget();
+                return;
+            }
+
+            if (crouchAction.triggered)
+            {
+                controller.ChangeState(crouchedState).Forget();
                 return;
             }
         }

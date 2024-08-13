@@ -33,7 +33,6 @@ namespace Player
 
         public override async UniTask ChangeState(IState state)
         {
-
             if (currentState == (PlayerState)state || changingState)
                 return;
 

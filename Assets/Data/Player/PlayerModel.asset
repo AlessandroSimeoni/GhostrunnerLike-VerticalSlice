@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: PlayerModel
   m_EditorClassIdentifier: 
   hp: 1
+  defaultCharacterHeight: 2
   movementSpeed: 15
   jumpHeight: 3
   gravityMultiplier: 7
   midAirSpeed: 9
+  crouchedTransitionTime: 0.1
+  crouchedMovementSpeed: 10
+  crouchedCharacterHeight: 1.25
