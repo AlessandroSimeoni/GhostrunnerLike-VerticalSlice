@@ -18,7 +18,7 @@ namespace Player
         {
             Debug.Log("ENTERED JUMP STATE");
             await UniTask.NextFrame();
-            verticalVelocity += Mathf.Sqrt(player.playerModel.jumpHeight * -2.0f * Physics.gravity.y * player.playerModel.gravityMultiplier);
+            verticalVelocity += Mathf.Sqrt(player.playerModel.jumpHeight * -2.0f * Physics.gravity.y * player.playerModel.jumpGravityMultiplier);
             gravity.enabled = false;
             player.playerAnimator.SetBool(JUMP_ANIMATION, true);
         }
@@ -31,8 +31,6 @@ namespace Player
 
         public override void Tick()
         {
-            base.Tick();
-
             if (player.groundCheck.isGrounded && verticalVelocity < 0)
             {
                 verticalVelocity = 0.0f;
@@ -41,7 +39,7 @@ namespace Player
             }
 
             ((PlayerMovementStateController)controller).characterController.Move(Vector3.up * verticalVelocity * Time.deltaTime);
-            verticalVelocity += Physics.gravity.y * player.playerModel.gravityMultiplier * Time.deltaTime;
+            verticalVelocity += Physics.gravity.y * player.playerModel.jumpGravityMultiplier * Time.deltaTime;
 
             ((PlayerMovementStateController)controller).characterController.Move(player.movementDirection * player.playerModel.midAirSpeed * Time.deltaTime);
         }

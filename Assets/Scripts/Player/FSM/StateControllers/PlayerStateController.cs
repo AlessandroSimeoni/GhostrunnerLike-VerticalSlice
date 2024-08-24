@@ -10,6 +10,9 @@ namespace Player
         [SerializeField] private PlayerState[] state = Array.Empty<PlayerState>();
         public PlayerState initialState = null;
 
+        public PlayerState previousState { get; private set; } = null;
+        public PlayerState nextTargetState { get; private set; } = null;
+
         private PlayerState currentState = null;
         private bool changingState = false;
 
@@ -37,8 +40,13 @@ namespace Player
                 return;
 
             changingState = true;
+            nextTargetState = (PlayerState)state;
+
             if (currentState != null)
                 await currentState.Exit();
+
+            nextTargetState = null;
+            previousState = currentState;
 
             await state.Enter();
             currentState = (PlayerState)state;

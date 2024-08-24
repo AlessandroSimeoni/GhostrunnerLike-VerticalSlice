@@ -6,7 +6,7 @@ namespace MeshCut
     {
         /* 
          This class represents an intersection point between the mesh and the plane which is cutting it.
-         This points are used to process new triangles for left/right mesh and the filling for the hole generated in the meshes after the cut.
+         These points are used to process new triangles for left/right mesh and the filling for the hole generated in the meshes after the cut.
         */
 
         public Vector3 vertex;

@@ -8,15 +8,18 @@ namespace Player
     {
         [SerializeField] private PlayerState idleState = null;
         [SerializeField] private PlayerState jumpState = null;
+        [SerializeField] private PlayerState slideState = null;
 
         private const string RUN_ANIMATION = "Run";
 
         private InputAction jumpAction = null;
+        private InputAction crouchAction = null;
 
         public override void Init(PlayerCharacter player, PlayerStateController controller)
         {
             base.Init(player, controller);
             jumpAction = player.controls.Player.Jump;
+            crouchAction = player.controls.Player.Crouch;
         }
 
         public override async UniTask Enter()
@@ -43,6 +46,12 @@ namespace Player
             if (jumpAction.triggered && player.groundCheck.isGrounded)
             {
                 controller.ChangeState(jumpState).Forget();
+                return;
+            }
+
+            if (crouchAction.triggered && player.groundCheck.isGrounded)
+            {
+                controller.ChangeState(slideState).Forget();
                 return;
             }
 

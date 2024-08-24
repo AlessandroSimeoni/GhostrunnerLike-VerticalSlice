@@ -16,8 +16,16 @@ MonoBehaviour:
   defaultCharacterHeight: 2
   movementSpeed: 15
   jumpHeight: 3
-  gravityMultiplier: 7
+  jumpGravityMultiplier: 7
   midAirSpeed: 9
   crouchedTransitionTime: 0.1
   crouchedMovementSpeed: 10
   crouchedCharacterHeight: 1.25
+  slideTime: 1
+  maxSlideSpeed: 25
+  minSlideSpeed: 3
+  slideFriction: 2
+  slideJumpDegree: 70
+  maxSlideJumpHeight: 4
+  slidedJumpGravityMultiplier: 6
+  slidedMidAirSpeed: 9
