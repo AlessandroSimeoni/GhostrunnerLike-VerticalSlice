@@ -27,5 +27,8 @@ namespace Player
         public float maxSlideJumpHeight = 3.0f;
         public float slidedJumpGravityMultiplier = 4.0f;
         public float slidedMidAirSpeed = 2.5f;
+        [Header("Dash State")]
+        public float dashSpeed = 30.0f;
+        public float dashDistance = 4.0f;
     }
 }

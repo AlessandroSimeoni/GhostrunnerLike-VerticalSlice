@@ -6,6 +6,8 @@ namespace Utility
     [RequireComponent(typeof(CharacterController))]
     public class Gravity : MonoBehaviour
     {
+        [SerializeField] private float gravityMultiplier = 5.0f;
+
         private GroundCheck groundCheck = null;
         private CharacterController characterController = null;
 
@@ -19,7 +21,7 @@ namespace Utility
 
         private void FixedUpdate()
         {
-            currentAppliedGravity = groundCheck.isGrounded ? Vector3.zero : currentAppliedGravity + Physics.gravity * Time.fixedDeltaTime;
+            currentAppliedGravity = groundCheck.isGrounded ? Vector3.zero : currentAppliedGravity + Physics.gravity * gravityMultiplier * Time.fixedDeltaTime;
             characterController.Move(currentAppliedGravity * Time.fixedDeltaTime);
         }
     }

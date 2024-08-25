@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
-    public class PlayerSlideState : PlayerBaseCrouchedState
+    public class PlayerSlideState : BasePlayerCrouchedState
     {
         [SerializeField] private PlayerState crouchedState = null;
         [SerializeField] private PlayerState slideJumpState = null;
@@ -29,13 +29,17 @@ namespace Player
             currentTime = 0.0f;
             slideSpeed = player.playerModel.maxSlideSpeed;
             slideDirection = player.movementDirection;
+            ((PlayerMovementStateController)controller).OnCharacterControllerHit += CrouchedStateTransition;
             await base.Enter();
         }
+
 
         public override async UniTask Exit()
         {
             player.playerAnimator.SetBool(IDLE_ANIMATION, false);       // TODO: CREATE SLIDE ANIMATION
-            
+
+            ((PlayerMovementStateController)controller).OnCharacterControllerHit -= CrouchedStateTransition;
+
             if (controller.nextTargetState != crouchedState)
                 await base.Exit();
         }
@@ -58,9 +62,11 @@ namespace Player
 
             if (currentTime > player.playerModel.slideTime)
             {
-                controller.ChangeState(crouchedState).Forget();
+                CrouchedStateTransition();
                 return;
             }
         }
+
+        private void CrouchedStateTransition() => controller.ChangeState(crouchedState).Forget();
     }
 }

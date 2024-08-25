@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
-	public class PlayerCrouchedState : PlayerBaseCrouchedState
+	public class PlayerCrouchedState : BasePlayerCrouchedState
 	{
 		[SerializeField] private PlayerState idleState = null;
 		[SerializeField] private PlayerState movingState = null;

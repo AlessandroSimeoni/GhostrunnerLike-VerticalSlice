@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerBaseCrouchedState : PlayerState
+    public class BasePlayerCrouchedState : PlayerState
     {
         protected float originalCameraHeightOffset = 0.0f;
 

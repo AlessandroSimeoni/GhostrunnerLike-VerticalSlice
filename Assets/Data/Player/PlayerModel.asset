@@ -22,10 +22,12 @@ MonoBehaviour:
   crouchedMovementSpeed: 10
   crouchedCharacterHeight: 1.25
   slideTime: 1
-  maxSlideSpeed: 25
+  maxSlideSpeed: 30
   minSlideSpeed: 3
   slideFriction: 2
-  slideJumpDegree: 70
+  slideJumpDegree: 80
   maxSlideJumpHeight: 4
-  slidedJumpGravityMultiplier: 6
+  slidedJumpGravityMultiplier: 4.5
   slidedMidAirSpeed: 9
+  dashSpeed: 100
+  dashDistance: 10

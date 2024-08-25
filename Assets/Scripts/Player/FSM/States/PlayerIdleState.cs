@@ -9,17 +9,20 @@ namespace Player
         [SerializeField] private PlayerState movingState = null;
         [SerializeField] private PlayerState jumpState = null;
         [SerializeField] private PlayerState crouchedState = null;
+        [SerializeField] private PlayerState dashState = null;
 
         private const string IDLE_ANIMATION = "Idle";
 
         private InputAction jumpAction = null;
         private InputAction crouchAction = null;
+        private InputAction dashAction = null;
 
         public override void Init(PlayerCharacter player, PlayerStateController controller)
         {
             base.Init(player, controller);
             jumpAction = player.controls.Player.Jump;
             crouchAction = player.controls.Player.Crouch;
+            dashAction = player.controls.Player.Dash;
         }
 
         public override async UniTask Enter()
@@ -52,6 +55,12 @@ namespace Player
             if (crouchAction.triggered)
             {
                 controller.ChangeState(crouchedState).Forget();
+                return;
+            }
+
+            if (dashAction.triggered)
+            {
+                controller.ChangeState(dashState).Forget();
                 return;
             }
         }

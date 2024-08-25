@@ -1,45 +1,23 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Utility;
 
 namespace Player
 {
-    public class PlayerJumpState : PlayerState
+    public class PlayerJumpState : BasePlayerJumpState
     {
-        [SerializeField] private PlayerState idleState = null;
-        [SerializeField] private PlayerState movingState = null;
-        [SerializeField] private Gravity gravity = null;
-
-        private float verticalVelocity = 0.0f;
-
-        public const string JUMP_ANIMATION = "Jump";
-
         public override async UniTask Enter()
         {
             Debug.Log("ENTERED JUMP STATE");
-            await UniTask.NextFrame();
-            verticalVelocity += Mathf.Sqrt(player.playerModel.jumpHeight * -2.0f * Physics.gravity.y * player.playerModel.jumpGravityMultiplier);
-            gravity.enabled = false;
-            player.playerAnimator.SetBool(JUMP_ANIMATION, true);
-        }
-
-        public override async UniTask Exit()
-        {
-            player.playerAnimator.SetBool(JUMP_ANIMATION, false);
-            await base.Exit();
+            await base.Enter();
+            velocity += Mathf.Sqrt(player.playerModel.jumpHeight * -2.0f * Physics.gravity.y * player.playerModel.jumpGravityMultiplier);
         }
 
         public override void Tick()
         {
-            if (player.groundCheck.isGrounded && verticalVelocity < 0)
-            {
-                verticalVelocity = 0.0f;
-                gravity.enabled = true;
-                controller.ChangeState(player.movementDirection == Vector3.zero ? idleState : movingState).Forget();
-            }
+            base.Tick();
 
-            ((PlayerMovementStateController)controller).characterController.Move(Vector3.up * verticalVelocity * Time.deltaTime);
-            verticalVelocity += Physics.gravity.y * player.playerModel.jumpGravityMultiplier * Time.deltaTime;
+            ((PlayerMovementStateController)controller).characterController.Move(Vector3.up * velocity * Time.deltaTime);
+            velocity += Physics.gravity.y * player.playerModel.jumpGravityMultiplier * Time.deltaTime;
 
             ((PlayerMovementStateController)controller).characterController.Move(player.movementDirection * player.playerModel.midAirSpeed * Time.deltaTime);
         }

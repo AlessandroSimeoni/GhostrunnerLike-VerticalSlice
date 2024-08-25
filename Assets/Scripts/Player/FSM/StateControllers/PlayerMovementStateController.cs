@@ -9,6 +9,9 @@ namespace Player
 
         public CharacterController characterController { get; private set; } = null;
 
+        public delegate void CharacterControllerEvent();
+        public event CharacterControllerEvent OnCharacterControllerHit = null;
+
         private void Awake()
         {
             characterController = GetComponent<CharacterController>();
@@ -29,6 +32,8 @@ namespace Player
         {
             if (hit.rigidbody != null && !hit.rigidbody.isKinematic)
                 hit.rigidbody.AddForceAtPosition(hit.moveDirection * rigidbodyInteractionForce, hit.point);
+
+            OnCharacterControllerHit?.Invoke();
         }
     }
 }
