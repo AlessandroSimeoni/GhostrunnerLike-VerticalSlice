@@ -184,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
+  dashState: {fileID: 4619910424922956579}
   gravity: {fileID: 212152715129384261}
 --- !u!1 &4257197124117710128
 GameObject:
@@ -231,8 +232,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
-  slideState: {fileID: 4208264843113335310}
+  dashState: {fileID: 4619910424922956579}
   gravity: {fileID: 212152715129384261}
+  slideState: {fileID: 4208264843113335310}
 --- !u!1 &4528922606927980882
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +520,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
+  dashSlider: {fileID: 0}
+  sliderFillImage: {fileID: 0}
+  sliderFullColor: {r: 1, g: 1, b: 1, a: 1}
+  sliderChargingColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
 --- !u!1 &6928567365404764424
 GameObject:
   m_ObjectHideFlags: 0

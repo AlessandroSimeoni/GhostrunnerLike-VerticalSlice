@@ -40,7 +40,7 @@ namespace Player
 
         public override void Tick()
         {
-            if (dashAction.triggered)
+            if (dashAction.triggered && ((PlayerDashState)dashState).dashReady)
             {
                 controller.ChangeState(dashState).Forget();
                 return;

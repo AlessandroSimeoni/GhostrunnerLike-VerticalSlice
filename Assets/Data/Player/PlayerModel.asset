@@ -31,3 +31,4 @@ MonoBehaviour:
   slidedMidAirSpeed: 9
   dashSpeed: 100
   dashDistance: 10
+  dashCooldown: 2

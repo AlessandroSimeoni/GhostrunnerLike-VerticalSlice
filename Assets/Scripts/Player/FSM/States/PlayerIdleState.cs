@@ -58,7 +58,7 @@ namespace Player
                 return;
             }
 
-            if (dashAction.triggered)
+            if (dashAction.triggered && ((PlayerDashState)dashState).dashReady)
             {
                 controller.ChangeState(dashState).Forget();
                 return;
