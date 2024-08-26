@@ -31,5 +31,10 @@ namespace Player
         [Min(0.01f)] public float dashSpeed = 30.0f;
         [Min(0.05f)] public float dashDistance = 4.0f;
         [Min(0.0f)] public float dashCooldown = 3.0f;
+        [Header("Wall Run")]
+        [Header("Wall Check")]
+        public LayerMask wallCheckLayers = new LayerMask();
+        public float wallRayLenght = 1.0f;
+        public float wallRayHeightOffset = 1.0f;
     }
 }

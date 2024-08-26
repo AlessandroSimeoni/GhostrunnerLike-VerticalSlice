@@ -6,6 +6,7 @@ namespace Player
     public class PlayerMovementStateController : PlayerStateController
     {
         private float rigidbodyInteractionForce = 0.0f;
+        private const string GROUND_TAG = "Ground";
 
         public CharacterController characterController { get; private set; } = null;
 
@@ -33,7 +34,8 @@ namespace Player
             if (hit.rigidbody != null && !hit.rigidbody.isKinematic)
                 hit.rigidbody.AddForceAtPosition(hit.moveDirection * rigidbodyInteractionForce, hit.point);
 
-            OnCharacterControllerHit?.Invoke();
+            if (!hit.transform.CompareTag(GROUND_TAG))
+                OnCharacterControllerHit?.Invoke();
         }
     }
 }

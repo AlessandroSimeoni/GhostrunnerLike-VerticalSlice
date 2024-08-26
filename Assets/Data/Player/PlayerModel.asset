@@ -32,3 +32,8 @@ MonoBehaviour:
   dashSpeed: 100
   dashDistance: 10
   dashCooldown: 2
+  wallCheckLayers:
+    serializedVersion: 2
+    m_Bits: 55
+  wallRayLenght: 1
+  wallRayHeightOffset: 1

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4804630085971608230}
   - component: {fileID: 7052092395668710853}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: IdleState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3009315780720658018}
   - component: {fileID: 4208264843113335310}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SlideState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7396890784808930606}
   - component: {fileID: 2567900279655648186}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LastAttackState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7809062937510568242}
   - component: {fileID: 1279889641217208062}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: JumpState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 98961592988884084}
   - component: {fileID: 8924128491142083994}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SlideJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3487948390023989840}
   - component: {fileID: 6905955132634936331}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: MovingState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 212152715129384261}
   - component: {fileID: 788191742535975771}
   - component: {fileID: 502789715336523778}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -442,7 +442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5566620087732254069}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: States
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8111255836854076776}
   - component: {fileID: 4619910424922956579}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: DashState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +523,7 @@ MonoBehaviour:
   dashSlider: {fileID: 0}
   sliderFillImage: {fileID: 0}
   sliderFullColor: {r: 1, g: 1, b: 1, a: 1}
-  sliderChargingColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+  sliderChargingColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
 --- !u!1 &6928567365404764424
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,7 +534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2115163895706958738}
   - component: {fileID: 2061770367852614475}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: FirstAttackState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,7 +579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 306918522387813681}
   - component: {fileID: 1239408678167471794}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BaseAttackState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 177981276066128912}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4681284240045741420}
   - component: {fileID: 1404063540192064796}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CrouchedState
   m_TagString: Untagged
   m_Icon: {fileID: 0}

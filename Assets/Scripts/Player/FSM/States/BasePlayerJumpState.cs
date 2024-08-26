@@ -15,6 +15,9 @@ namespace Player
         protected float velocity = 0.0f;
         protected InputAction dashAction = null;
 
+        protected RaycastHit rightWallHitInfo;
+        protected RaycastHit leftWallHitInfo;
+
         public const string JUMP_ANIMATION = "Jump";
 
         public override void Init(PlayerCharacter player, PlayerStateController controller)
@@ -48,6 +51,27 @@ namespace Player
 
             if (player.groundCheck.isGrounded && velocity < 0)
                 controller.ChangeState(player.movementDirection == Vector3.zero ? idleState : movingState).Forget();
+
+            //Wall check for wall run state transition
+            Vector3 wallCheckOrigin = player.transform.position + Vector3.up * player.playerModel.wallRayHeightOffset;
+            Ray rightRay = new Ray(wallCheckOrigin, player.transform.right);
+            Ray leftRay = new Ray(wallCheckOrigin, -player.transform.right);
+            bool rightHit = Physics.Raycast(rightRay, out rightWallHitInfo, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers);
+            bool leftHit = Physics.Raycast(leftRay, out leftWallHitInfo, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers);
+
+            if (rightHit && IsVerticalWall(rightWallHitInfo))
+            {
+                Debug.Log($"MURO VERTICALE A DESTRA: {rightWallHitInfo.transform.name}");
+                // TODO: CAMBIO STATO A WALL RUN DESTRO
+            }
+
+            if (leftHit && IsVerticalWall(leftWallHitInfo))
+            {
+                Debug.Log($"MURO VERTICALE A SINISTRA: {leftWallHitInfo.transform.name}");
+                // TODO: CAMBIO STATO A WALL RUN SINISTRO
+            }
         }
+
+        private bool IsVerticalWall(RaycastHit hitInfo) => Vector3.Dot(player.transform.up, hitInfo.normal) == 0.0f;
     }
 }
