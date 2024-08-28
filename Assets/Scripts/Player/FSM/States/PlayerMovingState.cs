@@ -14,14 +14,14 @@ namespace Player
         private const string RUN_ANIMATION = "Run";
 
         private InputAction jumpAction = null;
-        private InputAction crouchAction = null;
+        private InputAction slideAction = null;
         private InputAction dashAction = null;
 
         public override void Init(PlayerCharacter player, PlayerStateController controller)
         {
             base.Init(player, controller);
             jumpAction = player.controls.Player.Jump;
-            crouchAction = player.controls.Player.Crouch;
+            slideAction = player.controls.Player.Crouch;
             dashAction = player.controls.Player.Dash;
         }
 
@@ -52,7 +52,7 @@ namespace Player
                 return;
             }
 
-            if (crouchAction.triggered && player.groundCheck.isGrounded)
+            if (slideAction.triggered && player.groundCheck.isGrounded)
             {
                 controller.ChangeState(slideState).Forget();
                 return;

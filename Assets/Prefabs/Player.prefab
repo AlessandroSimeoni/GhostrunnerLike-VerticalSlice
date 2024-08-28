@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4804630085971608230}
   - component: {fileID: 7052092395668710853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: IdleState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,6 @@ MonoBehaviour:
   movingState: {fileID: 6905955132634936331}
   jumpState: {fileID: 1279889641217208062}
   crouchedState: {fileID: 1404063540192064796}
-  dashState: {fileID: 4619910424922956579}
 --- !u!1 &1842454703991016522
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3009315780720658018}
   - component: {fileID: 4208264843113335310}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SlideState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,6 +93,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crouchedState: {fileID: 1404063540192064796}
   slideJumpState: {fileID: 8924128491142083994}
+  boostedSlideJumpState: {fileID: 0}
+  dashState: {fileID: 4619910424922956579}
+  boostedState: 0
 --- !u!1 &1858169510365345619
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7396890784808930606}
   - component: {fileID: 2567900279655648186}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LastAttackState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,6 +140,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49dd06710379bf84c8558f282a4232f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1883361606068191548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5686186230082782961}
+  - component: {fileID: 6969067490439880958}
+  m_Layer: 6
+  m_Name: BoostedSlideState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5686186230082782961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883361606068191548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5566620087732254069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6969067490439880958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883361606068191548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b56ea7b538b3be46aa6383d7936f7b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crouchedState: {fileID: 1404063540192064796}
+  slideJumpState: {fileID: 8924128491142083994}
+  boostedSlideJumpState: {fileID: 5587807358680366493}
+  dashState: {fileID: 4619910424922956579}
+  boostedState: 1
 --- !u!1 &2225829342669022840
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7809062937510568242}
   - component: {fileID: 1279889641217208062}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: JumpState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 98961592988884084}
   - component: {fileID: 8924128491142083994}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SlideJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,6 +286,8 @@ MonoBehaviour:
   dashState: {fileID: 4619910424922956579}
   gravity: {fileID: 212152715129384261}
   slideState: {fileID: 4208264843113335310}
+  boostedSlideState: {fileID: 0}
+  boostedState: 0
 --- !u!1 &4528922606927980882
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3487948390023989840}
   - component: {fileID: 6905955132634936331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MovingState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +351,7 @@ GameObject:
   - component: {fileID: 212152715129384261}
   - component: {fileID: 788191742535975771}
   - component: {fileID: 502789715336523778}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +465,9 @@ MonoBehaviour:
   - {fileID: 1279889641217208062}
   - {fileID: 1404063540192064796}
   - {fileID: 4208264843113335310}
+  - {fileID: 6969067490439880958}
   - {fileID: 8924128491142083994}
+  - {fileID: 5587807358680366493}
   - {fileID: 4619910424922956579}
   initialState: {fileID: 7052092395668710853}
 --- !u!114 &502789715336523778
@@ -442,7 +497,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5566620087732254069}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: States
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +525,9 @@ Transform:
   - {fileID: 7396890784808930606}
   - {fileID: 4681284240045741420}
   - {fileID: 3009315780720658018}
+  - {fileID: 5686186230082782961}
   - {fileID: 98961592988884084}
+  - {fileID: 2520844557886435829}
   - {fileID: 8111255836854076776}
   m_Father: {fileID: 1658106588011379665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -484,7 +541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8111255836854076776}
   - component: {fileID: 4619910424922956579}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DashState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -520,6 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
+  boostedSlideState: {fileID: 6969067490439880958}
   dashSlider: {fileID: 0}
   sliderFillImage: {fileID: 0}
   sliderFullColor: {r: 1, g: 1, b: 1, a: 1}
@@ -534,7 +592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2115163895706958738}
   - component: {fileID: 2061770367852614475}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirstAttackState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,7 +637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 306918522387813681}
   - component: {fileID: 1239408678167471794}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BaseAttackState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 177981276066128912}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,6 +703,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1658106588011379665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8262199527480164571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2520844557886435829}
+  - component: {fileID: 5587807358680366493}
+  m_Layer: 6
+  m_Name: BoostedSlideJump
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2520844557886435829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8262199527480164571}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5566620087732254069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5587807358680366493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8262199527480164571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168808f10b879004cb9d377d57435810, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleState: {fileID: 7052092395668710853}
+  movingState: {fileID: 6905955132634936331}
+  dashState: {fileID: 4619910424922956579}
+  gravity: {fileID: 212152715129384261}
+  slideState: {fileID: 4208264843113335310}
+  boostedSlideState: {fileID: 6969067490439880958}
+  boostedState: 1
 --- !u!1 &9028119413897356972
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,7 +764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4681284240045741420}
   - component: {fileID: 1404063540192064796}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CrouchedState
   m_TagString: Untagged
   m_Icon: {fileID: 0}

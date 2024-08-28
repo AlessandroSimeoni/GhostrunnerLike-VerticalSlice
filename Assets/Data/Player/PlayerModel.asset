@@ -15,21 +15,31 @@ MonoBehaviour:
   hp: 1
   defaultCharacterHeight: 2
   movementSpeed: 15
-  jumpHeight: 3
+  jumpHeight: 2
   jumpGravityMultiplier: 7
-  midAirSpeed: 9
+  midAirSpeed: 5
   crouchedTransitionTime: 0.1
   crouchedMovementSpeed: 10
   crouchedCharacterHeight: 1.25
   slideTime: 1
-  maxSlideSpeed: 30
+  maxSlideSpeed: 20
   minSlideSpeed: 3
   slideFriction: 2
-  slideJumpDegree: 80
-  maxSlideJumpHeight: 4
-  slidedJumpGravityMultiplier: 4.5
+  boostedSlideTime: 1
+  boostedMaxSlideSpeed: 50
+  boostedMinSlideSpeed: 5
+  boostedSlideFriction: 2
+  slideJumpDegree: 90
+  maxSlideJumpHeight: 3
+  slidedJumpGravityMultiplier: 5
   slidedMidAirSpeed: 9
-  dashSpeed: 100
+  forwardMovementWeight: 0.3
+  boostedSlideJumpDegree: 50
+  boostedMaxSlideJumpHeight: 4
+  boostedSlidedJumpGravityMultiplier: 5
+  boostedSlidedMidAirSpeed: 10
+  boostedforwardMovementWeight: 0.2
+  dashSpeed: 55
   dashDistance: 10
   dashCooldown: 2
   wallCheckLayers:

@@ -61,7 +61,7 @@ namespace Player
             Vector3 rightDirection = new Vector3(fpCamera.transform.right.x, 0.0f, fpCamera.transform.right.z).normalized;
             Vector3 forwardDirection = new Vector3(fpCamera.transform.forward.x, 0.0f, fpCamera.transform.forward.z).normalized;
 
-            movementDirection = rightDirection * inputValue.x + forwardDirection * inputValue.y;
+            movementDirection = Vector3.ClampMagnitude(rightDirection * inputValue.x + forwardDirection * inputValue.y, 1.0f);
         }
 
         private void ControlCamera() => fpCamera.ProcessMovement(controls.Camera.Rotation.ReadValue<Vector2>());

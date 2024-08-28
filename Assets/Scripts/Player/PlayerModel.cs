@@ -18,15 +18,29 @@ namespace Player
         [Min(0.05f)] public float crouchedMovementSpeed = 5.0f;
         [Min(0.1f)] public float crouchedCharacterHeight = 1.0f;
         [Header("Slide State")]
+        [Header("Non boosted:")]
         [Min(0.1f)] public float slideTime = 1.0f;
         [Min(0.01f)] public float maxSlideSpeed = 20.0f;
         [Min(0.01f)] public float minSlideSpeed = 5.0f;
         [Min(0.0f)] public float slideFriction = 5.0f;
+        [Header("Boosted:")]
+        [Min(0.1f)] public float boostedSlideTime = 1.0f;
+        [Min(0.01f)] public float boostedMaxSlideSpeed = 20.0f;
+        [Min(0.01f)] public float boostedMinSlideSpeed = 5.0f;
+        [Min(0.0f)] public float boostedSlideFriction = 5.0f;
         [Header("Slided Jump State")]
+        [Header("Non boosted:")]
         [Range(0.0f, 90.0f)] public float slideJumpDegree = 60.0f;
         [Min(0.0f)] public float maxSlideJumpHeight = 3.0f;
         [Min(1.0f)] public float slidedJumpGravityMultiplier = 4.0f;
         [Min(0.0f)] public float slidedMidAirSpeed = 2.5f;
+        [Range(0.0f, 1.0f)] public float forwardMovementWeight = 0.5f;
+        [Header("Boosted:")]
+        [Range(0.0f, 90.0f)] public float boostedSlideJumpDegree = 60.0f;
+        [Min(0.0f)] public float boostedMaxSlideJumpHeight = 3.0f;
+        [Min(1.0f)] public float boostedSlidedJumpGravityMultiplier = 4.0f;
+        [Min(0.0f)] public float boostedSlidedMidAirSpeed = 2.5f;
+        [Range(0.0f, 1.0f)] public float boostedforwardMovementWeight = 0.5f;
         [Header("Dash State")]
         [Min(0.01f)] public float dashSpeed = 30.0f;
         [Min(0.05f)] public float dashDistance = 4.0f;
