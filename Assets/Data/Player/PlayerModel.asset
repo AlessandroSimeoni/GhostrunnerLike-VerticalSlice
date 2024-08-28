@@ -26,17 +26,17 @@ MonoBehaviour:
   minSlideSpeed: 3
   slideFriction: 2
   boostedSlideTime: 1
-  boostedMaxSlideSpeed: 50
+  boostedMaxSlideSpeed: 35
   boostedMinSlideSpeed: 5
   boostedSlideFriction: 2
-  slideJumpDegree: 90
+  slideJumpRange: 5
   maxSlideJumpHeight: 3
-  slidedJumpGravityMultiplier: 5
-  slidedMidAirSpeed: 9
+  slidedJumpGravityMultiplier: 7
+  slidedMidAirSpeed: 7
   forwardMovementWeight: 0.3
-  boostedSlideJumpDegree: 50
+  boostedSlideJumpRange: 15
   boostedMaxSlideJumpHeight: 4
-  boostedSlidedJumpGravityMultiplier: 5
+  boostedSlidedJumpGravityMultiplier: 7
   boostedSlidedMidAirSpeed: 10
   boostedforwardMovementWeight: 0.2
   dashSpeed: 55

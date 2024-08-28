@@ -12,7 +12,7 @@ namespace Player
         [SerializeField] protected PlayerState dashState = null;
         [SerializeField] protected Gravity gravity = null;
 
-        protected float velocity = 0.0f;
+        protected float verticalVelocity = 0.0f;
         protected InputAction dashAction = null;
 
         protected RaycastHit rightWallHitInfo;
@@ -36,7 +36,7 @@ namespace Player
         public override async UniTask Exit()
         {
             player.playerAnimator.SetBool(JUMP_ANIMATION, false);
-            velocity = 0.0f;
+            verticalVelocity = 0.0f;
             gravity.enabled = true;
             await UniTask.NextFrame();
         }
@@ -49,7 +49,7 @@ namespace Player
                 return;
             }
 
-            if (player.groundCheck.isGrounded && velocity < 0)
+            if (player.groundCheck.isGrounded && verticalVelocity < 0)
                 controller.ChangeState(player.movementDirection == Vector3.zero ? idleState : movingState).Forget();
 
             //Wall check for wall run state transition

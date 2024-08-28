@@ -30,13 +30,13 @@ namespace Player
         [Min(0.0f)] public float boostedSlideFriction = 5.0f;
         [Header("Slided Jump State")]
         [Header("Non boosted:")]
-        [Range(0.0f, 90.0f)] public float slideJumpDegree = 60.0f;
+        [Min(0.0f)] public float slideJumpRange = 5.0f;
         [Min(0.0f)] public float maxSlideJumpHeight = 3.0f;
         [Min(1.0f)] public float slidedJumpGravityMultiplier = 4.0f;
         [Min(0.0f)] public float slidedMidAirSpeed = 2.5f;
         [Range(0.0f, 1.0f)] public float forwardMovementWeight = 0.5f;
         [Header("Boosted:")]
-        [Range(0.0f, 90.0f)] public float boostedSlideJumpDegree = 60.0f;
+        [Min(0.0f)] public float boostedSlideJumpRange = 10.0f;
         [Min(0.0f)] public float boostedMaxSlideJumpHeight = 3.0f;
         [Min(1.0f)] public float boostedSlidedJumpGravityMultiplier = 4.0f;
         [Min(0.0f)] public float boostedSlidedMidAirSpeed = 2.5f;
