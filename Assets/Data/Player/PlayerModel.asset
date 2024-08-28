@@ -41,7 +41,10 @@ MonoBehaviour:
   boostedforwardMovementWeight: 0.2
   dashSpeed: 55
   dashDistance: 10
-  dashCooldown: 2
+  dashSliderSize: 3
+  dashSliderRefillSpeed: 0.5
+  dashUsagePrice: 1
+  dashSliderWaitTimeWhenZero: 2
   wallCheckLayers:
     serializedVersion: 2
     m_Bits: 55

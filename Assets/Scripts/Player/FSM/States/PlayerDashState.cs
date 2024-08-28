@@ -20,6 +20,8 @@ namespace Player
         private Vector3 dashDirection = Vector3.zero;
         private float currentTime = 0.0f;
         private float targetTime = 0.0f;
+        private UniTask sliderRefillTask;
+
         public bool dashReady { get; private set; } = true;
 
         public override void Init(PlayerCharacter player, PlayerStateController controller)
@@ -27,16 +29,21 @@ namespace Player
             base.Init(player, controller);
             targetTime = player.playerModel.dashDistance / player.playerModel.dashSpeed;
             slideAction = player.controls.Player.Crouch;
+            dashSlider.maxValue = player.playerModel.dashSliderSize;
+            dashSlider.value = dashSlider.maxValue;
         }
 
         public override async UniTask Enter()
         {
             dashDirection = (player.movementDirection == Vector3.zero) ? player.transform.forward : player.movementDirection;
             currentTime = 0.0f;
-            dashReady = false;
-            dashSlider.value = 0.0f;
+
+            dashSlider.value = Mathf.Clamp(dashSlider.value - player.playerModel.dashUsagePrice, 0.0f, dashSlider.maxValue);
+            if (sliderRefillTask.Status.IsCompleted())
+                sliderRefillTask = DashRefill();
+
             await UniTask.NextFrame();
-            DashCooldown(player.playerModel.dashCooldown).Forget();
+            
         }
 
         public override void Tick()
@@ -61,22 +68,28 @@ namespace Player
             ((PlayerMovementStateController)controller).characterController.Move(dashDirection * player.playerModel.dashSpeed * Time.deltaTime);
         }
 
-        private async UniTask DashCooldown(float cooldownSeconds)
+        private async UniTask DashRefill()
         {
-            float remainingSeconds = cooldownSeconds;
-            sliderFillImage.color = sliderChargingColor;
-
-            while (remainingSeconds > 0)
+            while (dashSlider.value < dashSlider.maxValue)
             {
-                dashSlider.value = 1 - (remainingSeconds / cooldownSeconds);
-                remainingSeconds -= Time.deltaTime;
+                if (dashSlider.value == 0)
+                {
+                    dashReady = false;
+                    await UniTask.WaitForSeconds(player.playerModel.dashSliderWaitTimeWhenZero);
+                }
+
+                dashSlider.value += player.playerModel.dashSliderRefillSpeed * Time.deltaTime;
+
+                if (!dashReady)
+                {
+
+                    dashReady = true;
+                }
+
                 await UniTask.NextFrame();
             }
 
-            dashSlider.value = 1.0f;
-            sliderFillImage.color = sliderFullColor;
-
-            dashReady = true;
+            dashSlider.value = dashSlider.maxValue;
         }
     }
 }
