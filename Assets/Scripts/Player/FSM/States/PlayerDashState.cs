@@ -12,9 +12,10 @@ namespace Player
         [SerializeField] private PlayerState boostedSlideState = null;
         [Header("DashSlider")]
         [SerializeField] private Slider dashSlider = null;
-        [SerializeField] private Image sliderFillImage = null;
-        [SerializeField] private Color sliderFullColor = Color.white;
-        [SerializeField] private Color sliderChargingColor = Color.gray;
+        [SerializeField] private Image sliderBGImage = null;
+        [SerializeField] private Color sliderDefaultBGColor = Color.black;
+        [SerializeField] private Color sliderEmptyBGColor = Color.red;
+        [SerializeField] private float sliderBGFlashFrequence = 2.0f;
 
         private InputAction slideAction = null;
         private Vector3 dashDirection = Vector3.zero;
@@ -75,7 +76,7 @@ namespace Player
                 if (dashSlider.value == 0)
                 {
                     dashReady = false;
-                    await UniTask.WaitForSeconds(player.playerModel.dashSliderWaitTimeWhenZero);
+                    await SliderBackgroundEmptyFlash(player.playerModel.dashSliderWaitTimeWhenZero);
                 }
 
                 dashSlider.value += player.playerModel.dashSliderRefillSpeed * Time.deltaTime;
@@ -90,6 +91,23 @@ namespace Player
             }
 
             dashSlider.value = dashSlider.maxValue;
+        }
+
+        private async UniTask SliderBackgroundEmptyFlash(float time)
+        {
+            float currentTime = 0.0f;
+            float phase = 0.0f;
+
+            while (currentTime < time)
+            {
+                phase = (Mathf.Sin(2 * Mathf.PI * sliderBGFlashFrequence * currentTime - Mathf.PI/2 ) + 1) / 2;         // - Mathf.PI/2 --> in this way the sin value will start from zero; without this, at time 0, the sin would evaluate to 0.5 once normalized
+                sliderBGImage.color = Color.Lerp(sliderDefaultBGColor, sliderEmptyBGColor, phase);
+                currentTime += Time.deltaTime;
+
+                await UniTask.NextFrame();
+            }
+
+            sliderBGImage.color = sliderDefaultBGColor;
         }
     }
 }
