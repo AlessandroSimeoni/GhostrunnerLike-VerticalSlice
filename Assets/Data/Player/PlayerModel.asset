@@ -45,6 +45,8 @@ MonoBehaviour:
   dashSliderRefillSpeed: 0.5
   dashUsagePrice: 1
   dashSliderWaitTimeWhenZero: 2
+  wallRunSpeed: 15
+  forwardDotFallThreshold: 0.3
   wallCheckLayers:
     serializedVersion: 2
     m_Bits: 55

@@ -49,7 +49,9 @@ namespace Player
         [Min(0.0f)] public float dashSliderRefillSpeed = 1.0f;
         [Min(0.01f)] public float dashUsagePrice = 1.0f;
         [Min(0.0f)] public float dashSliderWaitTimeWhenZero = 2.0f;
-        [Header("Wall Run")]
+        [Header("Wall Run State")]
+        public float wallRunSpeed = 10.0f;
+        public float forwardDotFallThreshold = 0.5f;
         [Header("Wall Check")]
         public LayerMask wallCheckLayers = new LayerMask();
         public float wallRayLenght = 1.0f;

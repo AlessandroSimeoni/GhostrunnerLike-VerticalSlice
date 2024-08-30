@@ -7,8 +7,8 @@ namespace Player
     public class PlayerSlideState : BasePlayerCrouchedState
     {
         [SerializeField] private PlayerState crouchedState = null;
-        [SerializeField] private PlayerState slideJumpState = null;
-        [SerializeField] private PlayerState boostedSlideJumpState = null;
+        [SerializeField] private PlayerState parabolicJumpState = null;
+        [SerializeField] private PlayerState boostedParabolicJumpState = null;
         [SerializeField] private PlayerState dashState = null;
         [SerializeField] private bool boostedState = false;
 
@@ -69,7 +69,7 @@ namespace Player
 
             if (jumpAction.triggered)
             {
-                controller.ChangeState(boostedState ? boostedSlideJumpState : slideJumpState).Forget();
+                controller.ChangeState(boostedState ? boostedParabolicJumpState : parabolicJumpState).Forget();
                 return;
             }
 

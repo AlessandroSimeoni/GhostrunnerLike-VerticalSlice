@@ -92,8 +92,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchedState: {fileID: 1404063540192064796}
-  slideJumpState: {fileID: 8924128491142083994}
-  boostedSlideJumpState: {fileID: 0}
+  parabolicJumpState: {fileID: 8924128491142083994}
+  boostedParabolicJumpState: {fileID: 5587807358680366493}
   dashState: {fileID: 4619910424922956579}
   boostedState: 0
 --- !u!1 &1858169510365345619
@@ -185,8 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchedState: {fileID: 1404063540192064796}
-  slideJumpState: {fileID: 8924128491142083994}
-  boostedSlideJumpState: {fileID: 5587807358680366493}
+  parabolicJumpState: {fileID: 8924128491142083994}
+  boostedParabolicJumpState: {fileID: 5587807358680366493}
   dashState: {fileID: 4619910424922956579}
   boostedState: 1
 --- !u!1 &2225829342669022840
@@ -236,6 +236,7 @@ MonoBehaviour:
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
   dashState: {fileID: 4619910424922956579}
+  wallRunState: {fileID: 6622023189437684070}
   gravity: {fileID: 212152715129384261}
 --- !u!1 &4257197124117710128
 GameObject:
@@ -248,7 +249,7 @@ GameObject:
   - component: {fileID: 98961592988884084}
   - component: {fileID: 8924128491142083994}
   m_Layer: 6
-  m_Name: SlideJump
+  m_Name: ParabolicJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,6 +285,7 @@ MonoBehaviour:
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
   dashState: {fileID: 4619910424922956579}
+  wallRunState: {fileID: 6622023189437684070}
   gravity: {fileID: 212152715129384261}
   slideState: {fileID: 4208264843113335310}
   boostedSlideState: {fileID: 0}
@@ -469,6 +471,7 @@ MonoBehaviour:
   - {fileID: 8924128491142083994}
   - {fileID: 5587807358680366493}
   - {fileID: 4619910424922956579}
+  - {fileID: 6622023189437684070}
   initialState: {fileID: 7052092395668710853}
 --- !u!114 &502789715336523778
 MonoBehaviour:
@@ -529,6 +532,7 @@ Transform:
   - {fileID: 98961592988884084}
   - {fileID: 2520844557886435829}
   - {fileID: 8111255836854076776}
+  - {fileID: 318966636617143483}
   m_Father: {fileID: 1658106588011379665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6857069464752663936
@@ -579,9 +583,10 @@ MonoBehaviour:
   movingState: {fileID: 6905955132634936331}
   boostedSlideState: {fileID: 6969067490439880958}
   dashSlider: {fileID: 0}
-  sliderFillImage: {fileID: 0}
-  sliderFullColor: {r: 1, g: 1, b: 1, a: 1}
-  sliderChargingColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+  sliderBGImage: {fileID: 0}
+  sliderDefaultBGColor: {r: 0, g: 0, b: 0, a: 1}
+  sliderEmptyBGColor: {r: 0.7924528, g: 0, b: 0, a: 1}
+  sliderBGFlashFrequence: 2
 --- !u!1 &6928567365404764424
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +719,7 @@ GameObject:
   - component: {fileID: 2520844557886435829}
   - component: {fileID: 5587807358680366493}
   m_Layer: 6
-  m_Name: BoostedSlideJump
+  m_Name: BoostedParabolicJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -750,10 +755,59 @@ MonoBehaviour:
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
   dashState: {fileID: 4619910424922956579}
+  wallRunState: {fileID: 6622023189437684070}
   gravity: {fileID: 212152715129384261}
   slideState: {fileID: 4208264843113335310}
   boostedSlideState: {fileID: 6969067490439880958}
   boostedState: 1
+--- !u!1 &8500280279249063500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 318966636617143483}
+  - component: {fileID: 6622023189437684070}
+  m_Layer: 6
+  m_Name: WallRunState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &318966636617143483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500280279249063500}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5566620087732254069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6622023189437684070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500280279249063500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2567594850b5a2740a094e5d065a7a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleState: {fileID: 7052092395668710853}
+  parabolicJumpState: {fileID: 5587807358680366493}
+  dashState: {fileID: 4619910424922956579}
+  gravity: {fileID: 212152715129384261}
 --- !u!1 &9028119413897356972
 GameObject:
   m_ObjectHideFlags: 0

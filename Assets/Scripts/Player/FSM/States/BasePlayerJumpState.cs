@@ -10,7 +10,12 @@ namespace Player
         [SerializeField] protected PlayerState idleState = null;
         [SerializeField] protected PlayerState movingState = null;
         [SerializeField] protected PlayerState dashState = null;
+        [SerializeField] protected PlayerState wallRunState = null;
         [SerializeField] protected Gravity gravity = null;
+
+        private bool rightHit = false;
+        private bool leftHit = false;
+        private Vector3 wallDirection = Vector3.zero;
 
         protected float verticalVelocity = 0.0f;
         protected InputAction dashAction = null;
@@ -37,7 +42,12 @@ namespace Player
         {
             player.playerAnimator.SetBool(JUMP_ANIMATION, false);
             verticalVelocity = 0.0f;
-            gravity.enabled = true;
+
+            if (controller.nextTargetState == wallRunState)
+                ((PlayerWallRunState)wallRunState).rightSide = (rightHit && IsVerticalWall(rightWallHitInfo));
+            else
+                gravity.enabled = true;
+
             await UniTask.NextFrame();
         }
 
@@ -53,22 +63,30 @@ namespace Player
                 controller.ChangeState(player.movementDirection == Vector3.zero ? idleState : movingState).Forget();
 
             //Wall check for wall run state transition
-            Vector3 wallCheckOrigin = player.transform.position + Vector3.up * player.playerModel.wallRayHeightOffset;
-            Ray rightRay = new Ray(wallCheckOrigin, player.transform.right);
-            Ray leftRay = new Ray(wallCheckOrigin, -player.transform.right);
-            bool rightHit = Physics.Raycast(rightRay, out rightWallHitInfo, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers);
-            bool leftHit = Physics.Raycast(leftRay, out leftWallHitInfo, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers);
-
-            if (rightHit && IsVerticalWall(rightWallHitInfo))
+            if (verticalVelocity < 0)
             {
-                Debug.Log($"MURO VERTICALE A DESTRA: {rightWallHitInfo.transform.name}");
-                // TODO: CAMBIO STATO A WALL RUN DESTRO
-            }
+                Vector3 wallCheckOrigin = player.transform.position + Vector3.up * player.playerModel.wallRayHeightOffset;
+                Ray rightRay = new Ray(wallCheckOrigin, player.transform.right);
+                Ray leftRay = new Ray(wallCheckOrigin, -player.transform.right);
+                rightHit = Physics.Raycast(rightRay, out rightWallHitInfo, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers);
+                leftHit = Physics.Raycast(leftRay, out leftWallHitInfo, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers);
 
-            if (leftHit && IsVerticalWall(leftWallHitInfo))
-            {
-                Debug.Log($"MURO VERTICALE A SINISTRA: {leftWallHitInfo.transform.name}");
-                // TODO: CAMBIO STATO A WALL RUN SINISTRO
+                if ((rightHit && IsVerticalWall(rightWallHitInfo)) || (leftHit && IsVerticalWall(leftWallHitInfo)))
+                {
+                    wallDirection = Vector3.Cross(player.transform.up, rightHit ? rightWallHitInfo.normal : leftWallHitInfo.normal);
+                    if (Vector3.Dot(player.transform.forward, wallDirection) < 0)
+                        wallDirection *= -1;
+                }
+                else
+                    wallDirection = Vector3.zero;
+
+                if (wallDirection != Vector3.zero
+                    && player.movementDirection != Vector3.zero
+                    && Vector3.Dot(player.movementDirection, wallDirection) > player.playerModel.forwardDotFallThreshold
+                    && Vector3.Dot(player.transform.forward, wallDirection) > player.playerModel.forwardDotFallThreshold)
+                {
+                    controller.ChangeState(wallRunState).Forget();
+                }
             }
         }
 

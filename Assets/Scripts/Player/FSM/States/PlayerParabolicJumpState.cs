@@ -3,16 +3,17 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerSlideJumpState : BasePlayerJumpState
+    public class PlayerParabolicJumpState : BasePlayerJumpState
     {
         [SerializeField] private PlayerState slideState = null;
         [SerializeField] private PlayerState boostedSlideState = null;
         [SerializeField] private bool boostedState = false;
 
+        public Vector3 jumpDirection { get; set; } = Vector3.zero;
+
         private float initialVerticalVelocity = 0.0f;
         private float totalTime = 0.0f;
         private float initialHorizontalSpeed = 0.0f;
-        private Vector3 jumpDirection = Vector3.zero;
         private Vector3 jumpVector = Vector3.up;
         private float slideJumpRange = 0.0f;
         private float maxSlideJumpHeight = 0.0f;
@@ -42,7 +43,8 @@ namespace Player
             await base.Enter();
 
             verticalVelocity = initialVerticalVelocity;
-            jumpDirection = (boostedState ? ((PlayerSlideState)boostedSlideState).slideDirection : ((PlayerSlideState)slideState).slideDirection);
+            if (controller.previousState == boostedSlideState || controller.previousState == slideState)
+                jumpDirection = (boostedState ? ((PlayerSlideState)boostedSlideState).slideDirection : ((PlayerSlideState)slideState).slideDirection);
             jumpVector = jumpDirection * initialHorizontalSpeed;
             jumpVector.y = verticalVelocity;
         }
