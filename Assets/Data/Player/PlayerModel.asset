@@ -17,7 +17,7 @@ MonoBehaviour:
   movementSpeed: 15
   jumpHeight: 2
   jumpGravityMultiplier: 7
-  midAirSpeed: 5
+  midAirSpeed: 7
   crouchedTransitionTime: 0.1
   crouchedMovementSpeed: 10
   crouchedCharacterHeight: 1.25
@@ -46,7 +46,10 @@ MonoBehaviour:
   dashUsagePrice: 1
   dashSliderWaitTimeWhenZero: 2
   wallRunSpeed: 15
-  forwardDotFallThreshold: 0.3
+  forwardDotFallThreshold: 0.5
+  minJumpDirectionAngle: 35
+  cameraTiltAngle: 15
+  cameraTiltChangeSpeed: 10
   wallCheckLayers:
     serializedVersion: 2
     m_Bits: 55

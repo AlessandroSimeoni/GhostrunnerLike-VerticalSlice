@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 
 namespace GameCamera
@@ -18,6 +20,8 @@ namespace GameCamera
         [SerializeField, Min(0.0f)] private float horizontalSensitivity = 2.0f;
 
         private float currentVerticalAngle = 0.0f;
+        private float cameraZRotation = 0.0f;
+        private CancellationTokenSource cameraZRotationCTS = new CancellationTokenSource();
 
         private void LateUpdate() => SetPosition();
 
@@ -31,7 +35,7 @@ namespace GameCamera
         {
             float horizontalDeltaRotation = (invertedHorizontalAxis ? -deltaAngle : deltaAngle) * horizontalSensitivity;
             target.forward = Quaternion.AngleAxis(horizontalDeltaRotation, target.up) * target.forward;
-            transform.rotation = Quaternion.LookRotation(Quaternion.AngleAxis(currentVerticalAngle, target.right) * target.forward, target.up);
+            transform.rotation = Quaternion.LookRotation(Quaternion.AngleAxis(currentVerticalAngle, target.right) * target.forward, target.up) * Quaternion.Euler(0.0f, 0.0f, cameraZRotation);
         }
 
         private void AddVerticalAngle(float deltaAngle)
@@ -43,6 +47,48 @@ namespace GameCamera
         private void SetPosition()
         {
             transform.position = target.transform.position + target.transform.up * heightOffset + target.transform.forward * depthOffset;
+        }
+
+        public void TiltCameraZAxis(float tiltValue, float speed)
+        {
+            cameraZRotationCTS.Cancel();
+            cameraZRotationCTS.Dispose();
+            cameraZRotationCTS = new CancellationTokenSource();
+            LerpZAxisCameraRotation(tiltValue, speed, cameraZRotationCTS.Token).Forget();
+        }
+
+        private async UniTask LerpZAxisCameraRotation(float tiltValue, float speed, CancellationToken token)
+        {
+            bool cancelled = false;
+            float initialZRotation = transform.eulerAngles.z;   // returns a value between 0 and 360. es: if on the editor the rotation around z axis is -15, this return 345
+            float targetZRotation = tiltValue;
+            float lerp = 0.0f;
+
+            // normalize angle, otherwise it can cause a 360 spin
+            if (targetZRotation - initialZRotation > 180)
+                targetZRotation -= 360;
+            else if (initialZRotation - targetZRotation > 180)
+                targetZRotation += 360;
+
+            while (true)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    cancelled = true;
+                    break;
+                }
+
+                lerp += speed * Time.deltaTime;
+                cameraZRotation = Mathf.Lerp(initialZRotation, targetZRotation, lerp);
+                if (cameraZRotation == tiltValue)
+                    break;
+
+                await UniTask.NextFrame();
+
+            }
+
+            if (!cancelled)
+                cameraZRotation = tiltValue;
         }
     }
 }

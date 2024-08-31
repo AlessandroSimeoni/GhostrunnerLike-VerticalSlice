@@ -23,5 +23,13 @@ namespace Utility
             ray = new Ray(transform.position + Vector3.up * sphereCastOriginHeightOffset, Vector3.down);
             isGrounded = Physics.SphereCast(ray, sphereCastRadius, sphereCastDistance);
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("TestGrounded")]
+        private void TestGrounded()
+        {
+            Debug.Log("Grounded: "+isGrounded);
+        }
+#endif
     }
 }

@@ -1,7 +1,7 @@
+using Codice.CM.Client.Differences;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
 using Utility;
 
 namespace Player
@@ -14,25 +14,35 @@ namespace Player
         [SerializeField] protected Gravity gravity = null;
 
         public bool rightSide { get; set; } = true;
-        private Ray ray;
         private RaycastHit wallHit;
         private Vector3 wallMovementDirection = Vector3.zero;
         private Vector3 wallCheckOrigin = Vector3.zero;
+        private Vector3 wallNormal = Vector3.zero;
         private InputAction jumpAction = null;
         private InputAction dashAction = null;
+
+        private const string RUN_ANIMATION = "Run";
+
+        public override void Init(PlayerCharacter player, PlayerStateController controller)
+        {
+            base.Init(player, controller);
+            jumpAction = player.controls.Player.Jump;
+            dashAction = player.controls.Player.Dash;
+        }
 
         public override async UniTask Enter()
         {
             Debug.Log("Entered WALL RUN STATE");
+            player.playerAnimator.SetBool(RUN_ANIMATION, true);
+            gravity.enabled = false;
 
-            jumpAction = player.controls.Player.Jump;
-            dashAction = player.controls.Player.Dash;
+            player.fpCamera.TiltCameraZAxis(rightSide ? player.playerModel.cameraTiltAngle : -player.playerModel.cameraTiltAngle, player.playerModel.cameraTiltChangeSpeed);
 
             wallCheckOrigin = player.transform.position + Vector3.up * player.playerModel.wallRayHeightOffset;
-            ray = new Ray(wallCheckOrigin, rightSide ? player.transform.right : -player.transform.right);
-            Physics.Raycast(ray, out wallHit, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers);
+            Physics.Raycast(wallCheckOrigin, rightSide ? player.transform.right : -player.transform.right, out wallHit, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers);
+            wallNormal = wallHit.normal;
 
-            wallMovementDirection = Vector3.Cross(player.transform.up, wallHit.normal);
+            wallMovementDirection = Vector3.Cross(player.transform.up, wallNormal);
             if (Vector3.Dot(player.transform.forward, wallMovementDirection) < 0)
                 wallMovementDirection *= -1;
 
@@ -41,8 +51,22 @@ namespace Player
 
         public override async UniTask Exit()
         {
+            player.fpCamera.TiltCameraZAxis(0.0f, player.playerModel.cameraTiltChangeSpeed);
+            player.playerAnimator.SetBool(RUN_ANIMATION, false);
+
             if (controller.nextTargetState == parabolicJumpState)
-                ((PlayerParabolicJumpState)parabolicJumpState).jumpDirection = player.transform.forward;
+            {
+                Vector3 jumpDirection = Quaternion.AngleAxis(rightSide ? -player.playerModel.minJumpDirectionAngle : player.playerModel.minJumpDirectionAngle, Vector3.up) * wallMovementDirection;
+                float jumpDotThreshold = Mathf.Sin(player.playerModel.minJumpDirectionAngle);
+                
+                if (Vector3.Dot(player.transform.forward, wallMovementDirection) < jumpDotThreshold
+                    && Vector3.Dot(player.transform.forward, wallNormal) > 0)
+                {
+                    jumpDirection = player.transform.forward;
+                }
+
+                ((PlayerParabolicJumpState)parabolicJumpState).jumpDirection = jumpDirection;
+            }
             else
                 gravity.enabled = true;
 
@@ -60,12 +84,10 @@ namespace Player
              */
 
             wallCheckOrigin = player.transform.position + Vector3.up * player.playerModel.wallRayHeightOffset;
-            ray = new Ray(wallCheckOrigin, rightSide ? player.transform.right : -player.transform.right);
 
-            if (player.movementDirection == Vector3.zero
-                || Vector3.Dot(player.movementDirection, wallMovementDirection) < player.playerModel.forwardDotFallThreshold
+            if (Vector3.Dot(player.movementDirection, wallMovementDirection) < player.playerModel.forwardDotFallThreshold
                 || Vector3.Dot(player.transform.forward, wallMovementDirection) < player.playerModel.forwardDotFallThreshold
-                || !Physics.Raycast(ray, out wallHit, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers))
+                || !Physics.Raycast(wallCheckOrigin, -wallNormal, out wallHit, player.playerModel.wallRayLenght, player.playerModel.wallCheckLayers))
             {
                 controller.ChangeState(idleState).Forget();
             }

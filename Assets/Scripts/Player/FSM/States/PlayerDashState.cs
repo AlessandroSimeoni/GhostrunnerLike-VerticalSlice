@@ -10,6 +10,7 @@ namespace Player
         [SerializeField] private PlayerState idleState = null;
         [SerializeField] private PlayerState movingState = null;
         [SerializeField] private PlayerState boostedSlideState = null;
+        [SerializeField] private PlayerState fallingState = null;
         [Header("DashSlider")]
         [SerializeField] private Slider dashSlider = null;
         [SerializeField] private Image sliderBGImage = null;
@@ -36,6 +37,7 @@ namespace Player
 
         public override async UniTask Enter()
         {
+            Debug.Log("DASH!");
             dashDirection = (player.movementDirection == Vector3.zero) ? player.transform.forward : player.movementDirection;
             currentTime = 0.0f;
 
@@ -62,7 +64,11 @@ namespace Player
 
             if (currentTime >= targetTime)
             {
-                controller.ChangeState((player.movementDirection == Vector3.zero) ? idleState : movingState).Forget();
+                if (player.groundCheck.isGrounded)
+                    controller.ChangeState((player.movementDirection == Vector3.zero) ? idleState : movingState).Forget();
+                else
+                    controller.ChangeState(fallingState).Forget();
+
                 return;
             }
 

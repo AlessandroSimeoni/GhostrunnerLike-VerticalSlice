@@ -338,6 +338,7 @@ MonoBehaviour:
   jumpState: {fileID: 1279889641217208062}
   slideState: {fileID: 4208264843113335310}
   dashState: {fileID: 4619910424922956579}
+  fallingState: {fileID: 4621819113126619132}
 --- !u!1 &4673635503324769745
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sphereCastOriginHeightOffset: 1
-  sphereCastRadius: 0.49
+  sphereCastRadius: 0.5
   sphereCastGroundOffset: 0.1
 --- !u!114 &212152715129384261
 MonoBehaviour:
@@ -472,6 +473,7 @@ MonoBehaviour:
   - {fileID: 5587807358680366493}
   - {fileID: 4619910424922956579}
   - {fileID: 6622023189437684070}
+  - {fileID: 4621819113126619132}
   initialState: {fileID: 7052092395668710853}
 --- !u!114 &502789715336523778
 MonoBehaviour:
@@ -491,6 +493,54 @@ MonoBehaviour:
   - {fileID: 2567900279655648186}
   initialState: {fileID: 1239408678167471794}
   sword: {fileID: 0}
+--- !u!1 &5489127778212159510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2156010096110206914}
+  - component: {fileID: 4621819113126619132}
+  m_Layer: 6
+  m_Name: FallingState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2156010096110206914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5489127778212159510}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5566620087732254069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4621819113126619132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5489127778212159510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ad7037cce338848a31b157a9d17076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleState: {fileID: 7052092395668710853}
+  movingState: {fileID: 6905955132634936331}
+  dashState: {fileID: 4619910424922956579}
+  wallRunState: {fileID: 6622023189437684070}
 --- !u!1 &6749438568179185509
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,6 +583,7 @@ Transform:
   - {fileID: 2520844557886435829}
   - {fileID: 8111255836854076776}
   - {fileID: 318966636617143483}
+  - {fileID: 2156010096110206914}
   m_Father: {fileID: 1658106588011379665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6857069464752663936
@@ -582,6 +633,7 @@ MonoBehaviour:
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
   boostedSlideState: {fileID: 6969067490439880958}
+  fallingState: {fileID: 4621819113126619132}
   dashSlider: {fileID: 0}
   sliderBGImage: {fileID: 0}
   sliderDefaultBGColor: {r: 0, g: 0, b: 0, a: 1}
