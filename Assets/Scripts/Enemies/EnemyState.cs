@@ -2,22 +2,22 @@ using Architecture;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Player
+namespace Enemy
 {
-    public class PlayerState : MonoBehaviour, IState
+    public class EnemyState : MonoBehaviour, IState
     {
-        protected PlayerCharacter player = null;
-        protected PlayerStateController controller = null;
+        protected BaseEnemy enemy = null;
+        protected BaseStateController<EnemyState> controller = null;
 
-        public virtual void Init(PlayerCharacter player, PlayerStateController controller)
+        public virtual void Init(BaseEnemy enemy, BaseStateController<EnemyState> controller)
         {
-            this.player = player;
+            this.enemy = enemy;
             this.controller = controller;
         }
         public void Init(AStateController controller) { }
-
         public virtual async UniTask Enter() => await UniTask.NextFrame();
         public virtual async UniTask Exit() => await UniTask.NextFrame();
-        public virtual void Tick() { }
+
+        public void Tick() { }
     }
 }
