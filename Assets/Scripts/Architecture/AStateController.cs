@@ -5,7 +5,7 @@ namespace Architecture
 {
     public abstract class AStateController : MonoBehaviour
     {
-        public abstract void Init();
+        public abstract void Init<T>(T entity) where T : MonoBehaviour;
         public abstract UniTask ChangeState(IState state);
     }
 }

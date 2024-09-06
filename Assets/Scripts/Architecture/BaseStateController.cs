@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Architecture
 {
-    public class BaseStateController<T> : AStateController where T : class, IState
+    public class BaseStateController<T> : AStateController where T : MonoBehaviour, IState
     {
         [SerializeField] protected T[] state = Array.Empty<T>();
         public T initialState = null;
@@ -21,11 +21,10 @@ namespace Architecture
 
             currentState.Tick();
         }
-
-        public override void Init()
+        public override void Init<T1>(T1 entity)
         {
             foreach (T state in state)
-                state.Init(this);
+                state.Init<T1>(entity, this);
 
             ChangeState(initialState).Forget();
         }

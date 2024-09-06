@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c7459efe0d0114ebe5a4835f88757d, type: 3}
+  m_Name: PlayerParabolicJumpStateModel
+  m_EditorClassIdentifier: 
+  slideJumpRange: 5
+  maxSlideJumpHeight: 3
+  slidedJumpGravityMultiplier: 7
+  slidedMidAirSpeed: 7
+  forwardMovementWeight: 0.3
