@@ -7,6 +7,7 @@ namespace Player
 {
     public class PlayerMovingState : PlayerState
     {
+        [SerializeField] private PlayerMovingStateModel movingStateModel = null;
         [SerializeField] private PlayerState idleState = null;
         [SerializeField] private PlayerState jumpState = null;
         [SerializeField] private PlayerState slideState = null;
@@ -18,7 +19,6 @@ namespace Player
         private InputAction jumpAction = null;
         private InputAction slideAction = null;
         private InputAction dashAction = null;
-        private float speed = 0.0f;
 
         public override void Init<T>(T entity, AStateController controller)
         {
@@ -26,12 +26,10 @@ namespace Player
             jumpAction = player.controls.Player.Jump;
             slideAction = player.controls.Player.Crouch;
             dashAction = player.controls.Player.Dash;
-            speed = ((PlayerMovingStateModel)stateModel).movementSpeed;
         }
 
         public override async UniTask Enter()
         {
-            Debug.Log("Entered MOVING STATE");
             player.playerAnimator.SetBool(RUN_ANIMATION, true);
             await UniTask.NextFrame();
         }
@@ -74,7 +72,7 @@ namespace Player
                 return;
             }
 
-            player.characterController.Move(player.movementDirection * speed * Time.deltaTime);
+            player.characterController.Move(player.movementDirection * movingStateModel.movementSpeed * Time.deltaTime);
         }
     }
 }

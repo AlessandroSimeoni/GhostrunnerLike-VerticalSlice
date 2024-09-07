@@ -17,6 +17,6 @@ namespace Enemy
 
         public virtual async UniTask Enter() => await UniTask.NextFrame();
         public virtual async UniTask Exit() => await UniTask.NextFrame();
-        public void Tick() { }
+        public virtual void Tick() { }
     }
 }

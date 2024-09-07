@@ -30,7 +30,6 @@ namespace Player
 
         public override async UniTask Enter()
         {
-            Debug.Log("Entered SLIDING STATE");
             player.playerAnimator.SetBool(IDLE_ANIMATION, true);        // TODO: CREATE SLIDE ANIMATION
             currentTime = 0.0f;
             currentSlideSpeed = slideStateModel.maxSlideSpeed;

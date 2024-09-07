@@ -61,14 +61,13 @@ namespace GameCamera
         {
             bool cancelled = false;
             float initialZRotation = transform.eulerAngles.z;   // returns a value between 0 and 360. es: if on the editor the rotation around z axis is -15, this return 345
-            float targetZRotation = tiltValue;
             float lerp = 0.0f;
 
             // normalize angle, otherwise it can cause a 360 spin
-            if (targetZRotation - initialZRotation > 180)
-                targetZRotation -= 360;
-            else if (initialZRotation - targetZRotation > 180)
-                targetZRotation += 360;
+            if (tiltValue - initialZRotation > 180)
+                tiltValue -= 360;
+            else if (initialZRotation - tiltValue > 180)
+                tiltValue += 360;
 
             while (true)
             {
@@ -79,7 +78,7 @@ namespace GameCamera
                 }
 
                 lerp += speed * Time.deltaTime;
-                cameraZRotation = Mathf.Lerp(initialZRotation, targetZRotation, lerp);
+                cameraZRotation = Mathf.Lerp(initialZRotation, tiltValue, lerp);
                 if (cameraZRotation == tiltValue)
                     break;
 

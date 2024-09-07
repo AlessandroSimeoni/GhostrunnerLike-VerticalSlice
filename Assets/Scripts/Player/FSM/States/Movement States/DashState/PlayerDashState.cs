@@ -8,6 +8,7 @@ namespace Player
 {
     public class PlayerDashState : PlayerState
     {
+        [SerializeField] protected PlayerDashStateModel dashStateModel = null;
         [SerializeField] private PlayerState idleState = null;
         [SerializeField] private PlayerState movingState = null;
         [SerializeField] private PlayerState boostedSlideState = null;
@@ -24,33 +25,24 @@ namespace Player
         private float currentTime = 0.0f;
         private float targetTime = 0.0f;
         private UniTask sliderRefillTask;
-        private float dashSpeed = 0.0f;
-        private float dashUsagePrice = 0.0f;
-        private float dashSliderWaitTimeWhenZero = 0.0f;
-        private float dashSliderRefillSpeed = 0.0f;
 
         public bool dashReady { get; private set; } = true;
 
         public override void Init<T>(T entity, AStateController controller)
         {
             base.Init(entity, controller);
-            dashSpeed = ((PlayerDashStateModel)stateModel).dashSpeed;
-            dashUsagePrice = ((PlayerDashStateModel)stateModel).dashUsagePrice;
-            dashSliderWaitTimeWhenZero = ((PlayerDashStateModel)stateModel).dashSliderWaitTimeWhenZero;
-            dashSliderRefillSpeed = ((PlayerDashStateModel)stateModel).dashSliderRefillSpeed;
-            targetTime = ((PlayerDashStateModel)stateModel).dashDistance / dashSpeed;
-            dashSlider.maxValue = ((PlayerDashStateModel)stateModel).dashSliderSize;
+            targetTime = dashStateModel.dashDistance / dashStateModel.dashSpeed;
+            dashSlider.maxValue = dashStateModel.dashSliderSize;
             dashSlider.value = dashSlider.maxValue;
             slideAction = player.controls.Player.Crouch;
         }
 
         public override async UniTask Enter()
         {
-            Debug.Log("DASH!");
             dashDirection = (player.movementDirection == Vector3.zero) ? player.transform.forward : player.movementDirection;
             currentTime = 0.0f;
 
-            dashSlider.value = Mathf.Clamp(dashSlider.value - dashUsagePrice, 0.0f, dashSlider.maxValue);
+            dashSlider.value = Mathf.Clamp(dashSlider.value - dashStateModel.dashUsagePrice, 0.0f, dashSlider.maxValue);
             if (sliderRefillTask.Status.IsCompleted())
                 sliderRefillTask = DashRefill();
 
@@ -81,7 +73,7 @@ namespace Player
                 return;
             }
 
-            player.characterController.Move(dashDirection * dashSpeed * Time.deltaTime);
+            player.characterController.Move(dashDirection * dashStateModel.dashSpeed * Time.deltaTime);
         }
 
         private async UniTask DashRefill()
@@ -91,10 +83,10 @@ namespace Player
                 if (dashSlider.value == 0)
                 {
                     dashReady = false;
-                    await SliderBackgroundEmptyFlash(dashSliderWaitTimeWhenZero);
+                    await SliderBackgroundEmptyFlash(dashStateModel.dashSliderWaitTimeWhenZero);
                 }
 
-                dashSlider.value += dashSliderRefillSpeed * Time.deltaTime;
+                dashSlider.value += dashStateModel.dashSliderRefillSpeed * Time.deltaTime;
 
                 if (!dashReady)
                 {

@@ -7,6 +7,7 @@ namespace Player
 {
     public class PlayerFallingState : PlayerState
     {
+        [SerializeField] private PlayerMovingStateModel movingStateModel = null;
         [SerializeField] private PlayerWallRunStateModel wallRunStateModel = null;
         [SerializeField] protected PlayerState idleState = null;
         [SerializeField] protected PlayerState movingState = null;
@@ -19,7 +20,6 @@ namespace Player
         protected Vector3 wallDirection = Vector3.zero;
         protected RaycastHit rightWallHitInfo;
         protected RaycastHit leftWallHitInfo;
-        protected float speed = 0.0f;
 
         public const string IDLE_ANIMATION = "Idle";
 
@@ -27,12 +27,10 @@ namespace Player
         {
             base.Init(entity, controller);
             dashAction = player.controls.Player.Dash;
-            speed = ((PlayerMovingStateModel)stateModel).movementSpeed;
         }
 
         public override async UniTask Enter()
         {
-            Debug.Log("Entered FALLING STATE");
             player.playerAnimator.SetBool(IDLE_ANIMATION, true);
             await UniTask.NextFrame();
         }
@@ -52,7 +50,7 @@ namespace Player
             CheckDashAction();
             CheckGround();
             CheckWallRun();
-            player.characterController.Move(player.movementDirection * speed * Time.deltaTime);
+            player.characterController.Move(player.movementDirection * movingStateModel.movementSpeed * Time.deltaTime);
         }
 
         protected void CheckGround()

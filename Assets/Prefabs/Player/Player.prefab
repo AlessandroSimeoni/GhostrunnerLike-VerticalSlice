@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f58effa24b5f9f846bf6fb7896a9c0dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 0}
   movingState: {fileID: 6905955132634936331}
   jumpState: {fileID: 1279889641217208062}
   crouchedState: {fileID: 1404063540192064796}
@@ -92,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b56ea7b538b3be46aa6383d7936f7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: bcc69ca2353075148bf3f4870b2ffd68, type: 2}
+  crouchedModel: {fileID: 11400000, guid: bcc69ca2353075148bf3f4870b2ffd68, type: 2}
   slideStateModel: {fileID: 11400000, guid: a507a6b291490d34caa587ca7b1f13ec, type: 2}
   crouchedState: {fileID: 1404063540192064796}
   parabolicJumpState: {fileID: 8924128491142083994}
@@ -141,7 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49dd06710379bf84c8558f282a4232f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 0}
 --- !u!1 &1883361606068191548
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b56ea7b538b3be46aa6383d7936f7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: bcc69ca2353075148bf3f4870b2ffd68, type: 2}
+  crouchedModel: {fileID: 11400000, guid: bcc69ca2353075148bf3f4870b2ffd68, type: 2}
   slideStateModel: {fileID: 11400000, guid: c25a7c801f48f224cb9f6813ec68e5cc, type: 2}
   crouchedState: {fileID: 1404063540192064796}
   parabolicJumpState: {fileID: 5587807358680366493}
@@ -235,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0483e56d1cbaf7c429ca2c539cedb0cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
+  movingStateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
   wallRunStateModel: {fileID: 11400000, guid: cbb4aa5f29c4aa442b17914cc7c0a9eb, type: 2}
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
@@ -287,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168808f10b879004cb9d377d57435810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
+  movingStateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
   wallRunStateModel: {fileID: 11400000, guid: cbb4aa5f29c4aa442b17914cc7c0a9eb, type: 2}
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
@@ -340,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a047cd6ca9fbcc3429d21972d5b4d613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
+  movingStateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
   idleState: {fileID: 7052092395668710853}
   jumpState: {fileID: 1279889641217208062}
   slideState: {fileID: 4208264843113335310}
@@ -425,7 +423,6 @@ MonoBehaviour:
   fpCamera: {fileID: 0}
   movementStateController: {fileID: 742712364743701289}
   attackStateController: {fileID: 5967836830817075623}
-  playerModel: {fileID: 11400000, guid: 7547e68d538dbf3468c923f8c564b2ba, type: 2}
   sword: {fileID: 0}
   playerAnimator: {fileID: 0}
   rigidbodyInteractionForce: 3
@@ -543,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ad7037cce338848a31b157a9d17076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
+  movingStateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
   wallRunStateModel: {fileID: 11400000, guid: cbb4aa5f29c4aa442b17914cc7c0a9eb, type: 2}
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
@@ -638,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b45863298e8d88a4cb03ce0e1320e9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: 4ccf3ab6c4c0d61418b274d3b73f37fa, type: 2}
+  dashStateModel: {fileID: 11400000, guid: 4ccf3ab6c4c0d61418b274d3b73f37fa, type: 2}
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
   boostedSlideState: {fileID: 6969067490439880958}
@@ -692,7 +689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb072492877f69a4994cf41cf1229d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 0}
   nextAttackState: {fileID: 2567900279655648186}
 --- !u!1 &7281541524151636429
 GameObject:
@@ -738,7 +734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999a298fcfe608148a25ce6ba0237e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 0}
   firstAttackState: {fileID: 2061770367852614475}
 --- !u!1 &8262199527480164571
 GameObject:
@@ -784,7 +779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168808f10b879004cb9d377d57435810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
+  movingStateModel: {fileID: 11400000, guid: aec028058b6911545b276ea77824681d, type: 2}
   wallRunStateModel: {fileID: 11400000, guid: cbb4aa5f29c4aa442b17914cc7c0a9eb, type: 2}
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
@@ -837,7 +832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2567594850b5a2740a094e5d065a7a2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: cbb4aa5f29c4aa442b17914cc7c0a9eb, type: 2}
+  wallRunStateModel: {fileID: 11400000, guid: cbb4aa5f29c4aa442b17914cc7c0a9eb, type: 2}
   idleState: {fileID: 7052092395668710853}
   parabolicJumpState: {fileID: 5587807358680366493}
   dashState: {fileID: 4619910424922956579}
@@ -886,7 +881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7866d463ded0adf4d827969f9e721707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateModel: {fileID: 11400000, guid: bcc69ca2353075148bf3f4870b2ffd68, type: 2}
+  crouchedModel: {fileID: 11400000, guid: bcc69ca2353075148bf3f4870b2ffd68, type: 2}
   idleState: {fileID: 7052092395668710853}
   movingState: {fileID: 6905955132634936331}
   jumpState: {fileID: 1279889641217208062}

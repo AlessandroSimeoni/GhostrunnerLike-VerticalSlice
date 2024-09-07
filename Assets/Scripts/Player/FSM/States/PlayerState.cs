@@ -6,7 +6,6 @@ namespace Player
 {
     public class PlayerState : MonoBehaviour, IState
     {
-        [SerializeField] protected ScriptableObject stateModel = null;
         protected PlayerCharacter player = null;
         protected PlayerStateController controller = null;
 

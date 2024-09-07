@@ -8,6 +8,7 @@ namespace Player
 {
     public class PlayerWallRunState : PlayerState
     {
+        [SerializeField] private PlayerWallRunStateModel wallRunStateModel = null;
         [SerializeField] private PlayerState idleState = null;
         [SerializeField] private PlayerState parabolicJumpState = null;
         [SerializeField] private PlayerState dashState = null;
@@ -20,14 +21,6 @@ namespace Player
         private Vector3 wallNormal = Vector3.zero;
         private InputAction jumpAction = null;
         private InputAction dashAction = null;
-        private float cameraTiltAngle = 0.0f;
-        private float cameraTiltChangeSpeed = 0.0f;
-        private float wallRayHeightOffset = 0.0f;
-        private float wallRayLenght = 0.0f;
-        private LayerMask wallCheckLayers;
-        private float minJumpDirectionAngle = 0.0f;
-        private float forwardDotFallThreshold = 0.0f;
-        private float wallRunSpeed = 0.0f;
 
         private const string RUN_ANIMATION = "Run";
 
@@ -36,26 +29,17 @@ namespace Player
             base.Init(entity, controller);
             jumpAction = player.controls.Player.Jump;
             dashAction = player.controls.Player.Dash;
-            cameraTiltAngle = ((PlayerWallRunStateModel)stateModel).cameraTiltAngle;
-            cameraTiltChangeSpeed = ((PlayerWallRunStateModel)stateModel).cameraTiltChangeSpeed;
-            wallRayHeightOffset = ((PlayerWallRunStateModel)stateModel).wallRayHeightOffset;
-            wallRayLenght = ((PlayerWallRunStateModel)stateModel).wallRayLenght;
-            wallCheckLayers = ((PlayerWallRunStateModel)stateModel).wallCheckLayers;
-            minJumpDirectionAngle = ((PlayerWallRunStateModel)stateModel).minJumpDirectionAngle;
-            forwardDotFallThreshold = ((PlayerWallRunStateModel)stateModel).forwardDotFallThreshold;
-            wallRunSpeed = ((PlayerWallRunStateModel)stateModel).wallRunSpeed;
         }
 
         public override async UniTask Enter()
         {
-            Debug.Log("Entered WALL RUN STATE");
             player.playerAnimator.SetBool(RUN_ANIMATION, true);
             gravity.enabled = false;
 
-            player.fpCamera.TiltCameraZAxis(rightSide ? cameraTiltAngle : -cameraTiltAngle, cameraTiltChangeSpeed);
+            player.fpCamera.TiltCameraZAxis(rightSide ? wallRunStateModel.cameraTiltAngle : -wallRunStateModel.cameraTiltAngle, wallRunStateModel.cameraTiltChangeSpeed);
 
-            wallCheckOrigin = player.transform.position + Vector3.up * wallRayHeightOffset;
-            Physics.Raycast(wallCheckOrigin, rightSide ? player.transform.right : -player.transform.right, out wallHit, wallRayLenght, wallCheckLayers);
+            wallCheckOrigin = player.transform.position + Vector3.up * wallRunStateModel.wallRayHeightOffset;
+            Physics.Raycast(wallCheckOrigin, rightSide ? player.transform.right : -player.transform.right, out wallHit, wallRunStateModel.wallRayLenght, wallRunStateModel.wallCheckLayers);
             wallNormal = wallHit.normal;
 
             wallMovementDirection = Vector3.Cross(player.transform.up, wallNormal);
@@ -67,13 +51,13 @@ namespace Player
 
         public override async UniTask Exit()
         {
-            player.fpCamera.TiltCameraZAxis(0.0f, cameraTiltChangeSpeed);
+            player.fpCamera.TiltCameraZAxis(0.0f, wallRunStateModel.cameraTiltChangeSpeed);
             player.playerAnimator.SetBool(RUN_ANIMATION, false);
 
             if (controller.nextTargetState == parabolicJumpState)
             {
-                Vector3 jumpDirection = Quaternion.AngleAxis(rightSide ? -minJumpDirectionAngle : minJumpDirectionAngle, Vector3.up) * wallMovementDirection;
-                float jumpDotThreshold = Mathf.Sin(minJumpDirectionAngle);
+                Vector3 jumpDirection = Quaternion.AngleAxis(rightSide ? -wallRunStateModel.minJumpDirectionAngle : wallRunStateModel.minJumpDirectionAngle, Vector3.up) * wallMovementDirection;
+                float jumpDotThreshold = Mathf.Sin(wallRunStateModel.minJumpDirectionAngle);
                 
                 if (Vector3.Dot(player.transform.forward, wallMovementDirection) < jumpDotThreshold
                     && Vector3.Dot(player.transform.forward, wallNormal) > 0)
@@ -99,11 +83,11 @@ namespace Player
                 d) wall ends
              */
 
-            wallCheckOrigin = player.transform.position + Vector3.up * wallRayHeightOffset;
+            wallCheckOrigin = player.transform.position + Vector3.up * wallRunStateModel.wallRayHeightOffset;
 
-            if (Vector3.Dot(player.movementDirection, wallMovementDirection) < forwardDotFallThreshold
-                || Vector3.Dot(player.transform.forward, wallMovementDirection) < forwardDotFallThreshold
-                || !Physics.Raycast(wallCheckOrigin, -wallNormal, out wallHit, wallRayLenght, wallCheckLayers))
+            if (Vector3.Dot(player.movementDirection, wallMovementDirection) < wallRunStateModel.forwardDotFallThreshold
+                || Vector3.Dot(player.transform.forward, wallMovementDirection) < wallRunStateModel.forwardDotFallThreshold
+                || !Physics.Raycast(wallCheckOrigin, -wallNormal, out wallHit, wallRunStateModel.wallRayLenght, wallRunStateModel.wallCheckLayers))
             {
                 controller.ChangeState(idleState).Forget();
             }
@@ -115,7 +99,7 @@ namespace Player
                 if(dashAction.triggered)
                     controller.ChangeState(dashState).Forget();
 
-                player.characterController.Move(wallMovementDirection * wallRunSpeed * Time.deltaTime);
+                player.characterController.Move(wallMovementDirection * wallRunStateModel.wallRunSpeed * Time.deltaTime);
             }
         }
     }

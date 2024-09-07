@@ -25,7 +25,6 @@ namespace Player
 
         public override async UniTask Enter()
         {
-            Debug.Log("Entered IDLE STATE");
             player.playerAnimator.SetBool(IDLE_ANIMATION, true);
             await UniTask.NextFrame();
         }

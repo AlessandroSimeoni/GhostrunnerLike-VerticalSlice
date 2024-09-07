@@ -28,9 +28,7 @@ namespace Player
 
         public override async UniTask Enter()
         {
-            Debug.Log("ENTERED SLIDED JUMP STATE");
             await base.Enter();
-
             verticalVelocity = initialVerticalVelocity;
             if (controller.previousState == slideState)
                 jumpDirection = ((PlayerSlideState)slideState).slideDirection;

@@ -8,7 +8,6 @@ namespace Player
         [SerializeField] private PlayerJumpStateModel jumpStateModel = null;
         public override async UniTask Enter()
         {
-            Debug.Log("ENTERED JUMP STATE");
             await base.Enter();
             verticalVelocity += Mathf.Sqrt(jumpStateModel.jumpHeight * -2.0f * Physics.gravity.y * jumpStateModel.jumpGravityMultiplier);
         }

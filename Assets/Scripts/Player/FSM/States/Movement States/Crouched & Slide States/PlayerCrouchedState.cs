@@ -13,7 +13,6 @@ namespace Player
 
 		private InputAction jumpAction = null;
 		private InputAction crouchAction = null;
-		private float speed = 0.0f;
 
 		private const string IDLE_ANIMATION = "Idle";                   // TODO: CREATE CROUCHED ANIMATION
 
@@ -22,12 +21,10 @@ namespace Player
             base.Init(entity, controller);
 			jumpAction = player.controls.Player.Jump;
 			crouchAction = player.controls.Player.Crouch;
-            speed = ((PlayerCrouchedStateModel)stateModel).crouchedMovementSpeed;
         }
 
 		public override async UniTask Enter()
 		{
-			Debug.Log("Entered CROUCHED STATE");
 			player.playerAnimator.SetBool(IDLE_ANIMATION, true);        // TODO: CREATE CROUCHED ANIMATION
 
 			if (controller.previousState.GetType() != typeof(PlayerSlideState))
@@ -60,7 +57,7 @@ namespace Player
 				return;
 			}
 
-			player.characterController.Move(player.movementDirection * speed * Time.deltaTime);
+			player.characterController.Move(player.movementDirection * crouchedModel.crouchedMovementSpeed * Time.deltaTime);
 		}
 	}
 }
