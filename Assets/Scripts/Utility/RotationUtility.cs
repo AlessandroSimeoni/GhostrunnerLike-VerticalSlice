@@ -82,13 +82,39 @@ namespace Utility
             }
 		}
 
-		/// <summary>
-		/// normalize the target angle so that the rotation follow the shortest side (left or right rotation)
-		/// </summary>
-		/// <param name="targetAngle">the target angle</param>
-		/// <param name="initialEulerAngle">the current euler angle</param>
-		/// <returns>the normalized target angle</returns>
-		private static float NormalizeTargetAngle(float targetAngle, float initialEulerAngle)
+        public static async UniTask FollowCharacterController(Transform rotatingTransform, Transform targetTransform, CharacterController charController, float offsetFromCharacterHeight, float speed, CancellationToken token, bool xRotation = true, bool yRotation = true, bool zRotation = true)
+        {
+            Vector3 axisConstraint = new Vector3(xRotation ? 1.0f : 0.0f, yRotation ? 1.0f : 0.0f, zRotation ? 1.0f : 0.0f);
+            float degreeIncrement = 0.0f;
+            Vector3 targetDirection;
+            Quaternion targetRotation;
+
+            while (true)
+            {
+                if (token.IsCancellationRequested)
+                    break;
+
+                degreeIncrement = speed * Time.deltaTime;
+                targetDirection = targetTransform.position + Vector3.up * (charController.height + offsetFromCharacterHeight) - rotatingTransform.position;
+                targetRotation = Quaternion.LookRotation(targetDirection, rotatingTransform.up);
+
+                targetRotation = Quaternion.Euler(new Vector3(xRotation ? targetRotation.eulerAngles.x : rotatingTransform.rotation.eulerAngles.x,
+                                                              yRotation ? targetRotation.eulerAngles.y : rotatingTransform.rotation.eulerAngles.y,
+                                                              zRotation ? targetRotation.eulerAngles.z : rotatingTransform.rotation.eulerAngles.z));
+
+                rotatingTransform.rotation = Quaternion.RotateTowards(rotatingTransform.rotation, targetRotation, degreeIncrement);
+
+                await UniTask.NextFrame();
+            }
+        }
+
+        /// <summary>
+        /// normalize the target angle so that the rotation follow the shortest side (left or right rotation)
+        /// </summary>
+        /// <param name="targetAngle">the target angle</param>
+        /// <param name="initialEulerAngle">the current euler angle</param>
+        /// <returns>the normalized target angle</returns>
+        private static float NormalizeTargetAngle(float targetAngle, float initialEulerAngle)
 		{
 			if (targetAngle - initialEulerAngle > 180)
 				return targetAngle -= 360;

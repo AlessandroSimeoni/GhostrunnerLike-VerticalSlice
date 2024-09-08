@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffab611c4bd8dba42a3b7192d0ff9ee8, type: 3}
-  m_Name: TurretEnemyAttackStateModel
+  m_Script: {fileID: 11500000, guid: 7f753752ac137d044900d5fb48703198, type: 3}
+  m_Name: TurretCannonBulletModel
   m_EditorClassIdentifier: 
-  rotationSpeed: 160
-  barrelTargetOffsetHeight: -0.25
-  fireFrequency: 5
-  fireAlignmentThreshold: 0.9
+  velocity: 60
+  maxFlyTime: 5

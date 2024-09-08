@@ -9,7 +9,7 @@ namespace Enemy
         protected TurretCannonEnemy enemy = null;
         protected TurretCannonEnemyStateController controller = null;
 
-        public void Init<T>(T entity, AStateController controller) where T : MonoBehaviour
+        public virtual void Init<T>(T entity, AStateController controller) where T : MonoBehaviour
         {
             enemy = entity as TurretCannonEnemy;
             this.controller = (TurretCannonEnemyStateController)controller;

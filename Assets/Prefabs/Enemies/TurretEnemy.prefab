@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 6723988887991710571}
   - {fileID: 8639128750967529596}
+  - {fileID: 4472172103497714559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &6848330273446964479
@@ -70,6 +71,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateController: {fileID: 4091802732281133269}
+  shootPointTransform: {fileID: 7850931225744883195}
+  bulletModel: {fileID: 11400000, guid: 0ee0ab44fcb40514ebc8b7797b0b6c8e, type: 2}
+  bulletsParentTransform: {fileID: 4472172103497714559}
+  bulletPrefab: {fileID: 6111296744142984073, guid: e54c5458e995e074c8402a4302449c36, type: 3}
+  bulletsPoolDefaultSize: 20
+  bulletsPoolMaxSize: 50
 --- !u!114 &4091802732281133269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +189,7 @@ MonoBehaviour:
   idleState: {fileID: 8319243865473172576}
   upperBlockTransform: {fileID: 7851019555235778699}
   barrelTransform: {fileID: 7851179959033217833}
+  shootPointTransform: {fileID: 7850931225744883195}
 --- !u!1 &6624507127238705007
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +221,37 @@ Transform:
   m_Children:
   - {fileID: 4741796221007572367}
   - {fileID: 1363848443617171863}
+  m_Father: {fileID: 7715336415413408982}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6668551361488646398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4472172103497714559}
+  m_Layer: 0
+  m_Name: Bullets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4472172103497714559
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668551361488646398}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 7715336415413408982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8529442168831384374
@@ -313,11 +352,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4597034265451690, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4597034265451690, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4597034265451690, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -333,15 +372,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4722236510932744, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4722236510932744, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4722236510932744, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4722236510932744, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -560,6 +599,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 0c79d9d4997a7ea42ac2c62162d84cac, type: 3}
+--- !u!4 &7850931225744883195 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4703932692914808, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
+  m_PrefabInstance: {fileID: 7846583819804008323}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7851019555235778699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4722236510932744, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
