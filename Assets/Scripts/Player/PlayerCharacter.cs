@@ -12,10 +12,11 @@ namespace Player
     {
         public FirstPersonCamera fpCamera = null;
         [SerializeField] private PlayerStateController movementStateController = null;
-        [SerializeField] private PlayerStateController attackStateController = null;
+        [SerializeField] private PlayerStateController combatStateController = null;
         public Sword sword = null;
         public Animator playerAnimator = null;
         [Min(0.0f)] public float rigidbodyInteractionForce = 10.0f;
+        public Stamina stamina = null;
 
         public delegate void CharacterControllerEvent();
         public event CharacterControllerEvent OnCharacterControllerHit = null;
@@ -37,11 +38,11 @@ namespace Player
         private void Start()
         {
             Assert.IsNotNull(movementStateController, "Missing player movement state controller in PlayerCharacter");
-            Assert.IsNotNull(attackStateController, "Missing player attack state controller in PlayerCharacter");
+            Assert.IsNotNull(combatStateController, "Missing player combat state controller in PlayerCharacter");
             Assert.IsNotNull(fpCamera, "Missing first person camera in PlayerCharacter");
 
             movementStateController.Init(this);
-            attackStateController.Init(this);
+            combatStateController.Init(this);
 
             transform.position += Vector3.up * characterController.skinWidth;
         }

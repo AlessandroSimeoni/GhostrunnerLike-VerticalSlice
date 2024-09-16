@@ -63,7 +63,7 @@ namespace Player
                 return;
             }
 
-            if (dashAction.triggered)
+            if (dashAction.triggered && player.stamina.currentStamina > 0)
             {
                 controller.ChangeState(dashState).Forget();
                 return;

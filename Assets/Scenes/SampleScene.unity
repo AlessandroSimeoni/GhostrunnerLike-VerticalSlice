@@ -4266,18 +4266,18 @@ PrefabInstance:
       propertyPath: playerAnimator
       value: 
       objectReference: {fileID: 346596261}
-    - target: {fileID: 4619910424922956579, guid: 0d8e950c7aec49543ad2397958545288, type: 3}
-      propertyPath: dashSlider
-      value: 
-      objectReference: {fileID: 2092246054}
-    - target: {fileID: 4619910424922956579, guid: 0d8e950c7aec49543ad2397958545288, type: 3}
-      propertyPath: sliderBGImage
-      value: 
-      objectReference: {fileID: 1283490280}
     - target: {fileID: 4673635503324769745, guid: 0d8e950c7aec49543ad2397958545288, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6187127790724324947, guid: 0d8e950c7aec49543ad2397958545288, type: 3}
+      propertyPath: sliderBGImage
+      value: 
+      objectReference: {fileID: 1283490280}
+    - target: {fileID: 6187127790724324947, guid: 0d8e950c7aec49543ad2397958545288, type: 3}
+      propertyPath: staminaSlider
+      value: 
+      objectReference: {fileID: 2092246054}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4339,6 +4339,14 @@ PrefabInstance:
     - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7851179959033217833, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7851179959033217833, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

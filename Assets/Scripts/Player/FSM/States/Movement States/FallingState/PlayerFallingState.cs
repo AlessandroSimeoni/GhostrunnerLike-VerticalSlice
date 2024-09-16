@@ -61,7 +61,7 @@ namespace Player
 
         protected void CheckDashAction()
         {
-            if (dashAction.triggered && ((PlayerDashState)dashState).dashReady)
+            if (dashAction.triggered && player.stamina.currentStamina > 0)
                 controller.ChangeState(dashState).Forget();
         }
 

@@ -73,6 +73,15 @@ namespace InputControls
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Defense"",
+                    ""type"": ""Button"",
+                    ""id"": ""b24609cc-c7e9-4c89-b67d-277007133f77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=1.401298E-45)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -174,6 +183,17 @@ namespace InputControls
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30de6f3e-fb5e-4fb2-97e9-7f59c21929c8"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Defense"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -215,6 +235,7 @@ namespace InputControls
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+            m_Player_Defense = m_Player.FindAction("Defense", throwIfNotFound: true);
             // Camera
             m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
             m_Camera_Rotation = m_Camera.FindAction("Rotation", throwIfNotFound: true);
@@ -284,6 +305,7 @@ namespace InputControls
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_Crouch;
         private readonly InputAction m_Player_Dash;
+        private readonly InputAction m_Player_Defense;
         public struct PlayerActions
         {
             private @Controls m_Wrapper;
@@ -293,6 +315,7 @@ namespace InputControls
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
             public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
             public InputAction @Dash => m_Wrapper.m_Player_Dash;
+            public InputAction @Defense => m_Wrapper.m_Player_Defense;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -317,6 +340,9 @@ namespace InputControls
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Defense.started += instance.OnDefense;
+                @Defense.performed += instance.OnDefense;
+                @Defense.canceled += instance.OnDefense;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -336,6 +362,9 @@ namespace InputControls
                 @Dash.started -= instance.OnDash;
                 @Dash.performed -= instance.OnDash;
                 @Dash.canceled -= instance.OnDash;
+                @Defense.started -= instance.OnDefense;
+                @Defense.performed -= instance.OnDefense;
+                @Defense.canceled -= instance.OnDefense;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -406,6 +435,7 @@ namespace InputControls
             void OnAttack(InputAction.CallbackContext context);
             void OnCrouch(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
+            void OnDefense(InputAction.CallbackContext context);
         }
         public interface ICameraActions
         {

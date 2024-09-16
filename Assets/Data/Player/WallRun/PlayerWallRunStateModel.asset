@@ -15,7 +15,7 @@ MonoBehaviour:
   wallRunSpeed: 15
   forwardDotFallThreshold: 0.5
   minJumpDirectionAngle: 35
-  cameraTiltAngle: 15
+  cameraTiltAngle: 20
   cameraTiltChangeSpeed: 10
   wallCheckLayers:
     serializedVersion: 2
