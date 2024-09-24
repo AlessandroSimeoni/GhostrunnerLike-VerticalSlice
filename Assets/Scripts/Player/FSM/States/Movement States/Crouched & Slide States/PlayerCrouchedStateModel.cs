@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    [CreateAssetMenu(fileName = "PlayerCrouchedStateModel", menuName = "ScriptableObjects/PlayerStates/PlayerCrouchedStateModel")]
+    [CreateAssetMenu(fileName = "PlayerCrouchedStateModel", menuName = "ScriptableObjects/Player/PlayerStates/PlayerCrouchedStateModel")]
     public class PlayerCrouchedStateModel : ScriptableObject
     {
         [Min(0.01f)] public float defaultCharacterHeight = 2.0f;

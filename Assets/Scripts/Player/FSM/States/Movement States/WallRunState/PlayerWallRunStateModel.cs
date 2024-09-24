@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    [CreateAssetMenu(fileName = "PlayerWallRunStateModel", menuName = "ScriptableObjects/PlayerStates/PlayerWallRunStateModel")]
+    [CreateAssetMenu(fileName = "PlayerWallRunStateModel", menuName = "ScriptableObjects/Player/PlayerStates/PlayerWallRunStateModel")]
     public class PlayerWallRunStateModel : ScriptableObject
     {
         [Min(0.01f)] public float wallRunSpeed = 10.0f;

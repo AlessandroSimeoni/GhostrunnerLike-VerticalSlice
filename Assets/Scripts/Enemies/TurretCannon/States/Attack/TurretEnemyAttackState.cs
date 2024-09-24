@@ -30,7 +30,6 @@ namespace Enemy
         {
             await UniTask.NextFrame();
             enemy.OnPlayerNotInRange += ReturnToIdle;
-            Debug.Log("Enemy ATTACK STATE");
             rotationCTS = new CancellationTokenSource();
             RotationUtility.FollowTarget(upperBlockTransform, enemy.player.transform, Vector3.zero, attackModel.rotationSpeed, rotationCTS.Token, false, true, false).Forget();
             RotationUtility.FollowCharacterController(barrelTransform, enemy.player.transform, enemy.player.characterController, attackModel.barrelTargetOffsetHeight, attackModel.rotationSpeed, rotationCTS.Token, true, false, false).Forget();

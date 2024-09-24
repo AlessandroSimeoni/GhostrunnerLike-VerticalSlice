@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TurretEnemyAttackStateModel
   m_EditorClassIdentifier: 
   rotationSpeed: 160
-  barrelTargetOffsetHeight: -0.25
-  fireFrequency: 5
+  barrelTargetOffsetHeight: -0.7
+  fireFrequency: 2
   fireAlignmentThreshold: 0.9

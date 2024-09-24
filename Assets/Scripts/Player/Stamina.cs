@@ -60,7 +60,7 @@ namespace Player
             sliderBGImage.color = sliderDefaultBGColor;
         }
 
-        public void UseStamina(float value)
+        public void ConsumeStamina(float value)
         {
             currentStamina = Mathf.Clamp(currentStamina - value, 0.0f, staminaSlider.maxValue);
             staminaSlider.value = currentStamina;

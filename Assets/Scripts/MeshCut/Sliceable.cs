@@ -17,6 +17,9 @@ namespace MeshCut
 
         private bool _cutReady = false;
 
+        public delegate void CutEvent();
+        public event CutEvent OnCutEvent = null;
+
         public bool cutReady {
             get { return _cutReady; } 
             set {
@@ -44,5 +47,7 @@ namespace MeshCut
             await UniTask.WaitForSeconds(cutReadyCooldown);
             cutReady = true;
         }
+
+        public void OnCut() => OnCutEvent?.Invoke();
     }
 }

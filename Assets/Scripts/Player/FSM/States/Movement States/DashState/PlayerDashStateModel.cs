@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    [CreateAssetMenu(fileName = "PlayerDashStateModel", menuName = "ScriptableObjects/PlayerStates/PlayerDashStateModel")]
+    [CreateAssetMenu(fileName = "PlayerDashStateModel", menuName = "ScriptableObjects/Player/PlayerStates/PlayerDashStateModel")]
     public class PlayerDashStateModel : ScriptableObject
     {
         [Min(0.01f)] public float dashSpeed = 30.0f;

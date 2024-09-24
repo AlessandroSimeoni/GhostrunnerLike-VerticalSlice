@@ -18,7 +18,6 @@ namespace Enemy
         {
             await UniTask.NextFrame();
             enemy.OnPlayerRange += GoToAttackState;
-            Debug.Log("Enemy IDLE STATE");
             RotationSequence().Forget();
         }
 

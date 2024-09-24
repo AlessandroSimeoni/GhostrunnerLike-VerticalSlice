@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    [CreateAssetMenu(fileName = "PlayerSlideStateModel", menuName = "ScriptableObjects/PlayerStates/PlayerSlideStateModel")]
+    [CreateAssetMenu(fileName = "PlayerSlideStateModel", menuName = "ScriptableObjects/Player/PlayerStates/PlayerSlideStateModel")]
     public class PlayerSlideStateModel : ScriptableObject
     {
         [Min(0.1f)] public float slideTime = 1.0f;

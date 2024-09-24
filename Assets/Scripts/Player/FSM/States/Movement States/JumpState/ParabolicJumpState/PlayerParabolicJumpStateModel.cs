@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    [CreateAssetMenu(fileName = "PlayerParabolicJumpStateModel", menuName = "ScriptableObjects/PlayerStates/PlayerParabolicJumpStateModel")]
+    [CreateAssetMenu(fileName = "PlayerParabolicJumpStateModel", menuName = "ScriptableObjects/Player/PlayerStates/PlayerParabolicJumpStateModel")]
     public class PlayerParabolicJumpStateModel : ScriptableObject
     {
         [Min(0.0f)] public float slideJumpRange = 5.0f;

@@ -11,7 +11,7 @@ namespace Architecture
         public T previousState { get; protected set; } = null;
         public T nextTargetState { get; protected set; } = null;
 
-        protected T currentState = null;
+        public T currentState { get; protected set; } = null;
         protected bool changingState = false;
 
         protected virtual void Update()

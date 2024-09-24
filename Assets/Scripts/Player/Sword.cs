@@ -20,6 +20,7 @@ namespace Player
             {
                 target.cutReady = false;
                 Cut(target, invertCutNormal ? -transform.forward : transform.forward, transform.position, cutForce);
+                target.OnCut();
             }
         }
 

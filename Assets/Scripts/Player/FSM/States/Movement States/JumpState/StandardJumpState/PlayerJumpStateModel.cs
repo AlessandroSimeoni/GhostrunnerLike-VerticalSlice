@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    [CreateAssetMenu(fileName = "PlayerJumpStateModel", menuName = "ScriptableObjects/PlayerStates/PlayerJumpStateModel")]
+    [CreateAssetMenu(fileName = "PlayerJumpStateModel", menuName = "ScriptableObjects/Player/PlayerStates/PlayerJumpStateModel")]
     public class PlayerJumpStateModel : ScriptableObject
     {
         [Min(0.01f)] public float jumpHeight = 1.5f;

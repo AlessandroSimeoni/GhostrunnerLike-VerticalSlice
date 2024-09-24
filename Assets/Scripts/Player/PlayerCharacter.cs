@@ -1,5 +1,6 @@
 using GameCamera;
 using InputControls;
+using Projectiles;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Utility;
@@ -8,7 +9,8 @@ namespace Player
 {
     [RequireComponent(typeof(GroundCheck))]
     [RequireComponent(typeof(CharacterController))]
-    public class PlayerCharacter : MonoBehaviour
+    [RequireComponent(typeof(Stamina))]
+    public class PlayerCharacter : MonoBehaviour, IHitable
     {
         public FirstPersonCamera fpCamera = null;
         [SerializeField] private PlayerStateController movementStateController = null;
@@ -16,15 +18,18 @@ namespace Player
         public Sword sword = null;
         public Animator playerAnimator = null;
         [Min(0.0f)] public float rigidbodyInteractionForce = 10.0f;
-        public Stamina stamina = null;
 
         public delegate void CharacterControllerEvent();
         public event CharacterControllerEvent OnCharacterControllerHit = null;
+
+        public delegate void HitEvent(Bullet bullet);
+        public event HitEvent OnBulletHit = null;
 
         public Controls controls;
         public Vector3 movementDirection { get; private set; } = Vector3.zero;
         public GroundCheck groundCheck { get; private set; } = null;
         public CharacterController characterController { get; private set; } = null;
+        public Stamina stamina { get; private set; } = null;
 
         private const string GROUND_TAG = "Ground";
 
@@ -33,6 +38,7 @@ namespace Player
             controls = new Controls();
             groundCheck = GetComponent<GroundCheck>();
             characterController = GetComponent<CharacterController>();
+            stamina = GetComponent<Stamina>();
         }
 
         private void Start()
@@ -84,5 +90,12 @@ namespace Player
         }
 
         private void ControlCamera() => fpCamera.ProcessMovement(controls.Camera.Rotation.ReadValue<Vector2>());
+
+        public void Hit(Bullet bullet) => OnBulletHit?.Invoke(bullet);
+
+        public void Death()
+        {
+            Debug.Log("YOU LOSE");
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Player
         {
             dashDirection = (player.movementDirection == Vector3.zero) ? player.transform.forward : player.movementDirection;
             currentTime = 0.0f;
-            player.stamina.UseStamina(dashStateModel.dashStaminaCost);
+            player.stamina.ConsumeStamina(dashStateModel.dashStaminaCost);
             await UniTask.NextFrame();
         }
 
