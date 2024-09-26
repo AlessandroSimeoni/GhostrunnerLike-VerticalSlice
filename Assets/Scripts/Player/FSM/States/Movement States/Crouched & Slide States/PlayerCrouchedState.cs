@@ -2,6 +2,7 @@ using Architecture;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utilities;
 
 namespace Player
 {
@@ -10,6 +11,7 @@ namespace Player
 		[SerializeField] private PlayerState idleState = null;
 		[SerializeField] private PlayerState movingState = null;
 		[SerializeField] private PlayerState jumpState = null;
+		[SerializeField] private PlayerState slopeSlideState = null;
 
 		private InputAction jumpAction = null;
 		private InputAction crouchAction = null;
@@ -27,7 +29,7 @@ namespace Player
 		{
 			player.playerAnimator.SetBool(IDLE_ANIMATION, true);        // TODO: CREATE CROUCHED ANIMATION
 
-			if (controller.previousState.GetType() != typeof(PlayerSlideState))
+			if (controller.previousState.GetType() != typeof(PlayerSlideState) && controller.previousState.GetType() != typeof(PlayerSlopeSlideState))
 				await base.Enter();
 		}
 
@@ -39,13 +41,13 @@ namespace Player
 
 		public override void Tick()
 		{
-			if (crouchAction.triggered && player.movementDirection == Vector3.zero)
+			if (crouchAction.triggered && player.groundedMovementDirection == Vector3.zero)
 			{
 				controller.ChangeState(idleState).Forget();
 				return;
 			}
 
-			if (crouchAction.triggered && player.movementDirection != Vector3.zero)
+			if (crouchAction.triggered && player.groundedMovementDirection != Vector3.zero)
 			{
 				controller.ChangeState(movingState).Forget();
 				return;
@@ -57,7 +59,13 @@ namespace Player
 				return;
 			}
 
-			player.characterController.Move(player.movementDirection * crouchedModel.crouchedMovementSpeed * Time.deltaTime);
+			if (player.groundedMovementDirection != Vector3.zero && player.groundCheck.IsSlope() && MyUtility.SameDirection(player.groundCheck.groundNormal, player.inputMovementDirection))
+			{
+                controller.ChangeState(slopeSlideState).Forget();
+                return;
+            }
+
+			player.characterController.Move(player.groundedMovementDirection * crouchedModel.crouchedMovementSpeed * Time.deltaTime);
 		}
 	}
 }

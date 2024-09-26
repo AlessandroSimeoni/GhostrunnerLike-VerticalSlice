@@ -88,6 +88,7 @@ Transform:
   - {fileID: 8111255836854076776}
   - {fileID: 318966636617143483}
   - {fileID: 2156010096110206914}
+  - {fileID: 6384009428082252235}
   m_Father: {fileID: 5566620087732254069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1706505133820568784
@@ -114,6 +115,7 @@ MonoBehaviour:
   - {fileID: 4619910424922956579}
   - {fileID: 6622023189437684070}
   - {fileID: 4621819113126619132}
+  - {fileID: 6845379332355419672}
   initialState: {fileID: 7052092395668710853}
 --- !u!1 &1842454703991016522
 GameObject:
@@ -164,6 +166,7 @@ MonoBehaviour:
   crouchedState: {fileID: 1404063540192064796}
   parabolicJumpState: {fileID: 8924128491142083994}
   dashState: {fileID: 4619910424922956579}
+  slopeSlideState: {fileID: 6845379332355419672}
 --- !u!1 &1858169510365345619
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,6 +260,57 @@ MonoBehaviour:
   crouchedState: {fileID: 1404063540192064796}
   parabolicJumpState: {fileID: 5587807358680366493}
   dashState: {fileID: 4619910424922956579}
+  slopeSlideState: {fileID: 6845379332355419672}
+--- !u!1 &2035387869680558410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6384009428082252235}
+  - component: {fileID: 6845379332355419672}
+  m_Layer: 6
+  m_Name: SlopeSlideState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6384009428082252235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035387869680558410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8193752002774699453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6845379332355419672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035387869680558410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7894a04d2a75fc943806d90228430d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crouchedModel: {fileID: 11400000, guid: bcc69ca2353075148bf3f4870b2ffd68, type: 2}
+  slideStateModel: {fileID: 11400000, guid: b22b31c81ca079b429340339282eb1bb, type: 2}
+  crouchedState: {fileID: 1404063540192064796}
+  parabolicJumpState: {fileID: 5587807358680366493}
+  dashState: {fileID: 4619910424922956579}
+  slopeSlideState: {fileID: 0}
 --- !u!1 &2225829342669022840
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +578,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 40
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -547,7 +601,6 @@ MonoBehaviour:
   sword: {fileID: 0}
   playerAnimator: {fileID: 0}
   rigidbodyInteractionForce: 3
-  stamina: {fileID: 6187127790724324947}
 --- !u!114 &847907998886575097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,6 +616,10 @@ MonoBehaviour:
   sphereCastOriginHeightOffset: 1
   sphereCastRadius: 0.5
   sphereCastGroundOffset: 0.1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 55
+  slopeCheckModel: {fileID: 11400000, guid: 75a51b7b47cb1d3409edf77f62e32d2e, type: 2}
 --- !u!114 &212152715129384261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,6 +745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541d7102f31aa324890404cf3353eee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defenseModel: {fileID: 11400000, guid: 882120dd5c215f34699ec8c2c8f7adc3, type: 2}
   firstAttackState: {fileID: 2061770367852614475}
 --- !u!1 &6749438568179185509
 GameObject:

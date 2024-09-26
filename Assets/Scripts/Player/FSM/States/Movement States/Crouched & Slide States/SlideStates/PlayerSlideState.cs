@@ -2,24 +2,26 @@ using Architecture;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utilities;
 
 namespace Player
 {
     public class PlayerSlideState : BasePlayerCrouchedState
     {
-        [SerializeField] private PlayerSlideStateModel slideStateModel = null;
+        [SerializeField] protected PlayerSlideStateModel slideStateModel = null;
         [SerializeField] private PlayerState crouchedState = null;
         [SerializeField] private PlayerState parabolicJumpState = null;
         [SerializeField] private PlayerState dashState = null;
+        [SerializeField] private PlayerState slopeSlideState = null;
 
         private InputAction jumpAction = null;
         private InputAction dashAction = null;
         private float currentTime = 0.0f;
-        private float currentSlideSpeed = 0.0f;
+        protected float currentSlideSpeed = 0.0f;
 
-        public Vector3 slideDirection { get; private set; } = Vector3.forward;
+        public Vector3 slideDirection { get; protected set; } = Vector3.forward;
 
-        private const string IDLE_ANIMATION = "Idle";                   //TODO: CREATE SLIDE ANIMATION
+        protected const string IDLE_ANIMATION = "Idle";                   //TODO: CREATE SLIDE ANIMATION
 
         public override void Init<T>(T entity, AStateController controller)
         {
@@ -33,11 +35,10 @@ namespace Player
             player.playerAnimator.SetBool(IDLE_ANIMATION, true);        // TODO: CREATE SLIDE ANIMATION
             currentTime = 0.0f;
             currentSlideSpeed = slideStateModel.maxSlideSpeed;
-            slideDirection = (player.movementDirection == Vector3.zero) ? player.transform.forward : player.movementDirection.normalized;
+            slideDirection = (player.groundedMovementDirection == Vector3.zero) ? player.transform.forward : player.groundedMovementDirection;
             player.OnCharacterControllerHit += CrouchedStateTransition;
             await base.Enter();
         }
-
 
         public override async UniTask Exit()
         {
@@ -45,18 +46,42 @@ namespace Player
 
             player.OnCharacterControllerHit -= CrouchedStateTransition;
 
-            if (controller.nextTargetState != crouchedState)
+            if (controller.nextTargetState == parabolicJumpState)
+                ((PlayerParabolicJumpState)parabolicJumpState).jumpDirection = slideDirection;
+
+            if (controller.nextTargetState != crouchedState && controller.nextTargetState != slopeSlideState)
                 await base.Exit();
         }
 
         public override void Tick()
         {
-            if (currentTime > slideStateModel.slideTime)
+            if (player.groundCheck.IsSlope() && MyUtility.SameDirection(player.groundCheck.groundNormal, player.transform.forward))
+            {
+                controller.ChangeState(slopeSlideState).Forget();
                 return;
+            }
+            else
+            {
+                if (currentTime > slideStateModel.slideTime)
+                    return;
 
-            player.characterController.Move(slideDirection * currentSlideSpeed * Time.deltaTime);
-            currentSlideSpeed = Mathf.Lerp(currentSlideSpeed, slideStateModel.minSlideSpeed, slideStateModel.slideFriction * Time.deltaTime);
+                player.characterController.Move(slideDirection * currentSlideSpeed * Time.deltaTime);
+                currentSlideSpeed = Mathf.MoveTowards(currentSlideSpeed, slideStateModel.minSlideSpeed, slideStateModel.slideFriction * Time.deltaTime);
 
+                CheckActions();
+
+                currentTime += Time.deltaTime;
+
+                if (currentTime > slideStateModel.slideTime)
+                {
+                    CrouchedStateTransition();
+                    return;
+                }
+            }
+        }
+
+        protected void CheckActions()
+        {
             if (jumpAction.triggered)
             {
                 controller.ChangeState(parabolicJumpState).Forget();
@@ -68,16 +93,8 @@ namespace Player
                 controller.ChangeState(dashState).Forget();
                 return;
             }
-
-            currentTime += Time.deltaTime;
-
-            if (currentTime > slideStateModel.slideTime)
-            {
-                CrouchedStateTransition();
-                return;
-            }
         }
 
-        private void CrouchedStateTransition() => controller.ChangeState(crouchedState).Forget();
+        protected void CrouchedStateTransition() => controller.ChangeState(crouchedState).Forget();
     }
 }

@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Utility;
+using Utilities;
 
 namespace Player
 {

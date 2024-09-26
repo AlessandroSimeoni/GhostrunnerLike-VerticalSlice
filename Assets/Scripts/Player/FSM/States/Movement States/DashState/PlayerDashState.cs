@@ -27,7 +27,7 @@ namespace Player
 
         public override async UniTask Enter()
         {
-            dashDirection = (player.movementDirection == Vector3.zero) ? player.transform.forward : player.movementDirection;
+            dashDirection = (player.inputMovementDirection == Vector3.zero) ? player.transform.forward : player.inputMovementDirection;
             currentTime = 0.0f;
             player.stamina.ConsumeStamina(dashStateModel.dashStaminaCost);
             await UniTask.NextFrame();
@@ -49,7 +49,7 @@ namespace Player
             if (currentTime >= targetTime)
             {
                 if (player.groundCheck.isGrounded)
-                    controller.ChangeState((player.movementDirection == Vector3.zero) ? idleState : movingState).Forget();
+                    controller.ChangeState((player.groundedMovementDirection == Vector3.zero) ? idleState : movingState).Forget();
                 else
                     controller.ChangeState(fallingState).Forget();
 

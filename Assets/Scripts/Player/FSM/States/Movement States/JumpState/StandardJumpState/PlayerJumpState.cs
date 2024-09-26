@@ -19,7 +19,7 @@ namespace Player
             player.characterController.Move(Vector3.up * verticalVelocity * Time.deltaTime);
             verticalVelocity += Physics.gravity.y * jumpStateModel.jumpGravityMultiplier * Time.deltaTime;
 
-            player.characterController.Move(player.movementDirection * jumpStateModel.midAirSpeed * Time.deltaTime);
+            player.characterController.Move(player.inputMovementDirection * jumpStateModel.midAirSpeed * Time.deltaTime);
         }
     }
 }

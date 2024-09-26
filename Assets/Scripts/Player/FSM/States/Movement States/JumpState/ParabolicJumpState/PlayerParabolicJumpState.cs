@@ -7,7 +7,6 @@ namespace Player
     public class PlayerParabolicJumpState : BasePlayerJumpState
     {
         [SerializeField] private PlayerParabolicJumpStateModel parabolicJumpModel = null;
-        [SerializeField] private PlayerState slideState = null;
 
         public Vector3 jumpDirection { get; set; } = Vector3.zero;
 
@@ -30,8 +29,6 @@ namespace Player
         {
             await base.Enter();
             verticalVelocity = initialVerticalVelocity;
-            if (controller.previousState == slideState)
-                jumpDirection = ((PlayerSlideState)slideState).slideDirection;
             jumpVector = jumpDirection * initialHorizontalSpeed;
             jumpVector.y = verticalVelocity;
         }
@@ -44,8 +41,8 @@ namespace Player
             player.characterController.Move(jumpVector * Time.deltaTime);
             verticalVelocity += Physics.gravity.y * parabolicJumpModel.slidedJumpGravityMultiplier * Time.deltaTime;
 
-            Vector3 forwardMovementDirection = Vector3.Project(player.movementDirection, jumpDirection);
-            Vector3 horizontalMovementDirection = player.movementDirection - forwardMovementDirection;
+            Vector3 forwardMovementDirection = Vector3.Project(player.inputMovementDirection, jumpDirection);
+            Vector3 horizontalMovementDirection = player.inputMovementDirection - forwardMovementDirection;
             player.characterController.Move((forwardMovementDirection * parabolicJumpModel.forwardMovementWeight + horizontalMovementDirection) * parabolicJumpModel.slidedMidAirSpeed * Time.deltaTime);
         }
     }

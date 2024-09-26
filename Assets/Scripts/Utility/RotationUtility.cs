@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
 
-namespace Utility
+namespace Utilities
 {
 	public static class RotationUtility
 	{

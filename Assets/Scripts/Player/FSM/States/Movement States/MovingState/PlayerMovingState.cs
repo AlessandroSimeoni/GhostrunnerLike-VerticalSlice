@@ -42,7 +42,7 @@ namespace Player
 
         public override void Tick()
         {
-            if (player.movementDirection == Vector3.zero)
+            if (player.groundedMovementDirection == Vector3.zero)
             {
                 controller.ChangeState(idleState).Forget();
                 return;
@@ -72,7 +72,7 @@ namespace Player
                 return;
             }
 
-            player.characterController.Move(player.movementDirection * movingStateModel.movementSpeed * Time.deltaTime);
+            player.characterController.Move(player.groundedMovementDirection * movingStateModel.movementSpeed * Time.deltaTime);
         }
     }
 }

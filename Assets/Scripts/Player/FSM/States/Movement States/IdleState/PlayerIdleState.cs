@@ -37,7 +37,7 @@ namespace Player
 
         public override void Tick()
         {
-            if (player.movementDirection != Vector3.zero)
+            if (player.groundedMovementDirection != Vector3.zero)
             {
                 controller.ChangeState(movingState).Forget();
                 return;

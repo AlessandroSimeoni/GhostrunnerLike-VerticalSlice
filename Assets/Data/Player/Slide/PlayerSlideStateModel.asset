@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerSlideStateModel
   m_EditorClassIdentifier: 
   slideTime: 1
-  maxSlideSpeed: 20
-  minSlideSpeed: 3
-  slideFriction: 2
+  maxSlideSpeed: 25
+  minSlideSpeed: 7
+  slideFriction: 35

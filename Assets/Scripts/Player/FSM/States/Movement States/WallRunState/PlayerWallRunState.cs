@@ -2,7 +2,7 @@ using Architecture;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Utility;
+using Utilities;
 
 namespace Player
 {
@@ -85,7 +85,7 @@ namespace Player
 
             wallCheckOrigin = player.transform.position + Vector3.up * wallRunStateModel.wallRayHeightOffset;
 
-            if (Vector3.Dot(player.movementDirection, wallMovementDirection) < wallRunStateModel.forwardDotFallThreshold
+            if (Vector3.Dot(player.inputMovementDirection, wallMovementDirection) < wallRunStateModel.forwardDotFallThreshold
                 || Vector3.Dot(player.transform.forward, wallMovementDirection) < wallRunStateModel.forwardDotFallThreshold
                 || !Physics.Raycast(wallCheckOrigin, -wallNormal, out wallHit, wallRunStateModel.wallRayLenght, wallRunStateModel.wallCheckLayers))
             {

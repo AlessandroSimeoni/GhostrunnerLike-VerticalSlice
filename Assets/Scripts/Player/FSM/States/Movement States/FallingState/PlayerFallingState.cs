@@ -50,13 +50,13 @@ namespace Player
             CheckDashAction();
             CheckGround();
             CheckWallRun();
-            player.characterController.Move(player.movementDirection * movingStateModel.movementSpeed * Time.deltaTime);
+            player.characterController.Move(player.inputMovementDirection * movingStateModel.movementSpeed * Time.deltaTime);
         }
 
         protected void CheckGround()
         {
             if (player.groundCheck.isGrounded)
-                controller.ChangeState(player.movementDirection == Vector3.zero ? idleState : movingState).Forget();
+                controller.ChangeState(player.inputMovementDirection == Vector3.zero ? idleState : movingState).Forget();
         }
 
         protected void CheckDashAction()
@@ -81,7 +81,7 @@ namespace Player
                 wallDirection = Vector3.zero;
 
             if (wallDirection != Vector3.zero
-                && Vector3.Dot(player.movementDirection, wallDirection) > wallRunStateModel.forwardDotFallThreshold
+                && Vector3.Dot(player.inputMovementDirection, wallDirection) > wallRunStateModel.forwardDotFallThreshold
                 && Vector3.Dot(player.transform.forward, wallDirection) > wallRunStateModel.forwardDotFallThreshold)
             {
                 controller.ChangeState(wallRunState).Forget();

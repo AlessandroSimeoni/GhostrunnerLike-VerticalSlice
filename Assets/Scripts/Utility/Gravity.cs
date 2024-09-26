@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Utility
+namespace Utilities
 {
     [RequireComponent(typeof(GroundCheck))]
     [RequireComponent(typeof(CharacterController))]

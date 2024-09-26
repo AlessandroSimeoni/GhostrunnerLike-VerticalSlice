@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ecfed4186157cd46a56c47781b07dd1, type: 3}
-  m_Name: PlayerBoostedSlideStateModel
+  m_Script: {fileID: 11500000, guid: 941d4301f5ca1374c91ccbe77e0ad0e0, type: 3}
+  m_Name: GroundSlopeCheckModel
   m_EditorClassIdentifier: 
-  slideTime: 1
-  maxSlideSpeed: 35
-  minSlideSpeed: 5
-  slideFriction: 35
+  minSlopeAngle: 10
+  maxSlopeAngle: 30

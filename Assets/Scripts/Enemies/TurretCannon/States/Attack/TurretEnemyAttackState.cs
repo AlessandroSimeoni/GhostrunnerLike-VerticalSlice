@@ -2,7 +2,7 @@ using Architecture;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
-using Utility;
+using Utilities;
 
 namespace Enemy
 {

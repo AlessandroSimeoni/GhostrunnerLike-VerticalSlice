@@ -3,7 +3,7 @@ using InputControls;
 using Projectiles;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Utility;
+using Utilities;
 
 namespace Player
 {
@@ -26,7 +26,8 @@ namespace Player
         public event HitEvent OnBulletHit = null;
 
         public Controls controls;
-        public Vector3 movementDirection { get; private set; } = Vector3.zero;
+        public Vector3 inputMovementDirection { get; private set; } = Vector3.zero;     // the standard direction based on the input
+        public Vector3 groundedMovementDirection { get; private set; } = Vector3.zero;  // the input direction adapted to handle slopes
         public GroundCheck groundCheck { get; private set; } = null;
         public CharacterController characterController { get; private set; } = null;
         public Stamina stamina { get; private set; } = null;
@@ -83,10 +84,19 @@ namespace Player
         {
             Vector2 inputValue = controls.Player.Move.ReadValue<Vector2>();
 
-            Vector3 rightDirection = new Vector3(fpCamera.transform.right.x, 0.0f, fpCamera.transform.right.z).normalized;
+            Vector3 rightDirection = new Vector3(fpCamera.transform.right.x, 0.0f, fpCamera.transform.right.z);
             Vector3 forwardDirection = new Vector3(fpCamera.transform.forward.x, 0.0f, fpCamera.transform.forward.z).normalized;
 
-            movementDirection = Vector3.ClampMagnitude(rightDirection * inputValue.x + forwardDirection * inputValue.y, 1.0f);
+            inputMovementDirection = rightDirection * inputValue.x + forwardDirection * inputValue.y;
+            if(groundCheck.groundNormal != Vector3.zero)        // adapt movement direction for slopes
+            {
+                if (groundCheck.groundNormal != Vector3.up)     // normalize only if we are on slopes
+                    groundedMovementDirection = Vector3.ProjectOnPlane(inputMovementDirection, groundCheck.groundNormal).normalized;
+                else
+                    groundedMovementDirection = Vector3.ProjectOnPlane(inputMovementDirection, groundCheck.groundNormal);
+            }
+            else
+                groundedMovementDirection = inputMovementDirection;
         }
 
         private void ControlCamera() => fpCamera.ProcessMovement(controls.Camera.Rotation.ReadValue<Vector2>());
