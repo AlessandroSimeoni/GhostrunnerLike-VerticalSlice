@@ -16,6 +16,7 @@ namespace Player
         {
             gravity.enabled = false;
             player.playerAnimator.SetBool(JUMP_ANIMATION, true);
+            canDash = true;
             await UniTask.NextFrame();
         }
 

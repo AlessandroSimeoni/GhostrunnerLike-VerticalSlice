@@ -20,6 +20,7 @@ namespace Player
         protected Vector3 wallDirection = Vector3.zero;
         protected RaycastHit rightWallHitInfo;
         protected RaycastHit leftWallHitInfo;
+        protected bool canDash = true;
 
         public const string IDLE_ANIMATION = "Idle";
 
@@ -32,6 +33,7 @@ namespace Player
         public override async UniTask Enter()
         {
             player.playerAnimator.SetBool(IDLE_ANIMATION, true);
+            canDash = controller.previousState != dashState;
             await UniTask.NextFrame();
         }
 
@@ -61,8 +63,11 @@ namespace Player
 
         protected void CheckDashAction()
         {
-            if (dashAction.triggered && player.stamina.currentStamina > 0)
+            if (canDash && dashAction.triggered && player.stamina.currentStamina > 0)
+            {
+                canDash = false;
                 controller.ChangeState(dashState).Forget();
+            }
         }
 
         protected void CheckWallRun()
