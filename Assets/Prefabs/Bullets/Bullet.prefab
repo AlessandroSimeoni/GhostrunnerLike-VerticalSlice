@@ -79,6 +79,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletModel: {fileID: 11400000, guid: 7e352060e3179cd49a29c88649e36b66, type: 2}
+  rayMask:
+    serializedVersion: 2
+    m_Bits: 119
   bulletParticle: {fileID: 7155276144805580139}
   trailRenderer: {fileID: 6978564217988757795}
   impactParticle: {fileID: 1481700397980228782}

@@ -36,7 +36,8 @@ namespace Player
 		public override async UniTask Exit()
 		{
 			player.playerAnimator.SetBool(IDLE_ANIMATION, false);       // TODO: CREATE CROUCHED ANIMATION
-			await base.Exit();
+            if (controller.nextTargetState.GetType() != typeof(PlayerSlopeSlideState))
+                await base.Exit();
 		}
 
 		public override void Tick()

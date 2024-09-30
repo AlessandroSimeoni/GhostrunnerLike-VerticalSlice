@@ -12,7 +12,7 @@ namespace Player
         [SerializeField] private PlayerState jumpState = null;
         [SerializeField] private PlayerState slideState = null;
         [SerializeField] private PlayerState dashState = null;
-        [SerializeField] private PlayerState fallingState = null;
+        [SerializeField] private PlayerState groundFallingState = null;
 
         private const string RUN_ANIMATION = "Run";
 
@@ -68,7 +68,7 @@ namespace Player
 
             if (!player.groundCheck.isGrounded)
             {
-                controller.ChangeState(fallingState).Forget();
+                controller.ChangeState(groundFallingState).Forget();
                 return;
             }
 

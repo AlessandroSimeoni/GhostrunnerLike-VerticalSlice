@@ -1,8 +1,9 @@
+using Architecture;
 using UnityEngine.InputSystem;
 
 namespace Player
 {
-    public class PlayerCombatStateController : PlayerStateController
+    public class PlayerCombatStateController : BaseStateController<PlayerState>
     {
         public bool defenseRequested { get; private set; } = false;
 

@@ -7,12 +7,12 @@ namespace Player
     public class PlayerState : MonoBehaviour, IState
     {
         protected PlayerCharacter player = null;
-        protected PlayerStateController controller = null;
+        protected BaseStateController<PlayerState> controller = null;
 
         public virtual void Init<T>(T entity, AStateController controller) where T : MonoBehaviour
         {
             player = entity as PlayerCharacter;
-            this.controller = (PlayerStateController)controller;
+            this.controller = (BaseStateController<PlayerState>)controller;
         }
 
         public virtual async UniTask Enter() => await UniTask.NextFrame();

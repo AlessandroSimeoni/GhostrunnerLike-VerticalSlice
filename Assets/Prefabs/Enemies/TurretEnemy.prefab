@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6848330273446964479}
   - component: {fileID: 9059829690403761375}
   - component: {fileID: 4091802732281133269}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TurretEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,6 +244,9 @@ MonoBehaviour:
   upperBlockTransform: {fileID: 7851019555235778699}
   barrelTransform: {fileID: 7851179959033217833}
   shootPointTransform: {fileID: 7850931225744883195}
+  rayLayermask:
+    serializedVersion: 2
+    m_Bits: 247
 --- !u!1 &6624507127238705007
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,11 +852,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4597034265451690, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4597034265451690, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4597034265451690, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

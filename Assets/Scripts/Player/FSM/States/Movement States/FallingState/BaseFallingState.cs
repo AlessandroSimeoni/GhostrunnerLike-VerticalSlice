@@ -5,9 +5,8 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
-    public class PlayerFallingState : PlayerState
-    {
-        [SerializeField] private PlayerMovingStateModel movingStateModel = null;
+    public class BaseFallingState : PlayerState
+    {        
         [SerializeField] private PlayerWallRunStateModel wallRunStateModel = null;
         [SerializeField] protected PlayerState idleState = null;
         [SerializeField] protected PlayerState movingState = null;
@@ -52,7 +51,6 @@ namespace Player
             CheckDashAction();
             CheckGround();
             CheckWallRun();
-            player.characterController.Move(player.inputMovementDirection * movingStateModel.movementSpeed * Time.deltaTime);
         }
 
         protected void CheckGround()

@@ -82,6 +82,15 @@ namespace InputControls
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=1.401298E-45)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrapplingHook"",
+                    ""type"": ""Button"",
+                    ""id"": ""2cbc7022-2a79-4192-ac6e-cb722fc709e3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,17 @@ namespace InputControls
                     ""action"": ""Defense"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""247e4d3a-b368-4770-ae37-fdf5f185bfbc"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrapplingHook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -236,6 +256,7 @@ namespace InputControls
             m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
             m_Player_Defense = m_Player.FindAction("Defense", throwIfNotFound: true);
+            m_Player_GrapplingHook = m_Player.FindAction("GrapplingHook", throwIfNotFound: true);
             // Camera
             m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
             m_Camera_Rotation = m_Camera.FindAction("Rotation", throwIfNotFound: true);
@@ -306,6 +327,7 @@ namespace InputControls
         private readonly InputAction m_Player_Crouch;
         private readonly InputAction m_Player_Dash;
         private readonly InputAction m_Player_Defense;
+        private readonly InputAction m_Player_GrapplingHook;
         public struct PlayerActions
         {
             private @Controls m_Wrapper;
@@ -316,6 +338,7 @@ namespace InputControls
             public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
             public InputAction @Dash => m_Wrapper.m_Player_Dash;
             public InputAction @Defense => m_Wrapper.m_Player_Defense;
+            public InputAction @GrapplingHook => m_Wrapper.m_Player_GrapplingHook;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -343,6 +366,9 @@ namespace InputControls
                 @Defense.started += instance.OnDefense;
                 @Defense.performed += instance.OnDefense;
                 @Defense.canceled += instance.OnDefense;
+                @GrapplingHook.started += instance.OnGrapplingHook;
+                @GrapplingHook.performed += instance.OnGrapplingHook;
+                @GrapplingHook.canceled += instance.OnGrapplingHook;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -365,6 +391,9 @@ namespace InputControls
                 @Defense.started -= instance.OnDefense;
                 @Defense.performed -= instance.OnDefense;
                 @Defense.canceled -= instance.OnDefense;
+                @GrapplingHook.started -= instance.OnGrapplingHook;
+                @GrapplingHook.performed -= instance.OnGrapplingHook;
+                @GrapplingHook.canceled -= instance.OnGrapplingHook;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -436,6 +465,7 @@ namespace InputControls
             void OnCrouch(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
             void OnDefense(InputAction.CallbackContext context);
+            void OnGrapplingHook(InputAction.CallbackContext context);
         }
         public interface ICameraActions
         {

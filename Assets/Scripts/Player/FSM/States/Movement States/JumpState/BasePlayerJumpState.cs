@@ -4,7 +4,7 @@ using Utilities;
 
 namespace Player
 {
-    public class BasePlayerJumpState : PlayerFallingState
+    public class BasePlayerJumpState : BaseFallingState
     {
         [SerializeField] protected Gravity gravity = null;
 

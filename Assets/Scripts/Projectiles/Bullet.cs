@@ -8,6 +8,7 @@ namespace Projectiles
     public class Bullet : MonoBehaviour
     {
         public BulletModel bulletModel = null;
+        [SerializeField] private LayerMask rayMask;
         [Header("VFX")]
         [SerializeField] private ParticleSystem bulletParticle = null;
         [SerializeField] private TrailRenderer trailRenderer = null;
@@ -30,7 +31,7 @@ namespace Projectiles
 
             transform.position += transform.forward * velocity * Time.deltaTime;
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.0f))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.0f, rayMask))
             {
                 hasHit = true;
                 if (flyTimeCoroutine != null)

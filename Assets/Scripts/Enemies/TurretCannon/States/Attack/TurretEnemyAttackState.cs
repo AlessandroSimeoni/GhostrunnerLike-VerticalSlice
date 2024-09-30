@@ -13,6 +13,7 @@ namespace Enemy
         [SerializeField] private Transform upperBlockTransform = null;
         [SerializeField] private Transform barrelTransform = null;
         [SerializeField] private Transform shootPointTransform = null;
+        [SerializeField] private LayerMask rayLayermask;
 
         private CancellationTokenSource rotationCTS = new CancellationTokenSource();
         private Vector3 targetDirection = Vector3.zero;
@@ -47,7 +48,7 @@ namespace Enemy
             targetDirection = (enemy.player.transform.position + Vector3.up * (enemy.player.characterController.height + attackModel.barrelTargetOffsetHeight)) - enemy.transform.position;
 
             if (Vector3.Dot(barrelTransform.forward, targetDirection.normalized) > attackModel.fireAlignmentThreshold
-                && Physics.Raycast(shootPointTransform.position, shootPointTransform.forward, out hit, targetDirection.magnitude)
+                && Physics.Raycast(shootPointTransform.position, shootPointTransform.forward, out hit, targetDirection.magnitude, rayLayermask)
                 && hit.transform.gameObject.layer == LayerMask.NameToLayer(TurretCannonEnemy.PLAYER_LAYER))
             {
                 currentTime += Time.deltaTime;

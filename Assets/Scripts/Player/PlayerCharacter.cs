@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using GameCamera;
 using InputControls;
 using Projectiles;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 using Utilities;
 
 namespace Player
@@ -13,14 +15,15 @@ namespace Player
     public class PlayerCharacter : MonoBehaviour, IHitable
     {
         public FirstPersonCamera fpCamera = null;
-        [SerializeField] private PlayerStateController movementStateController = null;
-        [SerializeField] private PlayerStateController combatStateController = null;
+        [SerializeField] private PlayerMovementStateController movementStateController = null;
+        [SerializeField] private PlayerCombatStateController combatStateController = null;
         public Sword sword = null;
         public Animator playerAnimator = null;
         [Min(0.0f)] public float rigidbodyInteractionForce = 10.0f;
 
-        public delegate void CharacterControllerEvent();
-        public event CharacterControllerEvent OnCharacterControllerHit = null;
+        public delegate void NoArgumentEvent();
+        public event NoArgumentEvent OnCharacterControllerHit = null;
+        public event NoArgumentEvent OnGrapplingHookUsed = null;
 
         public delegate void HitEvent(Bullet bullet);
         public event HitEvent OnBulletHit = null;
@@ -31,6 +34,7 @@ namespace Player
         public GroundCheck groundCheck { get; private set; } = null;
         public CharacterController characterController { get; private set; } = null;
         public Stamina stamina { get; private set; } = null;
+        public Transform hookTransform { get; set; } = null;
 
         private const string GROUND_TAG = "Ground";
 
@@ -50,6 +54,7 @@ namespace Player
 
             movementStateController.Init(this);
             combatStateController.Init(this);
+            controls.Player.GrapplingHook.performed += GrabHook;
 
             transform.position += Vector3.up * characterController.skinWidth;
         }
@@ -100,6 +105,15 @@ namespace Player
         }
 
         private void ControlCamera() => fpCamera.ProcessMovement(controls.Camera.Rotation.ReadValue<Vector2>());
+
+        private void GrabHook(InputAction.CallbackContext context)
+        {
+            if (hookTransform == null)
+                return;
+
+            movementStateController.HandleGrapplingHookRequest();
+            OnGrapplingHookUsed?.Invoke();
+        }
 
         public void Hit(Bullet bullet) => OnBulletHit?.Invoke(bullet);
 

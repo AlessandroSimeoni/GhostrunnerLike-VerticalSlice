@@ -6,13 +6,13 @@ namespace Player
 {
     public class PlayerParabolicJumpState : BasePlayerJumpState
     {
-        [SerializeField] private PlayerParabolicJumpStateModel parabolicJumpModel = null;
+        [SerializeField] protected PlayerParabolicJumpStateModel parabolicJumpModel = null;
 
         public Vector3 jumpDirection { get; set; } = Vector3.zero;
 
-        private float initialVerticalVelocity = 0.0f;
-        private float totalTime = 0.0f;
-        private float initialHorizontalSpeed = 0.0f;
+        protected float initialVerticalVelocity = 0.0f;
+        protected float totalTime = 0.0f;
+        protected float initialHorizontalSpeed = 0.0f;
         private Vector3 jumpVector = Vector3.up;
 
         public override void Init<T>(T entity, AStateController controller)
