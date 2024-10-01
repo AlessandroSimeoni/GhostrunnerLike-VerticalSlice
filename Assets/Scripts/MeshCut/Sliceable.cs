@@ -14,8 +14,12 @@ namespace MeshCut
         [Tooltip("The material for the part where the mesh will be cut")] 
         public Material fillMaterial = null;
         [SerializeField] private float cutReadyCooldown = 0.1f;
+        [Min(1)] public int maxCuts = 5;
 
         private bool _cutReady = false;
+
+        public int cutNumber { get; set; } = 0;
+        public string originalName { get; set; } = "";
 
         public delegate void CutEvent();
         public event CutEvent OnCutEvent = null;
@@ -30,6 +34,7 @@ namespace MeshCut
         }
 
         private MeshFilter meshFilter = null;
+
         public Mesh mesh { get { return meshFilter.mesh; } }
 
         private void Awake()
@@ -39,7 +44,19 @@ namespace MeshCut
 
         private void Start()
         {
+            if (cutNumber >= maxCuts)
+                return;
+
+            if (cutNumber == 0)
+                originalName = transform.name;
+
             PrepareForCut().Forget();
+        }
+
+        private void OnBecameInvisible()
+        {
+            if (cutNumber >= maxCuts)
+                Destroy(gameObject);
         }
 
         private async UniTask PrepareForCut()

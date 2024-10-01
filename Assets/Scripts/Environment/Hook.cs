@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Player;
-using System;
 
 namespace Environment
 {
     [RequireComponent(typeof(SphereCollider))]
     public class Hook : MonoBehaviour
     {
-
         [SerializeField] private Image QKeyImage = null;
         [SerializeField] private LayerMask rayMask;
+        [SerializeField] private MeshRenderer meshRenderer = null;
+        [SerializeField] private Material inactiveHookMaterial = null;
+        [SerializeField] private Material activeHookMaterial = null;
+        [SerializeField] private GameObject activeHookLight = null;
 
         private PlayerCharacter player = null;
         private bool playerInRange = false;
@@ -23,6 +25,7 @@ namespace Environment
 
         private void Start()
         {
+            DisableHook();
             sc = GetComponent<SphereCollider>();
         }
 
@@ -97,6 +100,8 @@ namespace Environment
             if (player != null)
                 player.hookTransform = null;
             ToggleUIImage(false);
+            meshRenderer.material = inactiveHookMaterial;
+            activeHookLight.SetActive(false);
         }
 
         private void EnableHook()
@@ -104,6 +109,8 @@ namespace Environment
             if (player != null)
                 player.hookTransform = transform;
             ToggleUIImage(true);
+            meshRenderer.material = activeHookMaterial;
+            activeHookLight.SetActive(true);
         }
 
         private void ToggleUIImage(bool value)

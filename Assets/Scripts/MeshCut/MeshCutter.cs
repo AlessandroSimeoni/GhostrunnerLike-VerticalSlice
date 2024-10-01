@@ -99,7 +99,7 @@ namespace MeshCut
         /// <param name="cutForce">the force applied to the object</param>
         private void PrepareLeftGameObject(Sliceable target, CutGeneratedMesh leftMesh, MeshRenderer targetRenderer, Plane plane, float cutForce)
         {
-            GameObject leftSideGO = new GameObject(target.name + " [Left Cut]");
+            GameObject leftSideGO = new GameObject();
             leftSideGO.transform.position = target.transform.position;
             leftSideGO.transform.rotation = target.transform.rotation;
             leftSideGO.transform.localScale = target.transform.localScale;
@@ -113,7 +113,11 @@ namespace MeshCut
             leftMeshCollider.convex = true;
 
             leftSideGO.AddComponent<Rigidbody>().AddForce(plane.normal * cutForce);
-			leftSideGO.AddComponent<Sliceable>().fillMaterial = target.fillMaterial;
+			Sliceable leftSliceable = leftSideGO.AddComponent<Sliceable>();
+			leftSliceable.fillMaterial = target.fillMaterial;
+			leftSliceable.cutNumber = target.cutNumber;
+			leftSliceable.originalName = target.originalName;
+			leftSliceable.name = leftSliceable.originalName + $" {leftSliceable.cutNumber}B";
         }
 
         /// <summary>
@@ -139,6 +143,8 @@ namespace MeshCut
             foreach (Collider collider in targetOriginalColliders)
                 Destroy(collider);
 
+			target.cutNumber++;
+			target.name = target.originalName + $" {target.cutNumber}A";
             target.GetComponent<MeshFilter>().mesh = rightMesh.mesh;
 
             Material[] newMaterials = new Material[targetRenderer.materials.Length + 1];
@@ -151,7 +157,7 @@ namespace MeshCut
             targetCollider.convex = true;
 
 			Rigidbody targetRigidbody = target.gameObject.GetComponent<Rigidbody>();
-			//targetRigidbody.isKinematic = false;
+			targetRigidbody.isKinematic = false;
             targetRigidbody.AddForce(-plane.normal * cutForce);
         }
 
