@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffab611c4bd8dba42a3b7192d0ff9ee8, type: 3}
-  m_Name: TurretEnemyAttackStateModel
+  m_Script: {fileID: 11500000, guid: 01bf6ade638c5444bb64efa691868ca7, type: 3}
+  m_Name: TurretEnemy1DeathStateModel
   m_EditorClassIdentifier: 
-  rotationSpeed: 160
-  barrelTargetOffsetHeight: -0.7
-  fireFrequency: 2
-  fireAlignmentThreshold: 0.9
+  idleRotation: {x: 19, y: 0, z: 0}
+  toIdleRotationSpeed: 120

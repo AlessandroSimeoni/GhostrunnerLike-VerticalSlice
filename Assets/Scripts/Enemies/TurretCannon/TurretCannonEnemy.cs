@@ -34,11 +34,13 @@ namespace Enemy
 
         public const string PLAYER_LAYER = "Player";
 
+        /*
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, 30.0f);
         }
+         */
 
         private void Awake()
         {

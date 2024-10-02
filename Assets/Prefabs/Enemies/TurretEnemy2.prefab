@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &337818807368771802
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 146582079844692756, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_Name
+      value: TurretEnemy2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691656778028949331, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: deathModel
+      value: 
+      objectReference: {fileID: 11400000, guid: ec90b52333f437a45b108114b93cf75c, type: 2}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.8309
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.7092905
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 168.68463
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715336415413408982, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831884505402455471, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3d4b4bf3af33cb1439e84611c0c8356d, type: 2}
+    - target: {fileID: 7833892978649808219, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3d4b4bf3af33cb1439e84611c0c8356d, type: 2}
+    - target: {fileID: 7833918747316564177, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3d4b4bf3af33cb1439e84611c0c8356d, type: 2}
+    - target: {fileID: 8127744273188036153, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: attackModel
+      value: 
+      objectReference: {fileID: 11400000, guid: 7ed59a9b813c34148a1c25bb07dcf542, type: 2}
+    - target: {fileID: 8319243865473172576, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: idleStateModel
+      value: 
+      objectReference: {fileID: 11400000, guid: 8cffaba7533c8454da39a71315ee3fe6, type: 2}
+    - target: {fileID: 9059829690403761375, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: turretModel
+      value: 
+      objectReference: {fileID: 11400000, guid: 38401f3decc3fe347be19c8768d8d037, type: 2}
+    - target: {fileID: 9059829690403761375, guid: 76841589967d5dd4ead5a45de157237e, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 36094570361234074, guid: 27502ac2103d86b42868c539e4c2adf5, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 76841589967d5dd4ead5a45de157237e, type: 3}

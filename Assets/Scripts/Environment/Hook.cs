@@ -97,7 +97,7 @@ namespace Environment
 
         private void DisableHook()
         {
-            if (player != null)
+            if (player != null && player.hookTransform == transform)
                 player.hookTransform = null;
             ToggleUIImage(false);
             meshRenderer.material = inactiveHookMaterial;
