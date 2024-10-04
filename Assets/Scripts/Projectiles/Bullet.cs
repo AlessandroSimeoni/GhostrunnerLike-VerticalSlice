@@ -80,7 +80,9 @@ namespace Projectiles
             impactParticle.Play();
 
             await UniTask.WaitForSeconds(impactParticle.main.duration);
-            trailRenderer.Clear();
+
+            if (trailRenderer != null)
+                trailRenderer.Clear();
 
             objectPool.Release(this);
         }

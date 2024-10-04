@@ -220,6 +220,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "GameEnd",
+            "id": "2c18755d-28e7-4ced-8bd9-cc6cdb186587",
+            "actions": [
+                {
+                    "name": "Continue",
+                    "type": "Button",
+                    "id": "d6b676b5-36ce-46ab-b186-4745a31dbfab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fb032449-2268-4673-abe0-1e03a12e2264",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

@@ -19,6 +19,12 @@ namespace Enemy
             RotationUtility.RotateTo(barrelTransform, new Vector3(deathModel.idleRotation.x, barrelTransform.eulerAngles.y, barrelTransform.eulerAngles.z), deathModel.toIdleRotationSpeed, rotationCTS.Token).Forget();
             triggerArea.enabled = false;
             controller.enabled = false;
+            enemy.Death();
+        }
+
+        private void OnDisable()
+        {
+            rotationCTS.Cancel();
         }
     }
 }

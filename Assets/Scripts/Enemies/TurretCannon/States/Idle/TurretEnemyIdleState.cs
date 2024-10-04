@@ -36,5 +36,10 @@ namespace Enemy
         }
 
         private void GoToAttackState() => controller.ChangeState(attackState).Forget();
+
+        private void OnDisable()
+        {
+            rotationCTS.Cancel();
+        }
     }
 }

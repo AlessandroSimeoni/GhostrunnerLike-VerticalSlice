@@ -244,6 +244,34 @@ namespace InputControls
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""GameEnd"",
+            ""id"": ""2c18755d-28e7-4ced-8bd9-cc6cdb186587"",
+            ""actions"": [
+                {
+                    ""name"": ""Continue"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6b676b5-36ce-46ab-b186-4745a31dbfab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""fb032449-2268-4673-abe0-1e03a12e2264"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -260,6 +288,9 @@ namespace InputControls
             // Camera
             m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
             m_Camera_Rotation = m_Camera.FindAction("Rotation", throwIfNotFound: true);
+            // GameEnd
+            m_GameEnd = asset.FindActionMap("GameEnd", throwIfNotFound: true);
+            m_GameEnd_Continue = m_GameEnd.FindAction("Continue", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -457,6 +488,52 @@ namespace InputControls
             }
         }
         public CameraActions @Camera => new CameraActions(this);
+
+        // GameEnd
+        private readonly InputActionMap m_GameEnd;
+        private List<IGameEndActions> m_GameEndActionsCallbackInterfaces = new List<IGameEndActions>();
+        private readonly InputAction m_GameEnd_Continue;
+        public struct GameEndActions
+        {
+            private @Controls m_Wrapper;
+            public GameEndActions(@Controls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Continue => m_Wrapper.m_GameEnd_Continue;
+            public InputActionMap Get() { return m_Wrapper.m_GameEnd; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(GameEndActions set) { return set.Get(); }
+            public void AddCallbacks(IGameEndActions instance)
+            {
+                if (instance == null || m_Wrapper.m_GameEndActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_GameEndActionsCallbackInterfaces.Add(instance);
+                @Continue.started += instance.OnContinue;
+                @Continue.performed += instance.OnContinue;
+                @Continue.canceled += instance.OnContinue;
+            }
+
+            private void UnregisterCallbacks(IGameEndActions instance)
+            {
+                @Continue.started -= instance.OnContinue;
+                @Continue.performed -= instance.OnContinue;
+                @Continue.canceled -= instance.OnContinue;
+            }
+
+            public void RemoveCallbacks(IGameEndActions instance)
+            {
+                if (m_Wrapper.m_GameEndActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IGameEndActions instance)
+            {
+                foreach (var item in m_Wrapper.m_GameEndActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_GameEndActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public GameEndActions @GameEnd => new GameEndActions(this);
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
@@ -470,6 +547,10 @@ namespace InputControls
         public interface ICameraActions
         {
             void OnRotation(InputAction.CallbackContext context);
+        }
+        public interface IGameEndActions
+        {
+            void OnContinue(InputAction.CallbackContext context);
         }
     }
 }

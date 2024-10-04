@@ -60,6 +60,11 @@ namespace Enemy
             }
         }
 
+        private void OnDisable()
+        {
+            rotationCTS.Cancel();
+        }
+
         private void ReturnToIdle() => controller.ChangeState(idleState).Forget();
     }
 }

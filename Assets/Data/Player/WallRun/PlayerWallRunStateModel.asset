@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerWallRunStateModel
   m_EditorClassIdentifier: 
   wallRunSpeed: 15
-  forwardDotFallThreshold: 0.5
+  forwardDotFallThreshold: 0.4
   minJumpDirectionAngle: 35
   cameraTiltAngle: 20
   cameraTiltChangeSpeed: 10

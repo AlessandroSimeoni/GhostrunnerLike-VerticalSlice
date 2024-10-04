@@ -1,4 +1,3 @@
-using Architecture;
 using Cysharp.Threading.Tasks;
 using Player;
 using Projectiles;
@@ -25,9 +24,10 @@ namespace Enemy
 
         private IObjectPool<Bullet> bulletsPool;
 
-        public delegate void PlayerRangeEvent();
-        public event PlayerRangeEvent OnPlayerRange = null;
-        public event PlayerRangeEvent OnPlayerNotInRange = null;
+        public delegate void NoArgumentEvent();
+        public event NoArgumentEvent OnPlayerRange = null;
+        public event NoArgumentEvent OnPlayerNotInRange = null;
+        public event NoArgumentEvent OnDeath = null;
 
         public PlayerCharacter player { get; private set; } = null;
         public SphereCollider sphereCollider { get; private set; } = null;
@@ -94,7 +94,8 @@ namespace Enemy
 
         private void OnReleaseToPool(Bullet bullet)
         {
-            bullet.gameObject.SetActive(false);
+            if (bullet != null)
+                bullet.gameObject.SetActive(false);
         }
 
         private void OnDestroyPooledObject(Bullet bullet)
@@ -118,5 +119,7 @@ namespace Enemy
             cutDestructionView.ChangeView().Forget();
             stateController.Death();
         }
+
+        public void Death() => OnDeath?.Invoke();
     }
 }

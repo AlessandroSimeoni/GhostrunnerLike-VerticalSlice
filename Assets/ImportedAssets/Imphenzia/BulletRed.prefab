@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4466262414135954}
   - component: {fileID: 96046009712919600}
-  - component: {fileID: 114845138273840728}
   - component: {fileID: 108563856247409952}
   - component: {fileID: 199484769932815430}
   - component: {fileID: 198523175385329784}
@@ -150,22 +149,6 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
---- !u!114 &114845138273840728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1452043023141516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc46b469ca32e641aecc271c1eb9b3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocity: 100
-  life: 2
-  impactImpulseForce: 50
-  turretParent: {fileID: 0}
 --- !u!108 &108563856247409952
 Light:
   m_ObjectHideFlags: 0

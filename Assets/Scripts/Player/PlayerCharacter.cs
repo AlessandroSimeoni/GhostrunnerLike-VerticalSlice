@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using GameCamera;
 using InputControls;
 using Projectiles;
@@ -24,6 +23,7 @@ namespace Player
         public delegate void NoArgumentEvent();
         public event NoArgumentEvent OnCharacterControllerHit = null;
         public event NoArgumentEvent OnGrapplingHookUsed = null;
+        public event NoArgumentEvent OnDeath = null;
 
         public delegate void HitEvent(Bullet bullet);
         public event HitEvent OnBulletHit = null;
@@ -37,6 +37,8 @@ namespace Player
         public Transform hookTransform { get; set; } = null;
 
         private const string GROUND_TAG = "Ground";
+
+        private bool alreadyDead = false;
 
         private void Awake()
         {
@@ -59,11 +61,13 @@ namespace Player
             transform.position += Vector3.up * characterController.skinWidth;
         }
 
-        private void OnEnable()
+        [ContextMenu("EnableControls")]
+        public void EnableControls()
         {
             controls.Player.Enable();
             controls.Camera.Enable();
         }
+
         private void OnDisable()
         {
             controls.Player.Disable();
@@ -119,7 +123,18 @@ namespace Player
 
         public void Death()
         {
-            Debug.Log("YOU LOSE");
+            if (alreadyDead)
+                return;
+
+            alreadyDead = true;
+            DisableControls();
+            OnDeath?.Invoke();
+        }
+
+        public void DisableControls()
+        {
+            controls.Player.Disable();
+            controls.Camera.Disable();
         }
     }
 }
