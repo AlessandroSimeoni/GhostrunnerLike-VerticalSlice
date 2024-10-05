@@ -90,6 +90,7 @@ Transform:
   - {fileID: 2156010096110206914}
   - {fileID: 6384009428082252235}
   - {fileID: 4761857198724783107}
+  - {fileID: 7156634437512350808}
   m_Father: {fileID: 5566620087732254069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2746671445614073779
@@ -118,8 +119,10 @@ MonoBehaviour:
   - {fileID: 3846830763558967994}
   - {fileID: 6845379332355419672}
   - {fileID: 180723842445554244}
+  - {fileID: 1941838657324265168}
   initialState: {fileID: 7052092395668710853}
   grapplingHookState: {fileID: 180723842445554244}
+  trampolineJumpState: {fileID: 1941838657324265168}
 --- !u!1 &1842454703991016522
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +680,57 @@ MonoBehaviour:
   wallRunState: {fileID: 6622023189437684070}
   gravity: {fileID: 212152715129384261}
   parabolicJumpModel: {fileID: 11400000, guid: 502b5ef5e12a7bc44962cfd7a4e95fcb, type: 2}
+--- !u!1 &4272582421080743283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7156634437512350808}
+  - component: {fileID: 1941838657324265168}
+  m_Layer: 6
+  m_Name: TrampolineJumpState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7156634437512350808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4272582421080743283}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8193752002774699453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1941838657324265168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4272582421080743283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168808f10b879004cb9d377d57435810, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallRunStateModel: {fileID: 11400000, guid: cbb4aa5f29c4aa442b17914cc7c0a9eb, type: 2}
+  idleState: {fileID: 7052092395668710853}
+  movingState: {fileID: 6905955132634936331}
+  dashState: {fileID: 4619910424922956579}
+  wallRunState: {fileID: 6622023189437684070}
+  gravity: {fileID: 212152715129384261}
+  parabolicJumpModel: {fileID: 0}
 --- !u!1 &4528922606927980882
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ namespace Player
     public class PlayerMovementStateController : BaseStateController<PlayerState>
     {
         [SerializeField] private PlayerGrapplingHookState grapplingHookState = null;
+        [SerializeField] private PlayerParabolicJumpState trampolineJumpState = null;
 
         public override void Init<T1>(T1 entity)
         {
@@ -22,6 +23,16 @@ namespace Player
                 currentState = null;
 
             ChangeState(grapplingHookState).Forget();
+        }
+
+        public void TrampolineJump(ParabolicJumpConfig trampolineConfig, Vector3 trampolineDirection)
+        {
+            if (currentState == trampolineJumpState)
+                currentState = null;
+
+            trampolineJumpState.jumpModel = trampolineConfig;
+            trampolineJumpState.jumpDirection = trampolineDirection;
+            ChangeState(trampolineJumpState).Forget();
         }
     }
 }

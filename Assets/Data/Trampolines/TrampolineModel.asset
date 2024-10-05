@@ -9,12 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4c7459efe0d0114ebe5a4835f88757d, type: 3}
-  m_Name: PlayerParabolicJumpStateModel
+  m_Script: {fileID: 11500000, guid: 1ceacccc2718ad84cb4a733196bd1588, type: 3}
+  m_Name: TrampolineModel
   m_EditorClassIdentifier: 
-  jumpModel:
-    jumpRange: 7
-    maxJumpHeight: 3
+  trampolineJumpModel:
+  - jumpRange: 0
+    maxJumpHeight: 15
+    jumpGravityMultiplier: 7
+    midAirSpeed: 7
+    forwardMovementWeight: 0.3
+  - jumpRange: 15
+    maxJumpHeight: 15
     jumpGravityMultiplier: 7
     midAirSpeed: 7
     forwardMovementWeight: 0.3

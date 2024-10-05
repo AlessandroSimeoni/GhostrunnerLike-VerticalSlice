@@ -98,8 +98,10 @@ namespace Environment
         private void DisableHook()
         {
             if (player != null && player.hookTransform == transform)
+            {
                 player.hookTransform = null;
-            ToggleUIImage(false);
+                ToggleUIImage(false);
+            }
             meshRenderer.material = inactiveHookMaterial;
             activeHookLight.SetActive(false);
         }

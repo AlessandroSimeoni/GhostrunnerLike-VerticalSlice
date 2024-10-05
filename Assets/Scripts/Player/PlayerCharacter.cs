@@ -136,5 +136,7 @@ namespace Player
             controls.Player.Disable();
             controls.Camera.Disable();
         }
+
+        public void TrampolineJump(ParabolicJumpConfig jumpConfig, Vector3 trampolineDirection) => movementStateController.TrampolineJump(jumpConfig, trampolineDirection);
     }
 }

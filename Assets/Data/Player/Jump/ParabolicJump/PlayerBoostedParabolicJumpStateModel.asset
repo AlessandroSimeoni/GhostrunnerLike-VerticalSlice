@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c7459efe0d0114ebe5a4835f88757d, type: 3}
   m_Name: PlayerBoostedParabolicJumpStateModel
   m_EditorClassIdentifier: 
-  slideJumpRange: 15
-  maxSlideJumpHeight: 4
-  slidedJumpGravityMultiplier: 7
-  slidedMidAirSpeed: 10
-  forwardMovementWeight: 0.2
+  jumpModel:
+    jumpRange: 15
+    maxJumpHeight: 4
+    jumpGravityMultiplier: 7
+    midAirSpeed: 10
+    forwardMovementWeight: 0.2
