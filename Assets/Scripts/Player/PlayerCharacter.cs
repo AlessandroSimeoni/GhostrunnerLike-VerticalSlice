@@ -70,8 +70,7 @@ namespace Player
 
         private void OnDisable()
         {
-            controls.Player.Disable();
-            controls.Camera.Disable();
+            DisableControls();
         }
 
         private void Update()

@@ -2,7 +2,8 @@
     "name": "Environment",
     "rootNamespace": "Environment",
     "references": [
-        "GUID:3fa1ed7f9addd604483c13243b661044"
+        "GUID:3fa1ed7f9addd604483c13243b661044",
+        "GUID:92baf9f6fa624af49ba94ef57888da71"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

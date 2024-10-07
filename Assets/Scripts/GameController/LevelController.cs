@@ -1,41 +1,71 @@
-using Enemy;
+using InputControls;
 using Player;
 using SceneLoad;
-using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UserInterface;
 
 namespace GameController
 {
     public class LevelController : MonoBehaviour
     {
-        [SerializeField] private PlayerCharacter player = null;
-        [SerializeField] private GameEnd gameOver = null;
-        [SerializeField] private GameEnd win = null;
-        [Space]
-        [Header("Enemies")]
-        [SerializeField] private TurretCannonEnemy[] enemyArray = Array.Empty<TurretCannonEnemy>();
+        [SerializeField] protected PlayerCharacter player = null;
+        [SerializeField] protected GameEnd gameOver = null;
+        [SerializeField] protected GameEnd win = null;
+        [SerializeField] protected GamePauseCanvas pauseCanvas = null;
 
-        private int remainingEnemies = 0;
+        private Controls controls = null;
 
-        private void Start()
+        protected virtual void Start()
         {
+            controls = new Controls();
             SceneLoader.instance.OnLoadingCompleted += player.EnableControls;
-            player.OnDeath += gameOver.EnterGameEnd;
-
-            remainingEnemies = enemyArray.Length;
-            foreach (TurretCannonEnemy tce in enemyArray)
-                tce.OnDeath += HandleEnemyDeath;
+            SceneLoader.instance.OnLoadingCompleted += EnablePauseControls;
+            player.OnDeath += HandleGameOver;
         }
 
-        private void HandleEnemyDeath()
+        protected void EnablePauseControls()
         {
-            remainingEnemies--;
+            controls.GamePause.Enable();
+            controls.GamePause.Pause.performed += EnablePause;
+        }
 
-            if (remainingEnemies == 0)
-            {
-                player.DisableControls();
-                win.EnterGameEnd();
-            }
+        protected virtual void HandleGameOver()
+        {
+            controls.GamePause.Disable();
+            gameOver.EnterGameEnd();
+        }
+
+        protected virtual void HandleWin()
+        {
+            controls.GamePause.Disable();
+        }
+
+        protected void EnablePause(InputAction.CallbackContext context)
+        {
+            pauseCanvas.gameObject.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            player.DisableControls();
+            controls.GamePause.Pause.performed -= EnablePause;
+            controls.GamePause.Pause.performed += DisablePause;
+        }
+
+        protected void DisablePause(InputAction.CallbackContext context)
+        {
+            pauseCanvas.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            player.EnableControls();
+            controls.GamePause.Pause.performed -= DisablePause;
+            controls.GamePause.Pause.performed += EnablePause;
+        }
+
+        protected void OnDestroy()
+        {
+            controls.GamePause.Pause.performed -= EnablePause;
+            controls.GamePause.Pause.performed -= DisablePause;
+            SceneLoader.instance.OnLoadingCompleted -= player.EnableControls;
+            SceneLoader.instance.OnLoadingCompleted -= EnablePauseControls;
+            controls.GamePause.Disable();
         }
     }
 }

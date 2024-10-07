@@ -272,6 +272,34 @@ namespace InputControls
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""GamePause"",
+            ""id"": ""8463ffd3-8307-4596-baa8-91e6d8348650"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""edbc7e03-89ea-442e-a16e-7414ac9ef7d9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""341aa60c-ba6b-44e1-88fd-fafcdf58e13b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -291,6 +319,9 @@ namespace InputControls
             // GameEnd
             m_GameEnd = asset.FindActionMap("GameEnd", throwIfNotFound: true);
             m_GameEnd_Continue = m_GameEnd.FindAction("Continue", throwIfNotFound: true);
+            // GamePause
+            m_GamePause = asset.FindActionMap("GamePause", throwIfNotFound: true);
+            m_GamePause_Pause = m_GamePause.FindAction("Pause", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -534,6 +565,52 @@ namespace InputControls
             }
         }
         public GameEndActions @GameEnd => new GameEndActions(this);
+
+        // GamePause
+        private readonly InputActionMap m_GamePause;
+        private List<IGamePauseActions> m_GamePauseActionsCallbackInterfaces = new List<IGamePauseActions>();
+        private readonly InputAction m_GamePause_Pause;
+        public struct GamePauseActions
+        {
+            private @Controls m_Wrapper;
+            public GamePauseActions(@Controls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Pause => m_Wrapper.m_GamePause_Pause;
+            public InputActionMap Get() { return m_Wrapper.m_GamePause; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(GamePauseActions set) { return set.Get(); }
+            public void AddCallbacks(IGamePauseActions instance)
+            {
+                if (instance == null || m_Wrapper.m_GamePauseActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_GamePauseActionsCallbackInterfaces.Add(instance);
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+
+            private void UnregisterCallbacks(IGamePauseActions instance)
+            {
+                @Pause.started -= instance.OnPause;
+                @Pause.performed -= instance.OnPause;
+                @Pause.canceled -= instance.OnPause;
+            }
+
+            public void RemoveCallbacks(IGamePauseActions instance)
+            {
+                if (m_Wrapper.m_GamePauseActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IGamePauseActions instance)
+            {
+                foreach (var item in m_Wrapper.m_GamePauseActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_GamePauseActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public GamePauseActions @GamePause => new GamePauseActions(this);
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
@@ -551,6 +628,10 @@ namespace InputControls
         public interface IGameEndActions
         {
             void OnContinue(InputAction.CallbackContext context);
+        }
+        public interface IGamePauseActions
+        {
+            void OnPause(InputAction.CallbackContext context);
         }
     }
 }

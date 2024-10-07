@@ -14,12 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trampolineJumpModel:
   - jumpRange: 0
-    maxJumpHeight: 15
+    maxJumpHeight: 30
     jumpGravityMultiplier: 7
     midAirSpeed: 7
     forwardMovementWeight: 0.3
-  - jumpRange: 15
+  - jumpRange: 90
+    maxJumpHeight: 53
+    jumpGravityMultiplier: 10
+    midAirSpeed: 0
+    forwardMovementWeight: 0.3
+  - jumpRange: 80
     maxJumpHeight: 15
     jumpGravityMultiplier: 7
-    midAirSpeed: 7
+    midAirSpeed: 0
+    forwardMovementWeight: 0.3
+  - jumpRange: 20
+    maxJumpHeight: 0.1
+    jumpGravityMultiplier: 2
+    midAirSpeed: 0
     forwardMovementWeight: 0.3
