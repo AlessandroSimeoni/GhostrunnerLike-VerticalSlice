@@ -1533,6 +1533,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5367508613123843138, guid: 561b548d86aae95459da270f12f5cbed, type: 3}
+      propertyPath: sceneBuildIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5766912019662074777, guid: 561b548d86aae95459da270f12f5cbed, type: 3}
       propertyPath: m_Name
       value: Pause

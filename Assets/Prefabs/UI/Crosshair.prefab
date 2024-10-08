@@ -149,7 +149,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3566961405195031194, guid: 1441993461ddb04429a8dd98e3c6a213, type: 3}
       propertyPath: m_Name
-      value: DashSlider
+      value: StaminaSlider
       objectReference: {fileID: 0}
     - target: {fileID: 4972114787811576987, guid: 1441993461ddb04429a8dd98e3c6a213, type: 3}
       propertyPath: m_Pivot.x

@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Training area
+  m_text: TEst area
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b2c3bb163664f70499bebb6b3120a2a5, type: 2}
   m_sharedMaterial: {fileID: -6806104748453530912, guid: b2c3bb163664f70499bebb6b3120a2a5, type: 2}
@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 1660388534427955465}
   - component: {fileID: 6343858100580384995}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: TestArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -116,6 +116,7 @@ namespace MeshCut
 			Sliceable leftSliceable = leftSideGO.AddComponent<Sliceable>();
 			leftSliceable.fillMaterial = target.fillMaterial;
 			leftSliceable.cutNumber = target.cutNumber;
+			leftSliceable.maxCuts = target.maxCuts;
 			leftSliceable.originalName = target.originalName;
 			leftSliceable.name = leftSliceable.originalName + $" {leftSliceable.cutNumber}B";
         }

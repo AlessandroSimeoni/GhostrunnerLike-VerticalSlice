@@ -33,3 +33,8 @@ MonoBehaviour:
     jumpGravityMultiplier: 2
     midAirSpeed: 0
     forwardMovementWeight: 0.3
+  - jumpRange: 80
+    maxJumpHeight: 30
+    jumpGravityMultiplier: 7
+    midAirSpeed: 7
+    forwardMovementWeight: 0.3
