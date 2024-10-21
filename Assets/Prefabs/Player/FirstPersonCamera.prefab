@@ -158,8 +158,8 @@ MonoBehaviour:
   invertedHorizontalAxis: 0
   maxLookUpAngle: 85
   maxLookDownAngle: 85
-  verticalSensitivity: 0.7
-  horizontalSensitivity: 0.7
+  verticalSensitivity: 0.5
+  horizontalSensitivity: 0.5
 --- !u!1001 &1954852489594046552
 PrefabInstance:
   m_ObjectHideFlags: 0

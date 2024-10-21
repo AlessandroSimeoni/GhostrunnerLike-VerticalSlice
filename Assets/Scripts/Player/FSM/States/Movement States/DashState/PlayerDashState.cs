@@ -2,6 +2,7 @@ using Architecture;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utilities;
 
 namespace Player
 {
@@ -12,6 +13,7 @@ namespace Player
         [SerializeField] private PlayerState movingState = null;
         [SerializeField] private PlayerState boostedSlideState = null;
         [SerializeField] private PlayerState fallingState = null;
+        [SerializeField] protected Gravity gravity = null;
 
         private InputAction slideAction = null;
         private Vector3 dashDirection = Vector3.zero;
@@ -27,9 +29,16 @@ namespace Player
 
         public override async UniTask Enter()
         {
+            gravity.enabled = false;
             dashDirection = (player.inputMovementDirection == Vector3.zero) ? player.transform.forward : player.inputMovementDirection;
             currentTime = 0.0f;
             player.stamina.ConsumeStamina(dashStateModel.dashStaminaCost);
+            await UniTask.NextFrame();
+        }
+
+        public override async UniTask Exit()
+        {
+            gravity.enabled = true;
             await UniTask.NextFrame();
         }
 

@@ -10083,7 +10083,7 @@ PrefabInstance:
       objectReference: {fileID: 1742843580715845229}
     - target: {fileID: 5003131493599833518, guid: da580f847e5af1b478a2dd74df3cce87, type: 3}
       propertyPath: verticalSensitivity
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5071611124881739236, guid: da580f847e5af1b478a2dd74df3cce87, type: 3}
       propertyPath: m_Center.x

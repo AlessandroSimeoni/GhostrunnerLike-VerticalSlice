@@ -1090,6 +1090,7 @@ MonoBehaviour:
   movingState: {fileID: 6905955132634936331}
   boostedSlideState: {fileID: 6969067490439880958}
   fallingState: {fileID: 3846830763558967994}
+  gravity: {fileID: 212152715129384261}
 --- !u!1 &6928567365404764424
 GameObject:
   m_ObjectHideFlags: 0
