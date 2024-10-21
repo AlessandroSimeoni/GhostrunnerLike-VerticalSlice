@@ -16,12 +16,15 @@ namespace GameCamera
         [SerializeField, Range(0.0f, 89.0f)] private float maxLookUpAngle = 75.0f;
         [SerializeField, Range(0.0f, 89.0f)] private float maxLookDownAngle = 75.0f;
         [Header("Sensitivities")]
-        [SerializeField, Min(0.0f)] private float verticalSensitivity = 2.0f;
-        [SerializeField, Min(0.0f)] private float horizontalSensitivity = 2.0f;
+        [Range(0.01f, 1.0f)] public float verticalSensitivity = 2.0f;
+        [Range(0.01f, 1.0f)] public float horizontalSensitivity = 2.0f;
 
         private float currentVerticalAngle = 0.0f;
         private float cameraZRotation = 0.0f;
         private CancellationTokenSource cameraZRotationCTS = new CancellationTokenSource();
+
+        public const string VERTICAL_SENSITIVITY = "VerticalSensitivity";
+        public const string HORIZONTAL_SENSITIVITY = "HorizontalSensitivity";
 
         private void LateUpdate() => SetPosition();
 
