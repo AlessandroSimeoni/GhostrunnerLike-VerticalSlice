@@ -9,6 +9,7 @@ namespace Projectiles
     {
         public BulletModel bulletModel = null;
         [SerializeField] private LayerMask rayMask;
+        [SerializeField] private int maxRaySegmentLength = 3;
         [Header("VFX")]
         [SerializeField] private ParticleSystem bulletParticle = null;
         [SerializeField] private TrailRenderer trailRenderer = null;
@@ -29,16 +30,29 @@ namespace Projectiles
             if (hasHit) 
                 return;
 
-            transform.position += transform.forward * velocity * Time.deltaTime;
+            Vector3 startPos = transform.position;
+            Vector3 movement = transform.forward * velocity * Time.deltaTime;
+            Vector3 endPos = startPos + movement;
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.0f, rayMask))
+            int steps = Mathf.CeilToInt(movement.magnitude / maxRaySegmentLength);
+            Vector3 stepSize = movement / steps;
+
+            for (int i = 0; i < steps; i++)
             {
-                hasHit = true;
-                if (flyTimeCoroutine != null)
-                    StopCoroutine(flyTimeCoroutine);
+                if (Physics.Raycast(startPos, transform.forward, out hit, stepSize.magnitude, rayMask))
+                {
+                    hasHit = true;
+                    if (flyTimeCoroutine != null)
+                        StopCoroutine(flyTimeCoroutine);
 
-                HandleCollision().Forget();
+                    HandleCollision().Forget();
+                    return;
+                }
+
+                startPos += stepSize;
             }
+
+            transform.position = endPos;
         }
 
         public void Shoot(float velocity, float maxFlyTime)
