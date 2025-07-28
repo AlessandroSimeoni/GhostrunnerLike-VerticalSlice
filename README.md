@@ -133,13 +133,55 @@ Player can also exit the wall run state with a jump in the direction he's lookin
             }
 ```
 
-As you can see, there is a minimum jump angle from the wall (`minJumpDirectionAngle`); this is done to avoid situations in which the player could climb the wall by jumping along its direction.  
+As you can see, there is a minimum jump angle from the wall (`minJumpDirectionAngle`); this is done to avoid situations in which the player could simply climb the wall by jumping along its direction.  
 
 See the wall run state [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/Player/FSM/States/Movement%20States/WallRunState/PlayerWallRunState.cs).
 
 <a name="Combat"></a>
 ## Combat
+The combat system is based on another FSM that works in parallel with the movement one and handles all the different combat states.  
+The state controller can be found [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/Player/FSM/StateControllers/PlayerCombatStateController.cs) while all the combat states can be found [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/tree/main/Assets/Scripts/Player/FSM/States/Combat%20States).  
 
+The combat system consists of three states: two attacks and a defense one.  
+The attacks can be concatenated with a simple combo system. The player's sword invokes, with an animation event, the opening of the combo window; the attack state subscribe to the event when entering and if the attack input is pressed in this window, the bool `comboTrigger` is set to true. The sword animation, at the end invokes an event that calls the `EndAttack` method in the attack state, eventually passing to the next attacking state:  
+
+```
+        private void EndAttack()
+        {
+            if (comboTrigger)
+                controller.ChangeState(nextAttackState).Forget();
+            else
+                controller.ChangeState(controller.initialState).Forget();
+        }
+```
+
+In the defense state the player can defend himself from the enemy's bullets. When a bullet hits the player while in this state, a function is called:  
+
+```
+        private void EvaluateBulletHit(Bullet bullet)
+        {
+            if (defending && Vector3.Dot(player.fpCamera.transform.forward, -bullet.transform.forward) > thresholdCosine)
+            {
+                if (timeSinceEnter <= defenseModel.parryWindow)
+                {
+                    float angle = Random.Range(0f, Mathf.PI);
+                    float radius = Random.Range(defenseModel.minRepositioningRadius, defenseModel.maxRepositioningRadius);
+                    Vector3 randomOffset = player.fpCamera.transform.right * Mathf.Cos(angle) * radius + player.fpCamera.transform.up * Mathf.Sin(angle) * radius;
+                    bullet.transform.position += randomOffset;
+                    bullet.Parry();
+                }
+                else
+                    player.stamina.ConsumeStamina(bullet.bulletModel.playerStaminaConsume);
+            }
+            else
+                player.Death();
+        }
+```
+
+As you can see, the hit is evaluated with a dot product to determine whether the player is facing the bullet within a certain range defined by the `thresholdCosine` value. If this condition is not met, it's game over, otherwise, the parry logic condition is evaluated.  
+The bullet can be parried if the time elapsed since entering the state is less than or equal to a `parryWindow` defined in the scriptable object of the defense state itself. If the condition is met, the bullet is randomly repositioned for cosmetic purposes and then the `bullet.Parry()` is called, reversing the direction of the bullet and returning it to the enemy.  
+
+See the defense state [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/Player/FSM/States/Combat%20States/Defense/PlayerDefenseState.cs) and the bullets [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/tree/main/Assets/Scripts/Projectiles).  
 
 <a name="Mesh-Cut"></a>
 ## Mesh cut
