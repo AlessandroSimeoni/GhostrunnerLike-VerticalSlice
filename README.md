@@ -185,3 +185,47 @@ See the defense state [here](https://github.com/AlessandroSimeoni/GhostrunnerLik
 
 <a name="Mesh-Cut"></a>
 ## Mesh cut
+When attacking, the meshes of the enemies (and also some cubes in the Test Area scene) can be cut in half.  
+Every gameobject that can be cut has [this script](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/MeshCut/Sliceable.cs) that handles a couple of things:  
+* the **cut cooldown**: there is a cooldown to avoid consecutive unwanted cuts; a coroutine is used to prepare the gameobject for the cut:  
+```
+        private async UniTask PrepareForCut()
+        {
+            await UniTask.WaitForSeconds(cutReadyCooldown);
+            cutReady = true;
+        }
+```
+* **maximum number of cuts**: it is possible to set a maximum number of cuts to limit the number of gameobjects generated in the scene, with the goal of limiting performance deterioration; once the max number is reached and the gameobject goes out of sight, it is destroyed:
+```
+        private void OnBecameInvisible()
+        {
+            if (cutNumber >= maxCuts)
+                Destroy(gameObject);
+        }
+```
+
+The core of the mesh cut feature resides in [this script](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/MeshCut/MeshCutter.cs).  
+The logic processes all the triangles of the target mesh generating two gameobjects (actually only one because the original one gets modified).  
+The triangle, which is composed of vertices, normals and uvs (see [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/MeshCut/MeshTriangle.cs)), is split into two parts if the cutting plane passes through it (this check is done with the `plane.GetSide` function), otherwise is simply put in the left or right gameobject.  
+Splitting a triangle is where the things gets a bit tricky, here is a "simple" explanation of what happens:  
+* a raycast is performed from the two vertices on one side to the third one on the other side of the plane
+* the two resulting intersection points (see [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/MeshCut/IntersectionPoint.cs)) with the plane are calculated and their vertex, normal and uv are calculated by lerping the vertex, normal and uv of the two vertices that generated that intersection
+* considering the three original vertices and the two new intersection points, new triangles are created (correcting their facing) and added to the left/right gameobjects
+
+Once this logic is done, the only thing that remain to do is filling the hole in the two meshes that has been created by the cut.  
+It is calculated the center location of the hole:  
+
+```
+            // calculate the center of the intersection points of the mesh
+            // (left and right meshes have the same intersection points, so it doesn't make any difference using one or the other)
+            Vector3 holeCenter = Vector3.zero;
+			for (int i = 0; i < leftMesh.intersectionPoints.Count; i++)
+				holeCenter += leftMesh.intersectionPoints[i].vertex;
+			holeCenter /= leftMesh.intersectionPoints.Count;
+```
+
+And then the triangles are created.  
+
+Although this system is not performant at all, I had a lot of fun developing it and understanding how the meshes works. I think delegating all the hard work to the GPU or use the Unity's job system might help improve performances.  
+
+For more details on the mesh cut, you can find the scripts [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/tree/main/Assets/Scripts/MeshCut).  
