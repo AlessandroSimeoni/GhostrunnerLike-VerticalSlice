@@ -1,3 +1,4 @@
+<a name="Title"></a>
 # Gostranner
 ![Gostranner menu](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/GostrannerImage.jpg)  
 
@@ -135,7 +136,9 @@ Player can also exit the wall run state with a jump in the direction he's lookin
 
 As you can see, there is a minimum jump angle from the wall (`minJumpDirectionAngle`); this is done to avoid situations in which the player could simply climb the wall by jumping along its direction.  
 
-See the wall run state [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/Player/FSM/States/Movement%20States/WallRunState/PlayerWallRunState.cs).
+See the wall run state [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/Player/FSM/States/Movement%20States/WallRunState/PlayerWallRunState.cs).  
+
+**[⬆ Back to Top](#Title)**
 
 <a name="Combat"></a>
 ## Combat
@@ -183,6 +186,8 @@ The bullet can be parried if the time elapsed since entering the state is less t
 
 See the defense state [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/blob/main/Assets/Scripts/Player/FSM/States/Combat%20States/Defense/PlayerDefenseState.cs) and the bullets [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/tree/main/Assets/Scripts/Projectiles).  
 
+**[⬆ Back to Top](#Title)**
+
 <a name="Mesh-Cut"></a>
 ## Mesh cut
 When attacking, the meshes of the enemies (and also some cubes in the Test Area scene) can be cut in half.  
@@ -229,3 +234,5 @@ And then the triangles are created.
 Although this system is not performant at all, I had a lot of fun developing it and understanding how the meshes works. I think delegating all the hard work to the GPU or use the Unity's job system might help improve performances.  
 
 For more details on the mesh cut, you can find the scripts [here](https://github.com/AlessandroSimeoni/GhostrunnerLike-VerticalSlice/tree/main/Assets/Scripts/MeshCut).  
+
+**[⬆ Back to Top](#Title)**
